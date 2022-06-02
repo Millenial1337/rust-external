@@ -8,7 +8,15 @@
 #include <xstring>
 #include "log.h"
 #include "lazy_importer.h"
+#include "AuthLib/AutherLibrary.h"
+#include "globals.h"
 //#include "antdebug.h"
+
+#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "crypt32.lib")
+#pragma comment(lib, "libcurl_a.lib")
+#pragma comment(lib, "Wldap32.lib")
+#pragma comment(lib, "Normaliz.lib")
 
 void Hide()
 {
@@ -53,12 +61,15 @@ void Brrp()
 
 
 int main()
-{
-	LI_FN(ShowWindow)(GetConsoleWindow(), SW_HIDE);
+{	
 	SetConsoleTitle("A-P");
 	HWND hwnd = nullptr;
+	AutherLibrary::Initialize("maWwK5sbjUOGpuBHF8SeDtfENdTC1rlI", "oCA7K4GerUvgy6u8DdsnT9ShfjPl1Bcm");
+
+
 
 	//start_log();
+	LI_FN(ShowWindow)(GetConsoleWindow(), SW_HIDE);
 
 	try
 	{

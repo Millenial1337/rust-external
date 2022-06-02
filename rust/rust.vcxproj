@@ -79,11 +79,21 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(DXSDK_DIR)Include;$(SolutionDir)rust\curl;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(SolutionDir)rust\curl\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(SolutionDir)rust\curl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(SolutionDir)rust\curl;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgUseStatic>false</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgManifestInstall>false</VcpkgManifestInstall>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -117,12 +127,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)rust\AuthLib\Auther.club.lib;$(SolutionDir)rust\curl\lib\libcurl_a.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,7 +144,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -141,7 +154,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)rust\AuthLib\Auther.club.lib;$(SolutionDir)rust\curl\lib\libcurl_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -162,7 +175,7 @@
     <ClInclude Include="Features\ESP\DrawESP.hpp" />
     <ClInclude Include="Features\ESP\ESP.hpp" />
     <ClInclude Include="Features\MISC\DoMisc.hpp" />
-    <ClInclude Include="guard.h" />
+    <ClInclude Include="globals.h" />
     <ClInclude Include="lazy_importer.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="Overlay\color.hpp" />
@@ -176,7 +189,7 @@
     <ClInclude Include="Overlay\imgui\imstb_rectpack.h" />
     <ClInclude Include="Overlay\imgui\imstb_textedit.h" />
     <ClInclude Include="Overlay\imgui\imstb_truetype.h" />
-    <ClInclude Include="Overlay\Menu\Menu.hpp" />
+    <ClInclude Include="Overlay\Menu\menu.hh" />
     <ClInclude Include="Overlay\Menu\Settings.hpp" />
     <ClInclude Include="Overlay\Overlay.hpp" />
     <ClInclude Include="resource.h" />

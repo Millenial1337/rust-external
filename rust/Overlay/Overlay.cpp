@@ -9,10 +9,11 @@
 #include <dinput.h>
 #include <tchar.h>
 #include <dwmapi.h>
-#include "Menu/Menu.hpp"
+#include "Menu/menu.hh"
 
 #include "../fonts/FontAwesome.h"
 #include "../fonts/RudaBolt.h"
+#include "../globals.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -24,6 +25,8 @@ bool CreateDeviceD3D(HWND hWnd);
 void CleanupDeviceD3D();
 void ResetDevice();
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+bool toggle = false;
 
 void Overlay::Style()
 {
@@ -188,7 +191,6 @@ void __fastcall Overlay::Loop()
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("OverWolf"), NULL };
 	::RegisterClassEx(&wc);
 	HWND hwnd = ::CreateWindow(wc.lpszClassName, _T(""), WS_EX_TOPMOST | WS_POPUP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), NULL, NULL, wc.hInstance, NULL);
-
 	//SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT); // clickable WS_EX_TRANSPARENT
 	SetLayeredWindowAttributes(hwnd, 0, 255, LWA_ALPHA);
 
@@ -217,10 +219,6 @@ void __fastcall Overlay::Loop()
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 
-	HWND gameWnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass
-	HWND activeWnd = nullptr;
-	bool toggle = false;
-
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 	while (msg.message != WM_QUIT)
@@ -235,49 +233,18 @@ void __fastcall Overlay::Loop()
 		ImGui_ImplDX9_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
-
-		activeWnd = GetForegroundWindow();
-		if (activeWnd != gameWnd && activeWnd != hwnd) {
-			::SetWindowPos(hwnd, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+		{
+			ImGui::Begin(safe_str("main"), (bool*)true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+			{
+				if (globals.auth) {
+					start(hwnd);
+				}
+				else {
+					login();
+				}
+			}
+			ImGui::End();
 		}
-		else {
-			::SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-		}
-
-		//ImGui::StyleColorsvosLight();
-		//ImGui::StyleColorsDark();
-		ImVec4* colors = ImGui::GetStyle().Colors;
-		colors[ImGuiCol_WindowBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-		colors[ImGuiCol_Border] = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
-
-		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
-		ImGui::SetNextWindowSize(ImVec2(screenWidth, screenHeight), ImGuiCond_Always);
-		ImGui::Begin(" ", (bool*)true, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-			ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs);
-
-		ESP::Run();
-
-		//Render::DrawString(20, 25, "", &ColorClass.White);
-		//Render::DrawString(58, 25, ".", &ColorClass.Pink);
-		ImGui::End();
-
-		if (GetKeyState(VK_OEM_PLUS) & 0x8000) {  //Menu Key
-			Sleep(200);
-			toggle = !toggle;
-		}
-
-		if (toggle) {
-			SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED);
-			//ImGui::StyleColorsvosLight();
-			//ImGui::StyleColorsDark();
-			colors[ImGuiCol_WindowBg] = ImVec4(40 / 255.f, 40 / 255.f, 40 / 255.f, 255 / 255.f); //ImVec4(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f);
-			colors[ImGuiCol_Border] = ImColor(25, 20, 36, 255);
-			DrawMenu();
-		}
-		else {
-			SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
-		}
-
 		ImGui::EndFrame();
 		g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 		g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -305,6 +272,59 @@ void __fastcall Overlay::Loop()
 	CleanupDeviceD3D();
 	::DestroyWindow(hwnd);
 	::UnregisterClass(wc.lpszClassName, wc.hInstance);
+}
+
+void __fastcall Overlay::start(HWND hwnd) {
+
+	HWND gameWnd = FindWindowA(("UnityWndClass"), ("Rust")); //UnityWndClass
+	HWND activeWnd = nullptr;
+
+	activeWnd = GetForegroundWindow();
+	if (activeWnd != gameWnd && activeWnd != hwnd) {
+		::SetWindowPos(hwnd, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	}
+	else {
+		::SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	}
+
+	RECT screen_rect{};
+	GetWindowRect(GetDesktopWindow(), &screen_rect);
+	glui::screen_res = ImVec2(float(screen_rect.right), float(screen_rect.bottom));
+
+	//ImGui::StyleColorsvosLight();
+	//ImGui::StyleColorsDark();
+	ImVec4* colors = ImGui::GetStyle().Colors;
+	colors[ImGuiCol_WindowBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+	colors[ImGuiCol_Border] = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
+
+	ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(glui::screen_res.x, glui::screen_res.y), ImGuiCond_Always);
+	ImGui::Begin(" ", (bool*)true, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs);
+
+	ESP::Run();
+
+	//Render::DrawString(20, 25, "", &ColorClass.White);
+	//Render::DrawString(58, 25, ".", &ColorClass.Pink);
+	ImGui::End();
+
+	if (GetKeyState(VK_INSERT) & 0x8000) {  //Menu Key
+		Sleep(200);
+		toggle = !toggle;
+	}
+
+	if (toggle) {
+		SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED);
+		//ImGui::StyleColorsvosLight();
+		//ImGui::StyleColorsDark();
+		colors[ImGuiCol_WindowBg] = ImVec4(40 / 255.f, 40 / 255.f, 40 / 255.f, 255 / 255.f); //ImVec4(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f);
+		colors[ImGuiCol_Border] = ImColor(25, 20, 36, 255);
+		menu();
+	}
+	else {
+		SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
+	}
+
 }
 
 bool CreateDeviceD3D(HWND hWnd)

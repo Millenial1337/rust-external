@@ -96,7 +96,7 @@
     <ClInclude Include="Overlay\color.hpp">
       <Filter>overlay</Filter>
     </ClInclude>
-    <ClInclude Include="Overlay\Menu\Menu.hpp">
+    <ClInclude Include="Overlay\Menu\menu.hh">
       <Filter>overlay\menu</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\Menu\Settings.hpp">
@@ -132,9 +132,7 @@
     <ClInclude Include="lazy_importer.h">
       <Filter>helpers</Filter>
     </ClInclude>
-    <ClInclude Include="guard.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
+    <ClInclude Include="globals.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Overlay\imgui\imgui_widgets.cpp">

@@ -11,6 +11,7 @@ namespace ESP
 namespace Overlay
 {
 	void __fastcall Loop();
+	void __fastcall start(HWND hwnd);
 	void Style();
 	inline ImFont* fontTitle;
 	inline ImFont* fontMenu;
