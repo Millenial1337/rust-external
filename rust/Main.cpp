@@ -58,7 +58,7 @@ int main()
 	SetConsoleTitle("A-P");
 	HWND hwnd = nullptr;
 
-	start_log();
+	//start_log();
 
 	try
 	{
@@ -69,6 +69,7 @@ int main()
 		while (!hwnd)
 		{
 			hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
+			//hwnd = FindWindowA(safe_str("CDownloadTracker f20000"), safe_str("JavaUpdate SysTray Icon"));
 			LI_FN(Sleep)(50);
 		}
 
@@ -95,7 +96,7 @@ int main()
 		pId = get_process_id(safe_str("RustClient.exe"));
 		gBase = get_module_base_address(safe_str("GameAssembly.dll"));
 		uBase = get_module_base_address(safe_str("UnityPlayer.dll"));
-		injection_log();
+		//injection_log();
 //		Brrp();
 //		Hide();
 		std::thread overlay_thread(Overlay::Loop);

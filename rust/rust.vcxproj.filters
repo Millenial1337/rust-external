@@ -1,161 +1,175 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{a012a3f2-a294-40fe-bc43-7b66f4acb62c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Features">
+      <UniqueIdentifier>{768f29d2-d9e5-4c49-bf66-a0b79a85b2ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="overlay">
+      <UniqueIdentifier>{8b19819a-1e40-465b-8553-014be732c7ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk">
+      <UniqueIdentifier>{94a76dd3-6cd5-4179-b462-9bff174e66fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="overlay\imgui">
+      <UniqueIdentifier>{4d8ca889-6ded-4e40-ab48-3028e5b33c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="overlay\menu">
+      <UniqueIdentifier>{2a7a0fb6-b0af-4fbc-8fa1-24a7d425fdb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Features\aim">
+      <UniqueIdentifier>{6a92084e-f566-4789-8f7f-86b7b5e5281a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Features\esp">
+      <UniqueIdentifier>{81d07328-cbaf-4f45-8af4-0932e64600f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Features\misc">
+      <UniqueIdentifier>{7c9aacaf-f2e4-4c89-9111-7f98a7fb4b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{09ed9f43-eced-4498-8322-b764fa654f54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SDK\Math.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\Utils.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\Driver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\Imports.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\Classes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\Overlay.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\ESP\ESP.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\ESP\DrawESP.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\Menu\Menu.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\Menu\Settings.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\safe_ptr.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\Aimbot\DoAimbot.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\Aimbot\Aimbot.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\BasePlayer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\BaseNetworkable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\HeldItem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\MISC\DoMisc.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\VMProtectSDK.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\EntityLoop.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imconfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imgui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imgui_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imstb_rectpack.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Overlay\imgui\imstb_truetype.h">
+      <Filter>overlay\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\imgui\imstb_textedit.h">
-      <Filter>Header Files</Filter>
+      <Filter>overlay\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Overlay\imgui\imstb_truetype.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Overlay\imgui\imstb_rectpack.h">
+      <Filter>overlay\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Overlay\imgui\imgui_impl_dx9.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Overlay\imgui\imgui_internal.h">
+      <Filter>overlay\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\imgui\imgui_impl_win32.h">
-      <Filter>Header Files</Filter>
+      <Filter>overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imgui_impl_dx9.h">
+      <Filter>overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imgui.h">
+      <Filter>overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imconfig.h">
+      <Filter>overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\BaseNetworkable.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\BasePlayer.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Classes.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Driver.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\HeldItem.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Imports.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Math.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\safe_ptr.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Utils.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\VMProtectSDK.h">
+      <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\FontData.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>overlay</Filter>
     </ClInclude>
-    <ClInclude Include="Features\MISC\Misc.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Overlay\Overlay.hpp">
+      <Filter>overlay</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\color.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>overlay</Filter>
     </ClInclude>
-    <ClInclude Include="log.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Overlay\Menu\Menu.hpp">
+      <Filter>overlay\menu</Filter>
     </ClInclude>
-    <ClInclude Include="guard.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Overlay\Menu\Settings.hpp">
+      <Filter>overlay\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\EntityLoop.hpp">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Aimbot\Aimbot.hpp">
+      <Filter>Features\aim</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Aimbot\DoAimbot.hpp">
+      <Filter>Features\aim</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\MISC\DoMisc.hpp">
+      <Filter>Features\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\ESP\DrawESP.hpp">
+      <Filter>Features\esp</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\ESP\ESP.hpp">
+      <Filter>Features\esp</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\MISC\Misc.hpp">
+      <Filter>Features\misc</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>helpers</Filter>
     </ClInclude>
     <ClInclude Include="lazy_importer.h">
-      <Filter>Header Files</Filter>
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="guard.h">
+      <Filter>helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\Overlay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\Menu\Settings.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Overlay\imgui\imgui_widgets.cpp">
+      <Filter>overlay\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Overlay\imgui\imgui.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>overlay\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Overlay\imgui\imgui_demo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>overlay\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Overlay\imgui\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\imgui\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>overlay\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Overlay\imgui\imgui_impl_dx9.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>overlay\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Overlay\imgui\imgui_impl_win32.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>overlay\imgui</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="vos.club_csgo.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Overlay\Overlay.cpp">
+      <Filter>overlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\Menu\Settings.cpp">
+      <Filter>overlay\menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\VMProtectSDK64.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\VMProtectSDK64.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="vos.club_csgo.rc" />
   </ItemGroup>
 </Project>

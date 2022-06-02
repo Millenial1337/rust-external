@@ -50,7 +50,7 @@ END
 // dll
 //
 
-IDR_DLL1                dll                     "E:\\1Ы\\VMProtectSDK64.dll"
+IDR_DLL1                dll                     "G:\\rust-license-vosclub\\VMProtectSDK64.dll"
 
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////

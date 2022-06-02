@@ -478,20 +478,20 @@ string GetUserDayCount()
 
 string GetVer()
 {
-	while (true) {
+	//while (true) {
 		string web_req = PATH;
 		web_req.append(xorstr_("gate.php?version=ok"));
 		return GetUrlData(web_req);
-		break;
-	}
+		//break;
+	//}
 }
 
 string GetInfo()
 {
-	while (true) {
+	//while (true) {
 		string web_req = PATH;
 		web_req.append(xorstr_("info.php"));
 		return GetUrlData(web_req);
-	break;
-	}
+		//break;
+	//}
 }
