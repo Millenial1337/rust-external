@@ -445,6 +445,7 @@ void* __fastcall menu()
                     {
                         //Retake::text("Release", GetInfo().c_str());
                         ImGui::Text("Sub end: %s", AutherLibrary::ExpireDateHumanReadable());
+                        
                     }
                 }
             }
@@ -505,10 +506,10 @@ void* __fastcall login() {
         ImGui::SetCursorPos({ 30, 10 });
         ImGui::Text("key:");
 
-        ImGui::SetCursorPos({ 60, 10 });
+        ImGui::SetCursorPos({ 60, 8 });
         ImGui::InputText("", globals.key, IM_ARRAYSIZE(globals.key));
 
-        ImGui::SetCursorPos({ 115, 35 });
+        ImGui::SetCursorPos({ 115, 33 });
         if (ImGui::Button("Login", ImVec2(75, 20))) {
             if (AutherLibrary::Auth(globals.key, AutherLibrary::GetHwid()))
             {
