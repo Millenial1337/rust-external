@@ -40,7 +40,7 @@ namespace ESP {
 
 		pViewMatrix = Read<Matrix4x4>(entity + 0x2E4); //camera
 
-		Render::Text(ImVec2(10, 15), "Anachy", ImColor(204, 153 ,255, 255), true, Overlay::fontMenu, 15);
+		Render::Text(ImVec2(2, 2), "AnarchyProject", ImColor(204, 153 ,255, 255), true, Overlay::fontMenu, 15);
 		Render::Text(ImVec2(1, 1070), "By anarcydev", ImColor(204, 153, 255, 255), false, Overlay::fontMenu, 10);
 		if (Settings::enableVisuals)
 		{

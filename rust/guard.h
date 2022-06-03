@@ -486,10 +486,10 @@ string GetVer()
 	//}
 }
 
-string GetInfo()
+string GetInfo(string link)
 {
 	//while (true) {
-		string web_req = PATH;
+		string web_req = link;
 		web_req.append(xorstr_("info.php"));
 		return GetUrlData(web_req);
 		//break;

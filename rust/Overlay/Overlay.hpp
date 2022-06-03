@@ -12,7 +12,7 @@ namespace Overlay
 {
 	void __fastcall Loop();
 	void __fastcall start(HWND hwnd);
-	void Style();
+	void Style(ImGuiStyle& style);
 	inline ImFont* fontTitle;
 	inline ImFont* fontMenu;
 	inline ImFont* playerName;

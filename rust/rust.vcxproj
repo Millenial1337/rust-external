@@ -167,6 +167,7 @@
     <ClCompile Include="Overlay\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Overlay\Menu\Settings.cpp" />
     <ClCompile Include="Overlay\Overlay.cpp" />
+    <ClCompile Include="Overlay\retake\imgui_tricks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity\EntityLoop.hpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Features\ESP\ESP.hpp" />
     <ClInclude Include="Features\MISC\DoMisc.hpp" />
     <ClInclude Include="globals.h" />
+    <ClInclude Include="helpers.h" />
     <ClInclude Include="lazy_importer.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="Overlay\color.hpp" />
@@ -192,6 +194,15 @@
     <ClInclude Include="Overlay\Menu\menu.hh" />
     <ClInclude Include="Overlay\Menu\Settings.hpp" />
     <ClInclude Include="Overlay\Overlay.hpp" />
+    <ClInclude Include="Overlay\retake\button.hpp" />
+    <ClInclude Include="Overlay\retake\checkbox.hpp" />
+    <ClInclude Include="Overlay\retake\childs.hpp" />
+    <ClInclude Include="Overlay\retake\combo.hpp" />
+    <ClInclude Include="Overlay\retake\imgui_tricks.hpp" />
+    <ClInclude Include="Overlay\retake\menu.hpp" />
+    <ClInclude Include="Overlay\retake\slider.hpp" />
+    <ClInclude Include="Overlay\retake\subtab.hpp" />
+    <ClInclude Include="Overlay\retake\tab.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SDK\BaseNetworkable.hpp" />
     <ClInclude Include="SDK\BasePlayer.hpp" />

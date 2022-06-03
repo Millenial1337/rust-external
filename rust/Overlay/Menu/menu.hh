@@ -1,11 +1,24 @@
 #pragma once
 #include "../SDK/Imports.hpp"
 #include "Settings.hpp"
-#include "../imgui/customfont.h"
-#include "../imgui/customgui.h"
 #include "../../globals.h"
 #include "../../AuthLib/AutherLibrary.h"
 #include "../Overlay.hpp"
+#include "../../helpers.h"
+
+
+#include "../imgui/imgui.h"
+#define IMGUI_DEFINE_MATH_OPERATORS
+#define IM_USE using namespace ImGui; 
+#include "../imgui/imgui_internal.h"
+
+#include "../retake/checkbox.hpp"
+#include "../retake/slider.hpp"
+#include "../retake/combo.hpp"
+#include "../retake/tab.hpp"
+#include "../retake/subtab.hpp"
+#include "../retake/button.hpp"
+#include "../retake/childs.hpp"
 
 void configSam()
 {
@@ -77,26 +90,58 @@ const char* oresItems[] = {
 
 void* __fastcall menu()
 {
-    ImGui::SetNextWindowSize(ImVec2(screenWidth + 15, screenHeight + 15));
+    ImGuiStyle& style = ImGui::GetStyle();
+
+    style.ScrollbarSize = 1;
+    style.GrabMinSize = 1;
+    style.WindowBorderSize = 0;
+    style.ChildBorderSize = 1;
+    style.PopupBorderSize = 0;
+    style.FrameBorderSize = 1;
+    style.WindowRounding = 0;
+    style.ChildRounding = 0;
+    style.FrameRounding = 0;
+    style.PopupRounding = 0;
+    style.ScrollbarRounding = 0;
+    style.GrabRounding = 0;
+
+    ImGui::SetNextWindowSize({520.000000f, 520.000000f });
     ImGui::SetNextWindowPos(ImVec2(-10, -10));
     ImGui::SetNextWindowBgAlpha(255.f);
 
     //Window Size
-    ImGui::SetNextWindowSize(ImVec2(620, 600)); //800, 550
+    ImGui::SetNextWindowSize({ 520.000000f, 520.000000f });
     ImGui::SetNextWindowPos(ImVec2((1920 - 840) * .5, (1080 - 500) * .5), ImGuiCond_Once);
 
-    //ImGui::Begin(safe_str("main"), (bool*)true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+    ImGui::Begin(safe_str("cheat"), (bool*)true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
     {
         ImGui::SetScrollY(0);
 
         ImVec2 p = ImGui::GetCursorScreenPos();
         ImColor barColors = ImColor(88, 0, 255, 255);
 
+
+        ImVec2 gwp = ImGui::GetWindowPos();
+        ImDrawList* drawlist = ImGui::GetWindowDrawList();
+
+
+
+        drawlist->AddRect(ImVec2(gwp.x + 0, gwp.y + 0), ImVec2(gwp.x + 520, gwp.y + 520), ImColor(0, 0, 0, 255), 0, 15, 1.000000);
+        drawlist->AddRectFilled(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 255), 0, 15);
+        drawlist->AddRectFilledMultiColor(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 64, gwp.y + 31), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105));
+        drawlist->AddRectFilledMultiColor(ImVec2(gwp.x + 408, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0));
+        drawlist->AddLine(ImVec2(gwp.x + 1, gwp.y + 31), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(255, 255, 255, 17), 1.000000);
+        drawlist->AddRect(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 518, gwp.y + 519), ImColor(255, 255, 255, 17), 0, 15, 1.000000);
+        drawlist->AddLine(ImVec2(gwp.x + 1, gwp.y + 61), ImVec2(gwp.x + 518, gwp.y + 61), ImColor(255, 255, 255, 17), 1.000000);
+        drawlist->AddLine(ImVec2(gwp.x + 1, gwp.y + 62), ImVec2(gwp.x + 518, gwp.y + 62), ImColor(0, 0, 0, 255), 1.000000);
+
+
+
         // FLAGS
-        auto window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar;
+        auto window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar; //| ImGuiWindowFlags_NoScrollbar;
 
         // ATRIBUTES
-        ImGui::SetNextWindowSize({ 800,550 });
+        ImGui::SetNextWindowSize({ 522.000000f,472.000000f });
 
         // STYLES
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });
@@ -130,102 +175,107 @@ void* __fastcall menu()
         position = ImGui::GetWindowPos();
         draw = ImGui::GetWindowDrawList();
 
-        draw->AddRectFilled(ImVec2{ position.x + 180,position.y + 50 }, ImVec2{ position.x + 620,position.y + 600 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
-        draw->AddLine(ImVec2{ position.x + 180,position.y }, ImVec2{ position.x + 180,position.y + 600 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
-        draw->AddLine(ImVec2{ position.x,position.y + 50 }, ImVec2{ position.x + 620,position.y + 50 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
+        draw->AddRectFilled(ImVec2{ position.x + 120,position.y + 62 }, ImVec2{ position.x + 515,position.y + 515 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
+        draw->AddLine(ImVec2{ position.x + 120,position.y + 31}, ImVec2{ position.x + 120,position.y + 515 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
+        draw->AddLine(ImVec2{ position.x,position.y + 30 }, ImVec2{ position.x + 520,position.y + 30 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
+
+        //under subtabs
+        draw->AddLine(ImVec2{ position.x + 130,position.y + 62 }, ImVec2{ position.x + 510,position.y + 62 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
 
 
-        draw->AddLine(ImVec2{ position.x + 200,position.y + 90 }, ImVec2{ position.x + 550,position.y + 90 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
+        //text
+        draw->AddText({ position.x + 33,position.y + 40 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "FEATURES");
 
-        draw->AddText({ position.x + 20,position.y + 70 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "FEATURES");
-        draw->AddText({ position.x + 20,position.y + 210 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "INFORMATION");
+        draw->AddLine(ImVec2{ position.x + 10, position.y + 188 }, ImVec2{ position.x + 112, position.y + 188 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
+        draw->AddText({ position.x + 20, position.y + 190 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "INFORMATION");
+        draw->AddLine(ImVec2{ position.x + 10, position.y + 205 }, ImVec2{ position.x + 112, position.y + 205 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
 
-        ImGui::PushFont(CustomGUI::fonts::SFUIbold_bigger);
-        draw->AddText({ position.x + 20,position.y + 50 / 2 - ImGui::CalcTextSize("AnarchyProject").y / 2 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "AnarchyProject ");
-        ImGui::PopFont();
+        //logo text
+        draw->AddText({ position.x + 220, position.y + 35 / 2 - ImGui::CalcTextSize("AnarchyProject").y / 2 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "AnarchyProject ");
+
 
         static int page = 0;
         static int subtab = 0;
         ImGui::PushFont(Overlay::fontMenu);
-        ImGui::SetCursorPos({ 20, 90 });
-        if (CustomGUI::Tab("Aimbot", "1", page == 0, { 140,25 }))
+        ImGui::SetCursorPos({ 25, 65 });
+        if (Retake::tab("Aimbot", page == 0))
             page = 0;
 
-        ImGui::SetCursorPos({ 20, 120 });
-        if (CustomGUI::Tab("Visuals", "2", page == 1, { 140,25 }))
+        ImGui::SetCursorPos({ 25, 95 });
+        if (Retake::tab("Visuals", page == 1))
             page = 1;
 
-        ImGui::SetCursorPos({ 20, 150 });
-        if (CustomGUI::Tab("Misc", "3", page == 2, { 140,25 }))
+        ImGui::SetCursorPos({ 25, 125 });
+        if (Retake::tab("Misc", page == 2))
             page = 2;
 
-        ImGui::SetCursorPos({ 20, 180 });
-        if (CustomGUI::Tab("Settings", "4", page == 3, { 140,25 }))
+        ImGui::SetCursorPos({ 25, 155 });
+        if (Retake::tab("Settings", page == 3))
             page = 3;
 
-        ImGui::SetCursorPos({ 20, 230 });
-        if (CustomGUI::Tab("Dashboard", "a", page == 4, { 140,25 }))
+        ImGui::SetCursorPos({ 25, 210 });
+        if (Retake::tab("Dashboard", page == 4))
             page = 4;
 
         if (page == 0)
         {
-            ImGui::SetCursorPos({ 200, 66 });
-            if (CustomGUI::SubTab("AIMBOT", subtab == 0, { 63,25 }))
+            ImGui::SetCursorPos({ 270, 40 });
+            if (Retake::subtab("AIMBOT", subtab == 0))
                 subtab = 0;
         }
         if (page == 1)
         {
-            ImGui::SetCursorPos({ 200, 66 });
-            if (CustomGUI::SubTab("ESP", subtab == 0, { 41,25 }))
+            ImGui::SetCursorPos({ 160, 40 });
+            if (Retake::subtab("ESP", subtab == 0))
                 subtab = 0;
 
-            ImGui::SetCursorPos({ 246, 66 });
-            if (CustomGUI::SubTab("ESP Object List", subtab == 1, { 91,25 }))
+            ImGui::SetCursorPos({ 260, 40 });
+            if (Retake::subtab("Object List", subtab == 1))
                 subtab = 1;
 
-            ImGui::SetCursorPos({ 330, 66 });
-            if (CustomGUI::SubTab("COLORS", subtab == 2, { 62,25 }))
+            ImGui::SetCursorPos({ 360, 40 });
+            if (Retake::subtab("COLORS", subtab == 2))
                 subtab = 2;
         }
         if (page == 2)
         {
-            ImGui::SetCursorPos({ 200, 66 });
-            if (CustomGUI::SubTab("Weapon Options", subtab == 0, { 100,25 }))
+            ImGui::SetCursorPos({ 210, 40 });
+            if (Retake::subtab("Weapon", subtab == 0))
                 subtab = 0;
 
-            ImGui::SetCursorPos({ 300, 66 });
-            if (CustomGUI::SubTab("Player Options", subtab == 1, { 100,25 }))
+            ImGui::SetCursorPos({ 320, 40 });
+            if (Retake::subtab("Player", subtab == 1))
                 subtab = 1;
         }
         if (page == 4) {
-            ImGui::SetCursorPos({ 200, 66 });
-            if (CustomGUI::SubTab("NEWS", subtab == 0, { 55,25 }))
+            ImGui::SetCursorPos({ 270, 40 });
+            if (Retake::subtab("NEWS", subtab == 0))
                 subtab = 0;
         }
         {
-            ImGui::SetCursorPos({ 200, 100 });
-            ImGui::BeginChild("", ImVec2(580, 500));
+            ImGui::SetCursorPos({ 130, 70 });
+            ImGui::BeginChild("", ImVec2(480, 440));
             {
                 if (page == 0)
                 {
                     if (subtab == 0)
                     {
-                        CustomGUI::Checkbox("Enable Aimbot", &Settings::enableAimbot);
+                        Retake::checkbox("Enable Aimbot", &Settings::enableAimbot);
                         ImGui::Text("Aimbot Key"); ImGui::SameLine(); ImGui::Hotkey("##Aimbot Key", &Settings::aimbotKey, ImVec2(80, 15));
 
                         ImGui::Spacing();
-                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 18);
+                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 10);
                         ImGui::Spacing();
-                        CustomGUI::SliderInt("Aimbot FOV", &Settings::aimbotFov, 0, 360, "%.1f");
+                        Retake::slider_int("Aimbot FOV", &Settings::aimbotFov, 0, 360, "%.1f", NULL);
 
-                        CustomGUI::Checkbox("Enable Distance", &Settings::enableAimbotDistance);
-                        CustomGUI::SliderInt("Aimbot Distance", &Settings::aimbotDistance, 0, 300, "%.1f");
+                        Retake::checkbox("Enable Distance", &Settings::enableAimbotDistance);
+                        Retake::slider_int("Aimbot Distance", &Settings::aimbotDistance, 0, 300, "%.1f", NULL);
 
                         ImGui::PushItemWidth(ImGui::GetWindowWidth() - 340);
                         ImGui::Spacing();
                         const char* listbox_items[] = { "Head", "Chest", "Pevlis" };
                         ImGui::ListBox("##Hitbox", &Settings::aimbotHitbox, listbox_items, IM_ARRAYSIZE(listbox_items));
-                        CustomGUI::Checkbox("ThickBullet", &Settings::thickBullettt);
+                        Retake::checkbox("ThickBullet", &Settings::thickBullettt);
 
                     }
                 }
@@ -233,46 +283,44 @@ void* __fastcall menu()
                 {
                     if (subtab == 0)
                     {
-                        CustomGUI::Checkbox("Enable Visuals", &Settings::enableVisuals);
-                        ImGui::Spacing();
+                        Retake::checkbox("Enable Visuals", &Settings::enableVisuals);
 
-                        CustomGUI::Checkbox(("Player Box"), &Settings::drawBox);
+                        Retake::checkbox(("Player Box"), &Settings::drawBox);
                         if (Settings::drawBox) {
-                            CustomGUI::Combo(("Box Type"), &Settings::typeBox, boxTypes, 3);
-                            CustomGUI::SliderInt(("Box Type distance"), &Settings::boxDistance, 100, 300, "%.1f");
+                            Retake::combo(("Box Type"), &Settings::typeBox, boxTypes, 3);
+                            Retake::slider_int(("Box Type distance"), &Settings::boxDistance, 100, 300, "%.1f", NULL);
                         }
 
-                        CustomGUI::Checkbox(("Weapon ESP"), &Settings::drawWeapon);
+                        Retake::checkbox(("Weapon ESP"), &Settings::drawWeapon);
                         if (Settings::drawWeapon)
-                            CustomGUI::SliderInt(("Weapon Distance"), &Settings::weaponDistance, 100, 300, "%.1f");
+                            Retake::slider_int(("Weapon Distance"), &Settings::weaponDistance, 100, 300, "%.1f", NULL);
 
-                        CustomGUI::Checkbox(("Skeleton"), &Settings::drawSkeleton);
+                        Retake::checkbox(("Skeleton"), &Settings::drawSkeleton);
                         if (Settings::drawSkeleton)
-                            CustomGUI::SliderInt(("Skeleton distance"), &Settings::skeletonDistance, 100, 300, "%.1f");
+                            Retake::slider_int(("Skeleton distance"), &Settings::skeletonDistance, 100, 300, "%.1f", NULL);
 
-
-                        CustomGUI::Checkbox(("Name"), &Settings::drawName);
+                        Retake::checkbox(("Name"), &Settings::drawName);
                         if (Settings::drawName)
-                            CustomGUI::SliderInt(("Name distance"), &Settings::nameDistance, 100, 300, "%.1f");
+                            Retake::slider_int(("Name distance"), &Settings::nameDistance, 100, 300, "%.1f", NULL);
 
-                        CustomGUI::Checkbox(("Health Bar"), &Settings::drawHealthBar);
+                        Retake::checkbox(("Health Bar"), &Settings::drawHealthBar);
                         if (Settings::drawHealthBar)
-                            CustomGUI::SliderInt(("Health Bar distance"), &Settings::healthDistance, 100, 300, "%.1f");
+                            Retake::slider_int(("Health Bar distance"), &Settings::healthDistance, 100, 300, "%.1f", NULL);
 
-                        CustomGUI::Checkbox(("Dropped Items"), &Settings::enableDroppedItem);
+                        Retake::checkbox(("Dropped Items"), &Settings::enableDroppedItem);
                         if (Settings::enableDroppedItem)
-                            CustomGUI::SliderInt(("Dropped Items distance"), &Settings::enableDroppedItemDistance, 100, 300, "%.1f");
+                            Retake::slider_int(("Dropped Items distance"), &Settings::enableDroppedItemDistance, 100, 300, "%.1f", NULL);
 
-                        CustomGUI::Checkbox(("Crosshair"), &Settings::drawCrosshair);
+                        Retake::checkbox(("Crosshair"), &Settings::drawCrosshair);
                         if (Settings::drawCrosshair)
                         {
-                            CustomGUI::Checkbox("while scoped", &Settings::crosshairScoped);
-                            CustomGUI::SliderInt("Length", &Settings::CrosshairLength, 1, 24, "%.1f");
-                            CustomGUI::SliderInt("Gap", &Settings::CrosshairGap, 0, 24, "%.1f");
-                            CustomGUI::SliderInt("Thickness", &Settings::CrosshairThickness, 1, 24, "%.1f");
+                            Retake::checkbox("while scoped", &Settings::crosshairScoped);
+                            Retake::slider_int("Length", &Settings::CrosshairLength, 1, 24, "%.1f", NULL);
+                            Retake::slider_int("Gap", &Settings::CrosshairGap, 0, 24, "%.1f", NULL);
+                            Retake::slider_int("Thickness", &Settings::CrosshairThickness, 1, 24, "%.1f", NULL);
                         }
 
-                        CustomGUI::SliderInt(("Fov Changer"), &Settings::FovSlider, 75, 150, "%.1f");
+                        Retake::slider_int(("Fov Changer"), &Settings::FovSlider, 75, 150, "%.1f", NULL);
 
                     }
                     if (subtab == 1)
@@ -299,80 +347,80 @@ void* __fastcall menu()
                 {
                     if (subtab == 0)
                     {
-                        CustomGUI::Checkbox(("Rapid Fire"), &Settings::rapidFire);
+                        Retake::checkbox(("Rapid Fire"), &Settings::rapidFire);
                         if (Settings::rapidFire)
                         {
-                            CustomGUI::SliderFloat(("Rapid Fire Value"), &Settings::rapidfirevalue, 0.01, 0.09, safe_str("%.2f"), 1);
+                            Retake::slider_float(("Rapid Fire Value"), &Settings::rapidfirevalue, 0.01, 0.09, safe_str("%.2f"), 1);
                         }
-                        CustomGUI::Checkbox(("Enable RCS"), &Settings::enableRCS);
+                        Retake::checkbox(("Enable RCS"), &Settings::enableRCS);
                         if (Settings::enableRCS)
                         {
-                            CustomGUI::SliderInt(("RCS Percentage X"), &Settings::RCSyaw, 0, -50, "%.0f");
-                            CustomGUI::SliderInt(("RCS Percentage Y"), &Settings::RCSpitch, 0, -50, "%.0f");
+                            Retake::slider_int(("RCS Percentage X"), &Settings::RCSyaw, 0, -50, "%.0f", NULL);
+                            Retake::slider_int(("RCS Percentage Y"), &Settings::RCSpitch, 0, -50, "%.0f", NULL);
                         }
-                        CustomGUI::Checkbox(("No Spread"), &Settings::noSpread);
-                        CustomGUI::Checkbox(("Instant Compound"), &Settings::instantCompound);
-                        CustomGUI::Checkbox(("Instant Switch"), &Settings::fastSwitchWeapons);
-                        CustomGUI::Checkbox(("instant eoka"), &Settings::tapeoka);
+                        Retake::checkbox(("No Spread"), &Settings::noSpread);
+                        Retake::checkbox(("Instant Compound"), &Settings::instantCompound);
+                        Retake::checkbox(("Instant Switch"), &Settings::fastSwitchWeapons);
+                        Retake::checkbox(("instant eoka"), &Settings::tapeoka);
 
                         ImGui::Spacing();
                     }
                     if (subtab == 1)
                     {
-                        CustomGUI::Checkbox(("Spider Climb"), &Settings::spiderClimb);
-                        CustomGUI::Checkbox(("ar"), &Settings::fly);
+                        Retake::checkbox(("Spider Climb"), &Settings::spiderClimb);
+                        Retake::checkbox(("ar"), &Settings::fly);
 
-                        CustomGUI::Checkbox(("Fast Kill"), &Settings::fastKill);
+                        Retake::checkbox(("Fast Kill"), &Settings::fastKill);
                         if (Settings::fastKill)
                         {
                            // ImGui::SameLine();
                             ImGui::Hotkey(("##fast Kill Key"), &Settings::fastKillKey, ImVec2(80, 15));
                         }
 
-                        CustomGUI::Checkbox(("admin flag"), &Settings::adminFlag);
-                        CustomGUI::Checkbox(("Time Changer"), &Settings::night_mode);
+                        Retake::checkbox(("admin flag"), &Settings::adminFlag);
+                        Retake::checkbox(("Time Changer"), &Settings::night_mode);
                         if (Settings::night_mode)
                             ImGui::SliderFloat(("Time"), &Settings::time, 0, 24);
 
-                        CustomGUI::Checkbox("Sky Color", &Settings::skyColorBool);
+                        Retake::checkbox("Sky Color", &Settings::skyColorBool);
                         if (Settings::skyColorBool)
                             ImGui::SliderFloat("color", &Settings::SkyColor, 0, 100);
 
 
-                        CustomGUI::Checkbox(("Long Hit"), &Settings::longhit);
-                        CustomGUI::Checkbox(("third person"), &Settings::thirdperson);
-                        CustomGUI::Checkbox(("Long Neck"), &Settings::shootInAir);
+                        Retake::checkbox(("Long Hit"), &Settings::longhit);
+                        Retake::checkbox(("third person"), &Settings::thirdperson);
+                        Retake::checkbox(("Long Neck"), &Settings::shootInAir);
                         if (Settings::shootInAir)
                         {
                             // ImGui::SameLine();
                             ImGui::Hotkey(("##Long Neck Key"), &Settings::LongNeckKey, ImVec2(80, 15));
                         }
-                        CustomGUI::Checkbox("High Jump", &Settings::SuperJump);
+                        Retake::checkbox("High Jump", &Settings::SuperJump);
                         if (Settings::SuperJump)
                         {
-                            CustomGUI::SliderFloat("value", &Settings::GravitySlider, 2.8, 0, "%.1f", 1);
+                            Retake::slider_float("value", &Settings::GravitySlider, 2.8, 0, "%.1f", 1);
                         }
-                        CustomGUI::Checkbox("Hold Items While Mounted", &Settings::ShootMounted);
-                        CustomGUI::Checkbox("Speed Hack", &Settings::SpeedHack);
+                        Retake::checkbox("Hold Items While Mounted", &Settings::ShootMounted);
+                        Retake::checkbox("Speed Hack", &Settings::SpeedHack);
                         if (Settings::SpeedHack)
                         {
                             ImGui::Hotkey(("##Speed Hack Key"), &Settings::SpeedHackKey, ImVec2(80, 15));
-                            CustomGUI::SliderFloat("Speed", &Settings::SpeedHackSpeed, 10, -10, "%.2f", 0.47);
+                            Retake::slider_float("Speed", &Settings::SpeedHackSpeed, 10, -10, "%.2f", 0.47);
                         }
-                        CustomGUI::Checkbox(("Bright Night"), &Settings::nightSky);
-                        CustomGUI::Checkbox(("Run Hit"), &Settings::runhit);
-                        CustomGUI::Checkbox(("Zoom"), &Settings::zoom);
+                        Retake::checkbox(("Bright Night"), &Settings::nightSky);
+                        Retake::checkbox(("Run Hit"), &Settings::runhit);
+                        Retake::checkbox(("Zoom"), &Settings::zoom);
                         if (Settings::zoom)
                         {
                             ImGui::Hotkey(("##Zoom Key"), &Settings::zoomKey, ImVec2(80, 15));
                         }
-                        CustomGUI::Checkbox("FlyHack", &Settings::flyHackkk);
+                        Retake::checkbox("FlyHack", &Settings::flyHackkk);
                         if (Settings::flyHackkk)
                         {
                             ImGui::Hotkey("##Flyhack Key", &Settings::flyhackKey, ImVec2(80, 15));
-                            CustomGUI::SliderFloat(("speed"), &Settings::flyhackSpeed, 6, -5, "%.0f", 1);
+                            Retake::slider_float(("speed"), &Settings::flyhackSpeed, 6, -5, "%.0f", 1);
                         }
-                        CustomGUI::Checkbox(("Jesus mode"), &Settings::walkOnWater);
+                        Retake::checkbox(("Jesus mode"), &Settings::walkOnWater);
                         if (Settings::walkOnWater)
                         {
                             ImGui::Hotkey(("##Jesus Key"), &Settings::walkWaterKEY, ImVec2(80, 15));
@@ -384,9 +432,9 @@ void* __fastcall menu()
                     static int subtab = 0;
                     if (subtab == 0)
                     {
-                        if (ImGui::Button("EXIT CHEAT"))
+                        if (ImGui::Button("EXIT CHEAT", ImVec2(100, 20)))
                             exit(-1);
-                        if (ImGui::Button("Load admin Config"))
+                        if (ImGui::Button("Load admin cfg", ImVec2(100, 20)))
                             configSam();
                     }
                 }
@@ -395,7 +443,7 @@ void* __fastcall menu()
                     static int subtab = 0;
                     if (subtab == 0)
                     {
-                        CustomGUI::News("Release", AutherLibrary::GetFullJsonResponse().c_str());
+                        //Retake::text("Release", GetInfo().c_str());
                         ImGui::Text("Sub end: %s", AutherLibrary::ExpireDateHumanReadable());
                     }
                 }
@@ -432,25 +480,46 @@ void* __fastcall menu()
 }
 
 void* __fastcall login() {
-    ImGui::SetNextWindowSize(ImVec2(screenWidth + 15, screenHeight + 15));
-    ImGui::SetNextWindowPos(ImVec2(-10, -10));
-    ImGui::SetNextWindowBgAlpha(255.f);
+    //ImGui::SetNextWindowBgAlpha(255.f);
+    ImGui::SetNextWindowSize({ 300.000000f,60.000000f });
+    
+    ImGuiStyle& style = ImGui::GetStyle();
 
-    //Window Size
-    ImGui::SetNextWindowSize(ImVec2(300, 200)); //800, 550
-    ImGui::SetNextWindowPos(ImVec2((1920 - 840) * .5, (1080 - 500) * .5), ImGuiCond_Once);
+    style.IndentSpacing = 21;
+    style.ScrollbarSize = 1;
+    style.GrabMinSize = 1;
+    style.WindowBorderSize = 1;
+    style.ChildBorderSize = 1;
+    style.PopupBorderSize = 1;
+    style.FrameBorderSize = 1;
+    style.WindowRounding = 6;
+    style.ChildRounding = 4;
+    style.FrameRounding = 4;
+    style.PopupRounding = 0;
+    style.ScrollbarRounding = 0;
+    style.GrabRounding = 0;
 
-    ImGui::Text("Enter your key:");
-    ImGui::InputText("Key: ",globals.key ,IM_ARRAYSIZE(globals.key));
-    if (ImGui::Button("Login")) {
-        if (AutherLibrary::Auth(globals.key, AutherLibrary::GetHwid()))
-        {
-            MessageBox(NULL, "uspeshno", "Logged", MB_OK | MB_DEFBUTTON1 | MB_ICONEXCLAMATION | MB_DEFAULT_DESKTOP_ONLY);
-            globals.auth = true;
-        }
-        else
-        {
-            exit(0);
+    ImGui::Begin(safe_str("log"), (bool*)true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+    {
+
+        ImGui::SetCursorPos({ 30, 10 });
+        ImGui::Text("key:");
+
+        ImGui::SetCursorPos({ 60, 10 });
+        ImGui::InputText("", globals.key, IM_ARRAYSIZE(globals.key));
+
+        ImGui::SetCursorPos({ 115, 35 });
+        if (ImGui::Button("Login", ImVec2(75, 20))) {
+            if (AutherLibrary::Auth(globals.key, AutherLibrary::GetHwid()))
+            {
+                //MessageBox(NULL, "uspeshno", "Logged", MB_OK | MB_DEFBUTTON1 | MB_ICONEXCLAMATION | MB_DEFAULT_DESKTOP_ONLY);
+                globals.auth = true;
+            }
+            else
+            {
+                exit(0);
+            }
         }
     }
+    ImGui::End();
 }

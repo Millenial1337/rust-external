@@ -31,6 +31,9 @@
     <Filter Include="helpers">
       <UniqueIdentifier>{09ed9f43-eced-4498-8322-b764fa654f54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="overlay\retake">
+      <UniqueIdentifier>{34763106-6efc-44cf-807f-80da51d0b442}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Overlay\imgui\imstb_truetype.h">
@@ -133,6 +136,36 @@
       <Filter>helpers</Filter>
     </ClInclude>
     <ClInclude Include="globals.h" />
+    <ClInclude Include="helpers.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\imgui_tricks.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\menu.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\slider.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\subtab.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\tab.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\button.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\checkbox.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\childs.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\combo.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Overlay\imgui\imgui_widgets.cpp">
@@ -159,6 +192,9 @@
     </ClCompile>
     <ClCompile Include="Overlay\Menu\Settings.cpp">
       <Filter>overlay\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\retake\imgui_tricks.cpp">
+      <Filter>overlay\retake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
