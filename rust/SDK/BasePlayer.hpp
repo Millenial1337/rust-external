@@ -211,9 +211,9 @@ public:
 		this->entityFlags = Read<int32_t>(_ent + 0x130);
 
 		this->playerModel = Read<uintptr_t>(this->player + 0x4C0); //BasePlayer -> public PlayerModel playerModel;
-		this->modelState = Read<uintptr_t>(this->player + 0x5F0); //0x588 // public ModelState modelState;
+		this->modelState = Read<uintptr_t>(this->player + 0x5F0); //0x588 // BasePlayer -> public ModelState modelState;
 
-		this->position = Read<Vector3>(this->visualState + 0x38); //internal Vector3 position; //0x90
+		this->position = Read<Vector3>(this->visualState + 0x38); //SpecialPurposeCamera -> internal Vector3 position; //PlayerModel maybe
 		this->health = Read<float>(this->player + 0x224);//protected float _health;
 	}
 
@@ -221,11 +221,11 @@ public:
 
 
 	void setViewAngles(Vector3 angles) { // vector 3
-		Write<Vector3>(Read<uint64_t>(this->player + 0x4E0) + 0x3C, angles); //public PlayerInput input; | private Vector3 bodyAngles;
+		Write<Vector3>(Read<uint64_t>(this->player + 0x4E0) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
 	}
 
 	void setViewAngles(Vector2 angles) { // vector 2
-		Write<Vector2>(Read<uint64_t>(this->player + 0x4E0) + 0x3C, angles); //public PlayerInput input; | private Vector3 bodyAngles;
+		Write<Vector2>(Read<uint64_t>(this->player + 0x4E0) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
 	}
 
 	void set_aim_angles(Vector3 aim_angle) {
@@ -239,10 +239,10 @@ public:
 
 	void remove_flag(MStateFlags flag)
 	{
-		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x24);// 	public int flags;
+		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x24);// ModelState -> public int flags;
 		flags &= ~(int)flags;
 
-		*reinterpret_cast<int*>((uintptr_t)this + 0x24) = flags;// 	public int flags;
+		*reinterpret_cast<int*>((uintptr_t)this + 0x24) = flags;// ModelState -> public int flags;
 	}
 
 	void setModelFlag(MStateFlags flag) {
@@ -250,11 +250,11 @@ public:
 	}
 
 	void setBaseFlag(BaseEntityFlag flag) {
-		Write(this->entityFlags + 0x130, flag);
+		Write(this->entityFlags + 0x130, flag);// BaseEntity -> public BaseEntity.Flags flags;
 	}
 
 	void speedHack(int speed) {
-		Write<float>(this->player + 0x714, speed);
+		Write<float>(this->player + 0x714, speed); // PlayerModel -> speed (maybe)
 	}
 
 public:
@@ -280,7 +280,7 @@ public:
 	bool iSMenu()
 	{
 		if (!this) return true;
-		DWORD64 Input = Read<DWORD64>(this->player + 0x4E0);
+		DWORD64 Input = Read<DWORD64>(this->player + 0x4E0);//public PlayerInput input;
 		return !(Read<bool>(Input + 0x98)); // private bool hasKeyFocus;
 	}
 
@@ -365,7 +365,7 @@ public:
 	}
 
 	Vector3 getRecoilAngles() {
-		return ReadChain<Vector3>(this->player, { (uint64_t)0x4E0, (uint64_t)0x64 }); //public Vector3 recoilAngles
+		return ReadChain<Vector3>(this->player, { (uint64_t)0x4E0, (uint64_t)0x64 }); //public PlayerInput input, public Vector3 recoilAngles
 	}
 
 	Vector3 getViewAngles() {
@@ -450,7 +450,7 @@ public:
 HeldItem getHeldItem()
 {
 	int active_weapon_id = Read<int>(this->player + 0x5C8); //private uint clActiveItem;
-
+	//												  PlayerInventory inventory   comment ->
 	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x688, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
 
 	//std::cout << "Held weapon: found :" <<  items << std::endl;

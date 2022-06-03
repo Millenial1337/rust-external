@@ -4,19 +4,24 @@
 #include "Utils.hpp"
 
 namespace O {
-	uintptr_t BaseMovement = 0x4E8;// public BaseMovement movement;
-	uintptr_t waterLevel = 0x460;// public float waterLevel
+	uintptr_t waterLevel = 0x460;// WaterWell -> public float waterLevel
+
+		// PlayerWalkMovement
 	uintptr_t gravityTestRadius = 0x80;// public float gravityTestRadius
 	uintptr_t groundAngle = 0xC4;// groundAngle
 	uintptr_t groundAngleNew = 0xC8;// groundAngleNew
 	uintptr_t capsuleHeight = 0x68;// public float capsuleHeight
 	uintptr_t capsuleCenter = 0x6C;// public float capsuleCenter
 	uintptr_t gravityMultiplier = 0x84;// public float gravityMultiplier;
-	uintptr_t wasFalling = 0x14B;// private bool wasFalling 0x00
+	uintptr_t wasFalling = 0x148;// private bool wasFalling 0x00
 	uintptr_t previousVelocity = 0xE4;// private Vector3 previousVelocity
 	uintptr_t groundTime = 0xCC;// private float groundTime
-	uintptr_t clothingMoveSpeedReduction = 0x74C;// public float clothingMoveSpeedReduction;
-	uintptr_t heldEntity = 0x98;// private EntityRef heldEntity;
+
+	uintptr_t clothingMoveSpeedReduction = 0x74C;// BasePlayer -> public float clothingMoveSpeedReduction;
+
+	uintptr_t heldEntity = 0x98;// Item -> private EntityRef heldEntity;
+
+		// BaseProjectile
 	uintptr_t recoil = 0x2D8;// public RecoilProperties recoil;
 	uintptr_t primaryMagazine = 0x2B8;//0x2A0 = public BaseProjectile.Magazine primaryMagazine;
 	uintptr_t aimSway = 0x2D0;// public float aimSway;
@@ -26,10 +31,13 @@ namespace O {
 	uintptr_t aimconePenaltyPerShot = 0x2F0;// public float aimconePenaltyPerShot;
 	uintptr_t aimConePenaltyMax = 0x2F4;// public float aimConePenaltyMax;
 
+		//BasePlayer
+	uintptr_t BaseMovement = 0x4E8;// public BaseMovement movement;
 	uintptr_t stancepenalty = 0x31C; //private float stancePenalty;
 	uintptr_t ClothingAccuracyBonus = 0x754; // public float clothingAccuracyBonus;
 	uintptr_t aimconePenalty = 0x320; //private float aimconePenalty;
-	uintptr_t canWieldItems = 0x2B0; // public bool canWieldItems;
+
+	uintptr_t canWieldItems = 0x2B0; // BaseMountable -> public bool canWieldItems;
 }
 
 typedef void(__fastcall* hitsound_fn)(DWORD64);
