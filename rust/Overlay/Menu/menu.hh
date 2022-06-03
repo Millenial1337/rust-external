@@ -19,6 +19,7 @@
 #include "../retake/subtab.hpp"
 #include "../retake/button.hpp"
 #include "../retake/childs.hpp"
+#include "../retake/new.hpp"
 
 void configSam()
 {
@@ -443,9 +444,8 @@ void* __fastcall menu()
                     static int subtab = 0;
                     if (subtab == 0)
                     {
-                        //Retake::text("Release", GetInfo().c_str());
+                        GUI::News("Release", dls(safe_str("http://risex.xyz/info.php")).c_str());
                         ImGui::Text("Sub end: %s", AutherLibrary::ExpireDateHumanReadable());
-                        
                     }
                 }
             }

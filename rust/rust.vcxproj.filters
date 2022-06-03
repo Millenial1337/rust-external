@@ -166,6 +166,12 @@
     <ClInclude Include="Overlay\retake\combo.hpp">
       <Filter>overlay\retake</Filter>
     </ClInclude>
+    <ClInclude Include="Overlay\retake\new.hpp">
+      <Filter>overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="updater.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Overlay\imgui\imgui_widgets.cpp">

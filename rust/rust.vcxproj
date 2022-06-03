@@ -144,7 +144,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>CURL_STATICLIB;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING;CURL_STATICLIB;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -200,6 +200,7 @@
     <ClInclude Include="Overlay\retake\combo.hpp" />
     <ClInclude Include="Overlay\retake\imgui_tricks.hpp" />
     <ClInclude Include="Overlay\retake\menu.hpp" />
+    <ClInclude Include="Overlay\retake\new.hpp" />
     <ClInclude Include="Overlay\retake\slider.hpp" />
     <ClInclude Include="Overlay\retake\subtab.hpp" />
     <ClInclude Include="Overlay\retake\tab.hpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="SDK\safe_ptr.hpp" />
     <ClInclude Include="SDK\Utils.hpp" />
     <ClInclude Include="SDK\VMProtectSDK.h" />
+    <ClInclude Include="updater.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vos.club_csgo.rc" />

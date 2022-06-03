@@ -50,7 +50,7 @@ END
 // dll
 //
 
-IDR_DLL1                dll                     "G:\\rust-external\\VMProtectSDK64.dll"
+IDR_DLL1                dll                     "D:\\rust-external\\VMProtectSDK64.dll"
 
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////

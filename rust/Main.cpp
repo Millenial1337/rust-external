@@ -64,8 +64,10 @@ int main()
 {	
 	SetConsoleTitle("A-P");
 	HWND hwnd = nullptr;
-	AutherLibrary::Initialize("maWwK5sbjUOGpuBHF8SeDtfENdTC1rlI", "oCA7K4GerUvgy6u8DdsnT9ShfjPl1Bcm");
 
+	
+
+	AutherLibrary::Initialize(safe_str("maWwK5sbjUOGpuBHF8SeDtfENdTC1rlI"), safe_str("oCA7K4GerUvgy6u8DdsnT9ShfjPl1Bcm"));
 
 
 	//start_log();

@@ -14,6 +14,7 @@
 #define IMGUI_DEFINE_MATH_OPERATORS
 #define IM_USE using namespace ImGui; 
 #include "../imgui/imgui_internal.h"
+#include <sstream>
 
 namespace Retake
 {
