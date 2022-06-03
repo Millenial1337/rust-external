@@ -1,4 +1,4 @@
-# rust-license-vosclub
+# rust-external
 
 this source based on medusa-rust-external (https://github.com/Skengdoo/Medusa-Rust-External-Source)
 
