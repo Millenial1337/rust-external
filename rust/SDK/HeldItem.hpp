@@ -4,7 +4,7 @@
 #include "Utils.hpp"
 
 namespace O {
-	uintptr_t waterLevel = 0x460;// WaterWell -> public float waterLevel
+	uintptr_t waterLevel = 0x478;// WaterWell -> public float waterLevel
 
 		// PlayerWalkMovement
 	uintptr_t gravityTestRadius = 0x80;// public float gravityTestRadius
@@ -17,27 +17,27 @@ namespace O {
 	uintptr_t previousVelocity = 0xE4;// private Vector3 previousVelocity
 	uintptr_t groundTime = 0xCC;// private float groundTime
 
-	uintptr_t clothingMoveSpeedReduction = 0x74C;// BasePlayer -> public float clothingMoveSpeedReduction;
+	uintptr_t clothingMoveSpeedReduction = 0x75C;// BasePlayer -> public float clothingMoveSpeedReduction;
 
 	uintptr_t heldEntity = 0x98;// Item -> private EntityRef heldEntity;
 
 		// BaseProjectile
-	uintptr_t recoil = 0x2D8;// public RecoilProperties recoil;
-	uintptr_t primaryMagazine = 0x2B8;//0x2A0 = public BaseProjectile.Magazine primaryMagazine;
-	uintptr_t aimSway = 0x2D0;// public float aimSway;
-	uintptr_t aimSwaySpeed = 0x2D4;// public float aimSwaySpeed;
-	uintptr_t aimCone = 0x2E8;// public float aimCone;
-	uintptr_t hipAimCone = 0x2EC;// public float hipAimCone;
-	uintptr_t aimconePenaltyPerShot = 0x2F0;// public float aimconePenaltyPerShot;
-	uintptr_t aimConePenaltyMax = 0x2F4;// public float aimConePenaltyMax;
+	uintptr_t recoil = 0x2E0;// public RecoilProperties recoil;
+	uintptr_t primaryMagazine = 0x2C0;//0x2A0 = public BaseProjectile.Magazine primaryMagazine;
+	uintptr_t aimSway = 0x2D8;// public float aimSway;
+	uintptr_t aimSwaySpeed = 0x2DC;// public float aimSwaySpeed;
+	uintptr_t aimCone = 0x2F0;// public float aimCone;
+	uintptr_t hipAimCone = 0x2F4;// public float hipAimCone;
+	uintptr_t aimconePenaltyPerShot = 0x2F8;// public float aimconePenaltyPerShot;
+	uintptr_t aimConePenaltyMax = 0x2FC;// public float aimConePenaltyMax;
 
 		//BasePlayer
-	uintptr_t BaseMovement = 0x4E8;// public BaseMovement movement;
-	uintptr_t stancepenalty = 0x31C; //private float stancePenalty;
-	uintptr_t ClothingAccuracyBonus = 0x754; // public float clothingAccuracyBonus;
-	uintptr_t aimconePenalty = 0x320; //private float aimconePenalty;
+	uintptr_t BaseMovement = 0x4F0;// public BaseMovement movement;
+	uintptr_t stancepenalty = 0x324; //private float stancePenalty;
+	uintptr_t ClothingAccuracyBonus = 0x764; // public float clothingAccuracyBonus;
+	uintptr_t aimconePenalty = 0x328; //private float aimconePenalty;
 
-	uintptr_t canWieldItems = 0x2B0; // BaseMountable -> public bool canWieldItems;
+	uintptr_t canWieldItems = 0x2B8; // BaseMountable -> public bool canWieldItems;
 }
 
 typedef void(__fastcall* hitsound_fn)(DWORD64);
@@ -122,7 +122,7 @@ public:
 
 	void fatBullet()
 	{
-		auto List = Read<DWORD64>(this->bp + 0x358); //private List<Projectile> createdProjectiles;
+		auto List = Read<DWORD64>(this->bp + 0x370); //private List<Projectile> createdProjectiles;
 		List = Read<DWORD64>(List + 0x10);
 		for (int i = 0; i < 8; ++i)
 		{
@@ -139,9 +139,9 @@ public:
 	void instantCompound() {
 		if (this->name.find(safe_str("bow.compound")) != std::string::npos)
 		{
-			Write<float>(bp + 0x378, 0);//stringHoldDurationMax
-			Write<float>(bp + 0x37C, 1000000);//stringBonusDamage
-			Write<float>(bp + 0x388, 1000000);//movementPenaltyRampUpTime
+			Write<float>(bp + 0x390, 0);//stringHoldDurationMax
+			Write<float>(bp + 0x394, 1000000);//stringBonusDamage
+			Write<float>(bp + 0x3A0, 1000000);//movementPenaltyRampUpTime
 		}
 	}
 
@@ -164,8 +164,8 @@ public:
 	void instantEoka() {
 		if (this->name.find(safe_str("eoka")) != std::string::npos)
 		{
-			Write<bool>(this->bp + 0x370, true);//_didSparkThisFrame
-			Write<float>(this->bp + 0x360, 100.f);//successFraction
+			Write<bool>(this->bp + 0x388, true);//_didSparkThisFrame
+			Write<float>(this->bp + 0x378, 100.f);//successFraction
 		}
 	}
 

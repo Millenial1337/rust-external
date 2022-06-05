@@ -61,7 +61,7 @@ enum class BTimeCategory {
 
 #pragma region OffsetStuff
 
-#define ConVar_Graphics_c 51685512 //0x32732A0
+#define ConVar_Graphics_c 52527840 //0x32732A0
 
 #pragma endregion
 
@@ -206,35 +206,35 @@ public:
 		this->player = Read<uintptr_t>(_ent + 0x20); //Entity
 		this->visualState = Read<uintptr_t>(_trans + 0x38); //0x38
 
-		this->playerFlags = Read<int32_t>(_ent + 0x678); //public BasePlayer.PlayerFlags playerFlags;
+		this->playerFlags = Read<int32_t>(_ent + 0x688); //public BasePlayer.PlayerFlags playerFlags;
 		this->name = ReadNative(_obj + 0x60);
 		this->entityFlags = Read<int32_t>(_ent + 0x130);
 
-		this->playerModel = Read<uintptr_t>(this->player + 0x4C0); //BasePlayer -> public PlayerModel playerModel;
-		this->modelState = Read<uintptr_t>(this->player + 0x5F0); //0x588 // BasePlayer -> public ModelState modelState;
+		this->playerModel = Read<uintptr_t>(this->player + 0x4C8); //BasePlayer -> public PlayerModel playerModel;
+		this->modelState = Read<uintptr_t>(this->player + 0x5F8); //0x588 // BasePlayer -> public ModelState modelState;
 
-		this->position = Read<Vector3>(this->visualState + 0x38); //SpecialPurposeCamera -> internal Vector3 position; //PlayerModel maybe
-		this->health = Read<float>(this->player + 0x224);//protected float _health;
+		this->position = Read<Vector3>(this->visualState + 0x38); //SpecialPurposeCamera -> internal Vector3 position; //PlayerModel maybe <- this
+		this->health = Read<float>(this->player + 0x22C);//protected float _health;
 	}
 
 public:
 
 
 	void setViewAngles(Vector3 angles) { // vector 3
-		Write<Vector3>(Read<uint64_t>(this->player + 0x4E0) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
+		Write<Vector3>(Read<uint64_t>(this->player + 0x4E8) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
 	}
 
 	void setViewAngles(Vector2 angles) { // vector 2
-		Write<Vector2>(Read<uint64_t>(this->player + 0x4E0) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
+		Write<Vector2>(Read<uint64_t>(this->player + 0x4E8) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
 	}
 
 	void set_aim_angles(Vector3 aim_angle) {
 		auto current = Read<uintptr_t>((uintptr_t)(this + 0x10));
-		Read<Vector3>(current + 0x18) = aim_angle; //public Vector3 aimAngles
+		Read<Vector3>(current + 0x18) = aim_angle; //InputMessage -> public Vector3 aimAngles
 	}
 
 	void setPlayerFlag(BPlayerFlags flag) {
-		Write(this->player + 0x678, flag); //0x5F8 //public BasePlayer.PlayerFlags playerFlags;
+		Write(this->player + 0x688, flag); //0x5F8 //public BasePlayer.PlayerFlags playerFlags;
 	}
 
 	void remove_flag(MStateFlags flag)
@@ -250,12 +250,12 @@ public:
 	}
 
 	void setBaseFlag(BaseEntityFlag flag) {
-		Write(this->entityFlags + 0x130, flag);// BaseEntity -> public BaseEntity.Flags flags;
+		Write(this->entityFlags + 0x138, flag);// BaseEntity -> public BaseEntity.Flags flags;
 	}
 
-	void speedHack(int speed) {
+	/*void speedHack(int speed) {
 		Write<float>(this->player + 0x714, speed); // PlayerModel -> speed (maybe)
-	}
+	}*/
 
 public:
 
@@ -280,12 +280,12 @@ public:
 	bool iSMenu()
 	{
 		if (!this) return true;
-		DWORD64 Input = Read<DWORD64>(this->player + 0x4E0);//public PlayerInput input;
-		return !(Read<bool>(Input + 0x98)); // private bool hasKeyFocus;
+		DWORD64 Input = Read<DWORD64>(this->player + 0x4E8);//public PlayerInput input;
+		return !(Read<bool>(Input + 0xA4)); // private bool hasKeyFocus;
 	}
 
 	bool isSameTeam(std::unique_ptr<BaseEntity>& localPlayer) {
-		auto localTeam = Read<uint32_t>(localPlayer->player + 0x598);
+		auto localTeam = Read<uint32_t>(localPlayer->player + 0x598); //public ulong currentTeam; 
 		auto playerTeam = Read<uint32_t>(this->player + 0x598);
 
 		if (localTeam == 0 || playerTeam == 0)
@@ -313,12 +313,12 @@ public:
 	bool isFrozen() {
 		if (GetAsyncKeyState(Settings::flyKey))
 		{
-			return Read<bool>(this->player + 0x4C8); //public bool Frozen;
+			return Read<bool>(this->player + 0x4D0); //public bool Frozen;
 		}
 	}
 
 	bool mounted() {
-		return Read<bool>(this->player + 0x2B0);
+		return Read<bool>(this->player + 0x2DB);// MAYBE WRONG
 	}
 
 	bool isDead() {
@@ -329,7 +329,7 @@ public:
 
 	uint64_t getUserID()
 	{
-		return Read<uint64_t>(this->player + 0x6C0); //public ulong userID;
+		return Read<uint64_t>(this->player + 0x6D0); //BasePlayer -> public ulong userID; 
 	}
 
 	int getDistance(std::unique_ptr<BaseEntity>& player) {
@@ -341,7 +341,7 @@ public:
 	}
 
 	uint64_t getMountedEntity() {
-		return Read<uint64_t>(this->player + 0x5E8); //0x590
+		return Read<uint64_t>(this->player + 0x600); //BasePlayer -> mounted
 	}
 
 	bool getModelFlag(MStateFlags flag) {
@@ -365,11 +365,11 @@ public:
 	}
 
 	Vector3 getRecoilAngles() {
-		return ReadChain<Vector3>(this->player, { (uint64_t)0x4E0, (uint64_t)0x64 }); //public PlayerInput input, public Vector3 recoilAngles
+		return ReadChain<Vector3>(this->player, { (uint64_t)0x4E8, (uint64_t)0x64 }); //public PlayerInput input, public Vector3 recoilAngles
 	}
 
 	Vector3 getViewAngles() {
-		return ReadChain<Vector3>(this->player, { (uint64_t)0x4E0, (uint64_t)0x3C });// public PlayerInput input;
+		return ReadChain<Vector3>(this->player, { (uint64_t)0x4E8, (uint64_t)0x3C });// public PlayerInput input, maybe private Vector3 bodyAngles;
 	}
 
 	std::string getName() {
@@ -425,7 +425,7 @@ public:
 
 		if (Settings::nightSky)
 		{
-			Write<float>(TOD_AmbientParameters + 0x28, 1.f);//AmbientMultiplier
+			Write<float>(TOD_AmbientParameters + 0x28, 1.f);//public EnvironmentMultiplier[] AmbientMultipliers;
 			Write<float>(TOD_NightParameters + 0x50, 6.f);//AmbientMultiplier
 			Write<float>(TOD_NightParameters + 0x54, 1.f);//ReflectionMultiplier 0x54
 			Write<float>(TOD_DayParameters + 0x50, 1.f);//AmbientMultiplier
@@ -442,16 +442,16 @@ public:
 	{
 		if (GetAsyncKeyState(Settings::LongNeckKey))
 		{
-			DWORD64 eyes = Read<DWORD64>(this->player + 0x680); //public PlayerEyes eyes;
+			DWORD64 eyes = Read<DWORD64>(this->player + 0x690); //public PlayerEyes eyes;
 			Write<Vector3>(eyes + 0x38, Vector3(0, (0.8f), 0));
 		}
 	}
 
 HeldItem getHeldItem()
 {
-	int active_weapon_id = Read<int>(this->player + 0x5C8); //private uint clActiveItem;
-	//												  PlayerInventory inventory   comment ->
-	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x688, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
+	int active_weapon_id = Read<int>(this->player + 0x5D0); //private uint clActiveItem;
+	//							               public PlayerInventory inventory   BasePlayer
+	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x698, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
 
 	//std::cout << "Held weapon: found :" <<  items << std::endl;
 
@@ -474,7 +474,7 @@ HeldItem getHeldItem()
 }
 
 std::wstring getPlayerName() {
-	std::wstring name = ReadUnicode(Read<uint64_t>(this->player + 0x6D8) + 0x14); //BasePlayer -> protected string _displayName
+	std::wstring name = ReadUnicode(Read<uint64_t>(this->player + 0x6E8) + 0x14); //BasePlayer -> protected string _displayName
 
 	if (name.find(safe_strW(L"Scientist")) == 0)
 		return safe_strW(L"Scientist");
