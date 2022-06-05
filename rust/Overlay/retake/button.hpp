@@ -43,7 +43,6 @@ namespace Retake
 		if (hovered || held)
 			ImGui::SetMouseCursor(0);
 
-
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(229 / 255.f, 229 / 255.f, 229 / 255.f, 255 / 255.f));
 		ImGui::RenderText(ImVec2(bb.Min.x + style.ItemInnerSpacing.x + 0, bb.Min.y + style.FramePadding.y + 0), label);
 		ImGui::PopStyleColor();

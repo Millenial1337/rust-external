@@ -47,7 +47,7 @@ namespace Retake
 
 		int lerpAnim = ImTricks::Animations::FastIntLerp(label, selected, 0, 255, 20);
 
-		window->DrawList->AddRectFilled(ImVec2(bb.Min.x + 10, bb.Min.y + 23), ImVec2(bb.Max.x + -10, bb.Max.y + 0), ImColor(180, 68, 124, lerpAnim), 6, 15);
+		window->DrawList->AddRectFilled(ImVec2(bb.Min.x, bb.Min.y), ImVec2(bb.Max.x - 70, bb.Max.y + 0), ImColor(180, 68, 124, lerpAnim), 6, 15);
 
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4((165 + lerpAnim / 8) / 255.f, (165 + lerpAnim / 8) / 255.f, (165 + lerpAnim / 8) / 255.f, 255 / 255.f));
 		ImGui::RenderText(ImVec2(bb.Min.x + 0 + (72 / 2 - label_size.x / 2), bb.Min.y + style.FramePadding.y + 2), label);

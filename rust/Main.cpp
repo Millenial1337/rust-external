@@ -77,16 +77,16 @@ int main()
 	{
 		CleanPIDDBCacheTable();
 
-		std::cout << safe_str("Launch Rust") << std::endl;
+		//MessageBox(NULL, safe_str("Launch Rust"), safe_str(""), MB_OK);
 
 		while (!hwnd)
 		{
-			hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
-			//hwnd = FindWindowA(safe_str("CDownloadTracker f20000"), safe_str("JavaUpdate SysTray Icon"));
+			//hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
+			hwnd = FindWindowA(safe_str("Chrome_WidgetWin_0"), safe_str("Spotify Free"));
 			LI_FN(Sleep)(50);
 		}
 
-		std::cout << safe_str("Game has been found! Press F1 when game loads in!") << std::endl;
+		//MessageBox(NULL, safe_str("Game has been found!"), safe_str(" Press F1 when game loads in!"), MB_OK);
 
 		while (true)
 		{

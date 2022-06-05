@@ -116,6 +116,7 @@ namespace ImTricks {
 
 		void AddNotify(const char* message, NotifyState state) {
 			notifies.push_back({ message, state, GetTickCount64() + 3000 });
+			
 		}
 
 		void HandleNotifies(ImDrawList* draw) {

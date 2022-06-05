@@ -23,7 +23,6 @@
 #ifndef IMGUI_TRICK_ONCE
 #define IMGUI_TRICK_ONCE
 
-
 /*
 // A customized ImColor structure with an additional constructor from the HEX HTML color code
 // and a method for obtaining HEX HTML from an already existing color.
@@ -128,6 +127,7 @@ namespace ImTricks {
 		*/
 		extern ImColor FastColorLerp(ImColor start, ImColor end, float stage);
 		extern ImTrickyColor FastColorLerp(ImTrickyColor start, ImTrickyColor end, float stage);
+
 	}
 
 	/*

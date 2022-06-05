@@ -11,7 +11,6 @@
 #define IMGUI_DEFINE_MATH_OPERATORS
 #define IM_USE using namespace ImGui; 
 #include "../imgui/imgui_internal.h"
-
 #include "../retake/checkbox.hpp"
 #include "../retake/slider.hpp"
 #include "../retake/combo.hpp"
@@ -123,18 +122,18 @@ void* __fastcall menu()
 
 
         ImVec2 gwp = ImGui::GetWindowPos();
-        ImDrawList* drawlist = ImGui::GetWindowDrawList();
+        ImDrawList* draw = ImGui::GetWindowDrawList();
 
+        ImTricks::NotifyManager::HandleNotifies(ImGui::GetOverlayDrawList());
 
-
-        drawlist->AddRect(ImVec2(gwp.x + 0, gwp.y + 0), ImVec2(gwp.x + 520, gwp.y + 520), ImColor(0, 0, 0, 255), 0, 15, 1.000000);
-        drawlist->AddRectFilled(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 255), 0, 15);
-        drawlist->AddRectFilledMultiColor(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 64, gwp.y + 31), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105));
-        drawlist->AddRectFilledMultiColor(ImVec2(gwp.x + 408, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0));
-        drawlist->AddLine(ImVec2(gwp.x + 1, gwp.y + 31), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(255, 255, 255, 17), 1.000000);
-        drawlist->AddRect(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 518, gwp.y + 519), ImColor(255, 255, 255, 17), 0, 15, 1.000000);
-        drawlist->AddLine(ImVec2(gwp.x + 1, gwp.y + 61), ImVec2(gwp.x + 518, gwp.y + 61), ImColor(255, 255, 255, 17), 1.000000);
-        drawlist->AddLine(ImVec2(gwp.x + 1, gwp.y + 62), ImVec2(gwp.x + 518, gwp.y + 62), ImColor(0, 0, 0, 255), 1.000000);
+        draw->AddRect(ImVec2(gwp.x + 0, gwp.y + 0), ImVec2(gwp.x + 520, gwp.y + 520), ImColor(0, 0, 0, 255), 0, 15, 1.000000);
+        draw->AddRectFilled(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 255), 0, 15);
+        draw->AddRectFilledMultiColor(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 64, gwp.y + 31), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105));
+        draw->AddRectFilledMultiColor(ImVec2(gwp.x + 408, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0));
+        draw->AddLine(ImVec2(gwp.x + 1, gwp.y + 31), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(255, 255, 255, 17), 1.000000);
+        draw->AddRect(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 518, gwp.y + 519), ImColor(255, 255, 255, 17), 0, 15, 1.000000);
+        draw->AddLine(ImVec2(gwp.x + 1, gwp.y + 61), ImVec2(gwp.x + 518, gwp.y + 61), ImColor(255, 255, 255, 17), 1.000000);
+        draw->AddLine(ImVec2(gwp.x + 1, gwp.y + 62), ImVec2(gwp.x + 518, gwp.y + 62), ImColor(0, 0, 0, 255), 1.000000);
 
 
 
@@ -142,7 +141,7 @@ void* __fastcall menu()
         auto window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar; //| ImGuiWindowFlags_NoScrollbar;
 
         // ATRIBUTES
-        ImGui::SetNextWindowSize({ 522.000000f,472.000000f });
+        //ImGui::SetNextWindowSize({ 522.000000f,472.000000f });
 
         // STYLES
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });
@@ -156,25 +155,8 @@ void* __fastcall menu()
         ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, { 35.f / 255.f,35.f / 255.f,35.f / 255.f,0 / 255.f });
 
         ImVec2 position;
-        ImDrawList* draw;
-
-        auto running = "";
-        auto loopFrame = ( 400);
-        if (loopFrame < 100) {
-            running = "|";
-        }
-        else if (loopFrame < 200) {
-            running = "/";
-        }
-        else if (loopFrame < 300) {
-            running = "-";
-        }
-        else if (loopFrame < 400) {
-            running = "\\";
-        }
 
         position = ImGui::GetWindowPos();
-        draw = ImGui::GetWindowDrawList();
 
         draw->AddRectFilled(ImVec2{ position.x + 120,position.y + 62 }, ImVec2{ position.x + 515,position.y + 515 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
         draw->AddLine(ImVec2{ position.x + 120,position.y + 31}, ImVec2{ position.x + 120,position.y + 515 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
@@ -194,6 +176,8 @@ void* __fastcall menu()
         //logo text
         draw->AddText({ position.x + 220, position.y + 35 / 2 - ImGui::CalcTextSize("AnarchyProject").y / 2 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "AnarchyProject ");
 
+        ImGui::SetCursorPos({ 10, 500 });
+        ImGui::Text("Sub: %s", AutherLibrary::ExpireDateHumanReadable());
 
         static int page = 0;
         static int subtab = 0;
@@ -433,10 +417,13 @@ void* __fastcall menu()
                     static int subtab = 0;
                     if (subtab == 0)
                     {
-                        if (ImGui::Button("EXIT CHEAT", ImVec2(100, 20)))
+                        if (Retake::button("EXIT CHEAT", ImVec2(100, 20)))
                             exit(-1);
-                        if (ImGui::Button("Load admin cfg", ImVec2(100, 20)))
+                        if (Retake::button("Load admin cfg", ImVec2(120, 20))) {
                             configSam();
+                            ImTricks::NotifyManager::AddNotify("Admin config loaded.", ImTrickNotify_Success);
+                        }
+                    		
                     }
                 }
                 if (page == 4)
@@ -444,8 +431,7 @@ void* __fastcall menu()
                     static int subtab = 0;
                     if (subtab == 0)
                     {
-                        GUI::News("Release", dls(safe_str("http://risex.xyz/info.php")).c_str());
-                        ImGui::Text("Sub end: %s", AutherLibrary::ExpireDateHumanReadable());
+                        GUI::News("Information", dls(safe_str("http://risex.xyz/info.php")).c_str());
                     }
                 }
             }
@@ -513,7 +499,6 @@ void* __fastcall login() {
         if (ImGui::Button("Login", ImVec2(75, 20))) {
             if (AutherLibrary::Auth(globals.key, AutherLibrary::GetHwid()))
             {
-                //MessageBox(NULL, "uspeshno", "Logged", MB_OK | MB_DEFBUTTON1 | MB_ICONEXCLAMATION | MB_DEFAULT_DESKTOP_ONLY);
                 globals.auth = true;
             }
             else
