@@ -81,8 +81,8 @@ int main()
 
 		while (!hwnd)
 		{
-			//hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
-			hwnd = FindWindowA(safe_str("Chrome_WidgetWin_0"), safe_str("Spotify Free"));
+			hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
+			//hwnd = FindWindowA(safe_str("Chrome_WidgetWin_0"), safe_str("Spotify Free"));
 			LI_FN(Sleep)(50);
 		}
 
