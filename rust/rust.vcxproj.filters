@@ -1,215 +1,220 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Entity">
-      <UniqueIdentifier>{a012a3f2-a294-40fe-bc43-7b66f4acb62c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Features">
-      <UniqueIdentifier>{768f29d2-d9e5-4c49-bf66-a0b79a85b2ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="overlay">
-      <UniqueIdentifier>{8b19819a-1e40-465b-8553-014be732c7ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sdk">
-      <UniqueIdentifier>{94a76dd3-6cd5-4179-b462-9bff174e66fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="overlay\imgui">
-      <UniqueIdentifier>{4d8ca889-6ded-4e40-ab48-3028e5b33c93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="overlay\menu">
-      <UniqueIdentifier>{2a7a0fb6-b0af-4fbc-8fa1-24a7d425fdb3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Features\aim">
-      <UniqueIdentifier>{6a92084e-f566-4789-8f7f-86b7b5e5281a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Features\esp">
-      <UniqueIdentifier>{81d07328-cbaf-4f45-8af4-0932e64600f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Features\misc">
-      <UniqueIdentifier>{7c9aacaf-f2e4-4c89-9111-7f98a7fb4b5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="helpers">
-      <UniqueIdentifier>{09ed9f43-eced-4498-8322-b764fa654f54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="overlay\retake">
-      <UniqueIdentifier>{34763106-6efc-44cf-807f-80da51d0b442}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Overlay\Overlay.cpp">
+      <Filter>Overlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\imgui\imgui.cpp">
+      <Filter>Overlay\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\imgui\imgui_demo.cpp">
+      <Filter>Overlay\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\imgui\imgui_draw.cpp">
+      <Filter>Overlay\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\imgui\imgui_impl_dx9.cpp">
+      <Filter>Overlay\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\imgui\imgui_impl_win32.cpp">
+      <Filter>Overlay\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\imgui\imgui_widgets.cpp">
+      <Filter>Overlay\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\Menu\Settings.cpp">
+      <Filter>Overlay\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\retake\imgui_tricks.cpp">
+      <Filter>Overlay\retake</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Overlay\imgui\imstb_truetype.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imstb_textedit.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imstb_rectpack.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imgui_internal.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imgui_impl_win32.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imgui_impl_dx9.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imgui.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\imgui\imconfig.h">
-      <Filter>overlay\imgui</Filter>
-    </ClInclude>
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="lazy_importer.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SDK\BaseNetworkable.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\BasePlayer.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\Classes.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\Driver.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\HeldItem.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\Imports.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\Math.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\safe_ptr.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\Utils.hpp">
-      <Filter>sdk</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\VMProtectSDK.h">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\FontData.hpp">
-      <Filter>overlay</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\Overlay.hpp">
-      <Filter>overlay</Filter>
+      <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\color.hpp">
-      <Filter>overlay</Filter>
+      <Filter>Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\FontData.hpp">
+      <Filter>Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\Overlay.hpp">
+      <Filter>Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imconfig.h">
+      <Filter>Overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imgui.h">
+      <Filter>Overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imgui_impl_dx9.h">
+      <Filter>Overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imgui_impl_win32.h">
+      <Filter>Overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imgui_internal.h">
+      <Filter>Overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imstb_rectpack.h">
+      <Filter>Overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imstb_textedit.h">
+      <Filter>Overlay\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\imgui\imstb_truetype.h">
+      <Filter>Overlay\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\Menu\menu.hh">
-      <Filter>overlay\menu</Filter>
+      <Filter>Overlay\menu</Filter>
     </ClInclude>
     <ClInclude Include="Overlay\Menu\Settings.hpp">
-      <Filter>overlay\menu</Filter>
+      <Filter>Overlay\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\button.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\checkbox.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\childs.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\combo.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\slider.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\subtab.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\tab.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\new.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\retake\imgui_tricks.hpp">
+      <Filter>Overlay\retake</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\antdebug.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\guard.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\helpers.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\include.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\log.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\updater.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\xorstr.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Aimbot\Aimbot.hpp">
+      <Filter>Features\Aimbot</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Aimbot\DoAimbot.hpp">
+      <Filter>Features\Aimbot</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\MISC\DoMisc.hpp">
+      <Filter>Features\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\ESP\DrawESP.hpp">
+      <Filter>Features\ESP</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\ESP\ESP.hpp">
+      <Filter>Features\ESP</Filter>
     </ClInclude>
     <ClInclude Include="Entity\EntityLoop.hpp">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Features\Aimbot\Aimbot.hpp">
-      <Filter>Features\aim</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\Aimbot\DoAimbot.hpp">
-      <Filter>Features\aim</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\MISC\DoMisc.hpp">
-      <Filter>Features\misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\ESP\DrawESP.hpp">
-      <Filter>Features\esp</Filter>
-    </ClInclude>
-    <ClInclude Include="Features\ESP\ESP.hpp">
-      <Filter>Features\esp</Filter>
-    </ClInclude>
     <ClInclude Include="Features\MISC\Misc.hpp">
-      <Filter>Features\misc</Filter>
+      <Filter>Features\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="log.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="lazy_importer.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="globals.h" />
-    <ClInclude Include="helpers.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\imgui_tricks.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\menu.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\slider.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\subtab.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\tab.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\button.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\checkbox.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\childs.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\combo.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\retake\new.hpp">
-      <Filter>overlay\retake</Filter>
-    </ClInclude>
-    <ClInclude Include="updater.hpp">
-      <Filter>helpers</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Overlay\imgui\imgui_widgets.cpp">
-      <Filter>overlay\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\imgui\imgui.cpp">
-      <Filter>overlay\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\imgui\imgui_demo.cpp">
-      <Filter>overlay\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\imgui\imgui_draw.cpp">
-      <Filter>overlay\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\imgui\imgui_impl_dx9.cpp">
-      <Filter>overlay\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\imgui\imgui_impl_win32.cpp">
-      <Filter>overlay\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Overlay\Overlay.cpp">
-      <Filter>overlay</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\Menu\Settings.cpp">
-      <Filter>overlay\menu</Filter>
-    </ClCompile>
-    <ClCompile Include="Overlay\retake\imgui_tricks.cpp">
-      <Filter>overlay\retake</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\VMProtectSDK64.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\VMProtectSDK64.lib" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vos.club_csgo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\VMProtectSDK64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{2d7fd1dc-5a73-4aac-8d21-a4e92520725b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay">
+      <UniqueIdentifier>{f6ac5b84-7858-4642-9f78-4de191c1e8c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay\imgui">
+      <UniqueIdentifier>{bd206f9b-beae-4fdc-964f-36cb8069ea63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay\menu">
+      <UniqueIdentifier>{0988211e-f76f-4302-87ae-d5438855cf9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay\retake">
+      <UniqueIdentifier>{830331f5-4132-4fd3-9590-2a5662b91a64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{37e21ed0-7296-44a4-9cdc-22a7029efdd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Features">
+      <UniqueIdentifier>{daa67c72-e9de-494b-af34-7188b62ff497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{7b8434ea-f522-45d2-8139-bd5e47a2b3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Features\Aimbot">
+      <UniqueIdentifier>{0bbc1e1c-af9e-427a-aee9-76069787ed4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Features\ESP">
+      <UniqueIdentifier>{ca48afd1-54c8-4198-a773-46239b626547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Features\Misc">
+      <UniqueIdentifier>{ffe78fdc-51a2-4be8-af79-54b35bf82c53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

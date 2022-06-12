@@ -1,7 +1,7 @@
 #include <WinBase.h>
 #include <string>
 #include <lmcons.h>
-#include "../rust/xorstr.hpp"
+#include "../helpers/xorstr.hpp"
 
 using namespace std;
 

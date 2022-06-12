@@ -211,7 +211,7 @@ public:
 		this->entityFlags = Read<int32_t>(_ent + 0x130);
 
 		this->playerModel = Read<uintptr_t>(this->player + 0x4C8); //BasePlayer -> public PlayerModel playerModel;
-		this->modelState = Read<uintptr_t>(this->player + 0x5F8); //0x588 // BasePlayer -> public ModelState modelState;
+		this->modelState = Read<uintptr_t>(this->player + 0x210); //0x588 // PlayerModel -> private ModelState modelState; // 0x210
 
 		this->position = Read<Vector3>(this->visualState + 0x38); //SpecialPurposeCamera -> internal Vector3 position; //PlayerModel maybe <- this
 		this->health = Read<float>(this->player + 0x22C);//protected float _health;
@@ -318,7 +318,7 @@ public:
 	}
 
 	bool mounted() {
-		return Read<bool>(this->player + 0x2DB);// MAYBE WRONG
+		return Read<bool>(this->player + 0x600);// BasePlayer -> mounted
 	}
 
 	bool isDead() {
@@ -403,6 +403,7 @@ public:
 	void TODCycle()
 	{
 		DWORD64 ObjManager = Read<DWORD64>(uBase + 0x17C1F18); if (!ObjManager) return;
+		//DWORD64 ObjManager = Read<DWORD64>(uBase + 0x17C1F18); if (!ObjManager) return;
 		DWORD64 Obj = Read<DWORD64>(ObjManager + 0x8); (Obj && (Obj) != Read<DWORD64>(ObjManager)); Obj = Read<DWORD64>(Obj + 0x8);
 		DWORD64 GameObject = Read<DWORD64>(Obj + 0x10); //tagged object
 		DWORD64 ObjClass = Read<DWORD64>(GameObject + 0x30);

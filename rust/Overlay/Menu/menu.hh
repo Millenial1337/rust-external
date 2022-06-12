@@ -4,7 +4,7 @@
 #include "../../globals.h"
 #include "../../AuthLib/AutherLibrary.h"
 #include "../Overlay.hpp"
-#include "../../helpers.h"
+#include "../../helpers/helpers.h"
 
 
 #include "../imgui/imgui.h"
@@ -121,19 +121,19 @@ void* __fastcall menu()
         ImColor barColors = ImColor(88, 0, 255, 255);
 
 
-        ImVec2 gwp = ImGui::GetWindowPos();
+        ImVec2 position = ImGui::GetWindowPos();
         ImDrawList* draw = ImGui::GetWindowDrawList();
 
         ImTricks::NotifyManager::HandleNotifies(ImGui::GetOverlayDrawList());
 
-        draw->AddRect(ImVec2(gwp.x + 0, gwp.y + 0), ImVec2(gwp.x + 520, gwp.y + 520), ImColor(0, 0, 0, 255), 0, 15, 1.000000);
-        draw->AddRectFilled(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 255), 0, 15);
-        draw->AddRectFilledMultiColor(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 64, gwp.y + 31), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105));
-        draw->AddRectFilledMultiColor(ImVec2(gwp.x + 408, gwp.y + 1), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0));
-        draw->AddLine(ImVec2(gwp.x + 1, gwp.y + 31), ImVec2(gwp.x + 519, gwp.y + 31), ImColor(255, 255, 255, 17), 1.000000);
-        draw->AddRect(ImVec2(gwp.x + 1, gwp.y + 1), ImVec2(gwp.x + 518, gwp.y + 519), ImColor(255, 255, 255, 17), 0, 15, 1.000000);
-        draw->AddLine(ImVec2(gwp.x + 1, gwp.y + 61), ImVec2(gwp.x + 518, gwp.y + 61), ImColor(255, 255, 255, 17), 1.000000);
-        draw->AddLine(ImVec2(gwp.x + 1, gwp.y + 62), ImVec2(gwp.x + 518, gwp.y + 62), ImColor(0, 0, 0, 255), 1.000000);
+        draw->AddRect(ImVec2(position.x + 0, position.y + 0), ImVec2(position.x + 520, position.y + 520), ImColor(0, 0, 0, 255), 0, 15, 1.000000);
+        draw->AddRectFilled(ImVec2(position.x + 1, position.y + 1), ImVec2(position.x + 519, position.y + 31), ImColor(30, 30, 35, 255), 0, 15);
+        draw->AddRectFilledMultiColor(ImVec2(position.x + 1, position.y + 1), ImVec2(position.x + 64, position.y + 31), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105));
+        draw->AddRectFilledMultiColor(ImVec2(position.x + 408, position.y + 1), ImVec2(position.x + 519, position.y + 31), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0));
+        draw->AddLine(ImVec2(position.x + 1, position.y + 31), ImVec2(position.x + 519, position.y + 31), ImColor(255, 255, 255, 17), 1.000000);
+        draw->AddRect(ImVec2(position.x + 1, position.y + 1), ImVec2(position.x + 518, position.y + 519), ImColor(255, 255, 255, 17), 0, 15, 1.000000);
+        draw->AddLine(ImVec2(position.x + 1, position.y + 61), ImVec2(position.x + 518, position.y + 61), ImColor(255, 255, 255, 17), 1.000000);
+        draw->AddLine(ImVec2(position.x + 1, position.y + 62), ImVec2(position.x + 518, position.y + 62), ImColor(0, 0, 0, 255), 1.000000);
 
 
 
@@ -154,13 +154,12 @@ void* __fastcall menu()
         ImGui::PushStyleColor(ImGuiCol_Text, { 255 / 255.f,255 / 255.f,255 / 255.f,255.f / 255.f });
         ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, { 35.f / 255.f,35.f / 255.f,35.f / 255.f,0 / 255.f });
 
-        ImVec2 position;
-
-        position = ImGui::GetWindowPos();
-
-        draw->AddRectFilled(ImVec2{ position.x + 120,position.y + 62 }, ImVec2{ position.x + 515,position.y + 515 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
-        draw->AddLine(ImVec2{ position.x + 120,position.y + 31}, ImVec2{ position.x + 120,position.y + 515 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
+        draw->AddRectFilled(ImVec2{ position.x + 120,position.y + 62 }, ImVec2{ position.x + 515,position.y + 493 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
+        draw->AddRectFilled(ImVec2{ position.x + 150,position.y + 492 }, ImVec2{ position.x + 515,position.y + 515 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
+        draw->AddLine(ImVec2{ position.x + 120,position.y + 31}, ImVec2{ position.x + 120,position.y + 493 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
         draw->AddLine(ImVec2{ position.x,position.y + 30 }, ImVec2{ position.x + 520,position.y + 30 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
+
+
 
         //under subtabs
         draw->AddLine(ImVec2{ position.x + 130,position.y + 62 }, ImVec2{ position.x + 510,position.y + 62 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
@@ -174,10 +173,18 @@ void* __fastcall menu()
         draw->AddLine(ImVec2{ position.x + 10, position.y + 205 }, ImVec2{ position.x + 112, position.y + 205 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
 
         //logo text
-        draw->AddText({ position.x + 220, position.y + 35 / 2 - ImGui::CalcTextSize("AnarchyProject").y / 2 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "AnarchyProject ");
+        draw->AddText({ position.x + 215, position.y + 35 / 2 - ImGui::CalcTextSize("AnarchyProject").y / 2 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "AnarchyProject ");
+        
+        ImGui::SetCursorPos({ 315, 10 });
+        ImGui::Text("%c", "|/-\\"[(int)(ImGui::GetTime() / 0.5f) & 3]);
 
-        ImGui::SetCursorPos({ 10, 500 });
+        draw->AddLine(ImVec2{ position.x + 8,position.y + 496 }, ImVec2{ position.x + 145,position.y + 496 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
+
+        ImGui::SetCursorPos({ 10, 498 });
         ImGui::Text("Sub: %s", AutherLibrary::ExpireDateHumanReadable());
+
+        draw->AddLine(ImVec2{ position.x + 8,position.y + 513 }, ImVec2{ position.x + 145,position.y + 513 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
+
 
         static int page = 0;
         static int subtab = 0;
@@ -495,8 +502,13 @@ void* __fastcall login() {
         ImGui::SetCursorPos({ 60, 8 });
         ImGui::InputText("", globals.key, IM_ARRAYSIZE(globals.key));
 
+        const ImU32 col = ImColor(15, 15, 155);
+        ImGui::SetCursorPos({ 138, 10 });
+
+
         ImGui::SetCursorPos({ 115, 33 });
         if (ImGui::Button("Login", ImVec2(75, 20))) {
+            ImTricks::Animations::Spinner("##spinner", 15, 3, col);
             if (AutherLibrary::Auth(globals.key, AutherLibrary::GetHwid()))
             {
                 globals.auth = true;

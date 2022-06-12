@@ -6,7 +6,7 @@
 #include "Features/MISC/DoMisc.hpp"
 #include "Entity/EntityLoop.hpp"
 #include <xstring>
-#include "log.h"
+#include "helpers/log.h"
 #include "lazy_importer.h"
 #include "AuthLib/AutherLibrary.h"
 #include "globals.h"
@@ -18,75 +18,26 @@
 #pragma comment(lib, "Wldap32.lib")
 #pragma comment(lib, "Normaliz.lib")
 
-void Hide()
-{
-	HWND Hide;
-	LI_FN(AllocConsole)();
-	Hide = FindWindowA("ConsoleWindowClass", NULL);
-	LI_FN(ShowWindow)(Hide, 0);
-}
-
-void Brrp()
-{
-	Beep(247, 500);
-	Beep(417, 500);
-	Beep(417, 500);
-	Beep(370, 500);
-	Beep(417, 500);
-	Beep(329, 500);
-	Beep(247, 500);
-	Beep(247, 500);
-	Beep(247, 500);
-	Beep(417, 500);
-	Beep(417, 500);
-	Beep(370, 500);
-	Beep(417, 500);
-	Beep(497, 500);
-	Sleep(500);
-	Beep(497, 500);
-	Beep(277, 500);
-	Beep(277, 500);
-	Beep(440, 500);
-	Beep(440, 500);
-	Beep(417, 500);
-	Beep(370, 500);
-	Beep(329, 500);
-	Beep(247, 500);
-	Beep(417, 500);
-	Beep(417, 500);
-	Beep(370, 500);
-	Beep(417, 500);
-	Beep(329, 500);
-}
-
-
 int main()
 {	
 	SetConsoleTitle("A-P");
 	HWND hwnd = nullptr;
 
-	
-
 	AutherLibrary::Initialize(safe_str("maWwK5sbjUOGpuBHF8SeDtfENdTC1rlI"), safe_str("oCA7K4GerUvgy6u8DdsnT9ShfjPl1Bcm"));
 
-
-	//start_log();
 	LI_FN(ShowWindow)(GetConsoleWindow(), SW_HIDE);
 
 	try
 	{
 		CleanPIDDBCacheTable();
 
-		//MessageBox(NULL, safe_str("Launch Rust"), safe_str(""), MB_OK);
-
 		while (!hwnd)
 		{
-			hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
-			//hwnd = FindWindowA(safe_str("Chrome_WidgetWin_0"), safe_str("Spotify Free"));
+			//hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
+			hwnd = FindWindowA(safe_str("Chrome_WidgetWin_1"), safe_str("GitHub Desktop"));
 			LI_FN(Sleep)(50);
 		}
 
-		//MessageBox(NULL, safe_str("Game has been found!"), safe_str(" Press F1 when game loads in!"), MB_OK);
 
 		while (true)
 		{
@@ -109,9 +60,6 @@ int main()
 		pId = get_process_id(safe_str("RustClient.exe"));
 		gBase = get_module_base_address(safe_str("GameAssembly.dll"));
 		uBase = get_module_base_address(safe_str("UnityPlayer.dll"));
-		//injection_log();
-//		Brrp();
-//		Hide();
 		std::thread overlay_thread(Overlay::Loop);
 		std::thread entity_thread(Entity::EntityLoop);
 		std::thread aimbot_thread(Aimbot::DoAimbot);

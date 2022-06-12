@@ -177,9 +177,14 @@
     <ClInclude Include="Features\ESP\ESP.hpp" />
     <ClInclude Include="Features\MISC\DoMisc.hpp" />
     <ClInclude Include="globals.h" />
-    <ClInclude Include="helpers.h" />
+    <ClInclude Include="helpers\antdebug.h" />
+    <ClInclude Include="helpers\guard.h" />
+    <ClInclude Include="helpers\helpers.h" />
+    <ClInclude Include="helpers\include.h" />
+    <ClInclude Include="helpers\log.h" />
+    <ClInclude Include="helpers\updater.hpp" />
+    <ClInclude Include="helpers\xorstr.hpp" />
     <ClInclude Include="lazy_importer.h" />
-    <ClInclude Include="log.h" />
     <ClInclude Include="Overlay\color.hpp" />
     <ClInclude Include="Overlay\FontData.hpp" />
     <ClInclude Include="Features\MISC\Misc.hpp" />
@@ -199,7 +204,6 @@
     <ClInclude Include="Overlay\retake\childs.hpp" />
     <ClInclude Include="Overlay\retake\combo.hpp" />
     <ClInclude Include="Overlay\retake\imgui_tricks.hpp" />
-    <ClInclude Include="Overlay\retake\menu.hpp" />
     <ClInclude Include="Overlay\retake\new.hpp" />
     <ClInclude Include="Overlay\retake\slider.hpp" />
     <ClInclude Include="Overlay\retake\subtab.hpp" />
@@ -215,7 +219,6 @@
     <ClInclude Include="SDK\safe_ptr.hpp" />
     <ClInclude Include="SDK\Utils.hpp" />
     <ClInclude Include="SDK\VMProtectSDK.h" />
-    <ClInclude Include="updater.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vos.club_csgo.rc" />

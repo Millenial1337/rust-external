@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vos.club_csgo", "rust\rust.vcxproj", "{B3DC4664-6216-4E2A-AB3E-D06AEFE03D7D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rust-external", "rust\rust.vcxproj", "{B3DC4664-6216-4E2A-AB3E-D06AEFE03D7D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kernel-driver", "kernel-driver\kernel-driver.vcxproj", "{DBDA90BF-8352-4970-B0F8-574EC54A1D2C}"
 EndProject

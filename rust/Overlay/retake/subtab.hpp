@@ -58,7 +58,7 @@ namespace Retake
 			}
 		}
 
-		int lerpAnim = ImTricks::Animations::FastIntLerp(label, selected, 0, 255, 10);
+		int fadein = ImTricks::Animations::FastIntLerp(label, selected, 0, 255, 10);
 
 
 		if(selected)
@@ -66,7 +66,7 @@ namespace Retake
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(229/ 255.f , 229/ 255.f ,229/ 255.f ,255/ 255.f ));
 			ImGui::RenderText(ImVec2(bb.Min.x + 0 + (100 / 2 - label_size.x / 2), bb.Min.y + style.FramePadding.y + 0), label); 
 			ImGui::PopStyleColor();
-			window->DrawList->AddRectFilled(ImVec2(bb.Min.x + 10, bb.Min.y + 20), ImVec2(bb.Max.x + -10, bb.Max.y + -1), ImColor(180, 68, 124, lerpAnim), 6, 16);
+			window->DrawList->AddRectFilled(ImVec2(bb.Min.x + 10, bb.Min.y + 20), ImVec2(bb.Max.x + -10, bb.Max.y + -1), ImColor(180, 68, 124, fadein), 6, 16);
 		}
 		else
 		{
