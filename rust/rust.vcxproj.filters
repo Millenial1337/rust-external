@@ -29,6 +29,9 @@
     <ClCompile Include="Overlay\retake\imgui_tricks.cpp">
       <Filter>Overlay\retake</Filter>
     </ClCompile>
+    <ClCompile Include="Overlay\blur\PostProcessing.cpp">
+      <Filter>Overlay\blur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.h" />
@@ -172,12 +175,21 @@
     <ClInclude Include="Features\MISC\Misc.hpp">
       <Filter>Features\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="Overlay\blur\BlurShaders\blur_x.h">
+      <Filter>Overlay\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\blur\BlurShaders\blur_y.h">
+      <Filter>Overlay\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\blur\BlurShaders\default_vs.h">
+      <Filter>Overlay\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\blur\PostProcessing.h">
+      <Filter>Overlay\blur</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\VMProtectSDK64.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="vos.club_csgo.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\VMProtectSDK64.dll" />
@@ -215,6 +227,9 @@
     </Filter>
     <Filter Include="Features\Misc">
       <UniqueIdentifier>{ffe78fdc-51a2-4be8-af79-54b35bf82c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay\blur">
+      <UniqueIdentifier>{1d30f129-8813-4c2f-ac34-302330e7de71}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

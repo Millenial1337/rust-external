@@ -20,6 +20,8 @@
 #include "../retake/childs.hpp"
 #include "../retake/new.hpp"
 
+#include "../blur/PostProcessing.h"
+
 void configSam()
 {
     Settings::enableAimbot = TRUE;
@@ -185,6 +187,9 @@ void* __fastcall menu()
 
         draw->AddLine(ImVec2{ position.x + 8,position.y + 513 }, ImVec2{ position.x + 145,position.y + 513 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
 
+        ImGui::SetCursorPos( {25, 475} );
+        if (Retake::button("EXIT CHEAT", ImVec2(100, 20)))
+            exit(-1);
 
         static int page = 0;
         static int subtab = 0;
@@ -327,12 +332,18 @@ void* __fastcall menu()
                     }
                     if (subtab == 2)
                     {
-                        ImGui::Text("Weapon Color"); ImGui::ColorEdit4(("Weapon Color"), Settings::drawColor_weapon, ImGuiColorEditFlags_NoInputs);
-                        ImGui::Text("Skeleton Color"); ImGui::ColorEdit4(("Skeleton Color"), Settings::drawColor_skeleton, ImGuiColorEditFlags_NoInputs);
-                        ImGui::Text("Name Color"); ImGui::ColorEdit4(("Name Color"), Settings::drawColor_name, ImGuiColorEditFlags_NoInputs);
-                        ImGui::Text("Dropped Items Color"); ImGui::ColorEdit4(("Dropped Items Color"), Settings::DroppedItemCol, ImGuiColorEditFlags_NoInputs);
-                        ImGui::Text("Crosshair Color"); ImGui::ColorEdit4(("Crosshair Color"), Settings::drawColor_crosshair, ImGuiColorEditFlags_NoInputs);
-                        ImGui::Text("ESP Object Color"); ImGui::ColorEdit4(("ESP Object Color"), Settings::espColorMisc, ImGuiColorEditFlags_NoInputs);
+                        //ImGui::Text("Weapon Color"); 
+                        Retake::ColorPicker(("Weapon Color"), Settings::drawColor_weapon, ImGuiColorEditFlags_NoInputs);
+                        //ImGui::Text("Skeleton Color"); 
+                        Retake::ColorPicker(("Skeleton Color"), Settings::drawColor_skeleton, ImGuiColorEditFlags_NoInputs);
+                        //ImGui::Text("Name Color"); 
+                        Retake::ColorPicker(("Name Color"), Settings::drawColor_name, ImGuiColorEditFlags_NoInputs);
+                        //ImGui::Text("Dropped Items Color"); 
+                        Retake::ColorPicker(("Dropped Items Color"), Settings::DroppedItemCol, ImGuiColorEditFlags_NoInputs);
+                        //ImGui::Text("Crosshair Color"); 
+                        Retake::ColorPicker(("Crosshair Color"), Settings::drawColor_crosshair, ImGuiColorEditFlags_NoInputs);
+                        //ImGui::Text("ESP Object Color"); 
+                        Retake::ColorPicker(("ESP Object Color"), Settings::espColorMisc, ImGuiColorEditFlags_NoInputs);
                     }
                 }
                 if (page == 2)
@@ -424,8 +435,6 @@ void* __fastcall menu()
                     static int subtab = 0;
                     if (subtab == 0)
                     {
-                        if (Retake::button("EXIT CHEAT", ImVec2(100, 20)))
-                            exit(-1);
                         if (Retake::button("Load admin cfg", ImVec2(120, 20))) {
                             configSam();
                             ImTricks::NotifyManager::AddNotify("Admin config loaded.", ImTrickNotify_Success);

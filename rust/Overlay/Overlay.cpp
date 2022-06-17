@@ -221,6 +221,8 @@ void __fastcall Overlay::Loop()
 			}
 			//ImGui::End();
 		}
+		PostProcessing::setDevice(g_pd3dDevice);
+		PostProcessing::newFrame();
 		ImGui::EndFrame();
 		g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 		g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -295,6 +297,8 @@ void __fastcall Overlay::start(HWND hwnd) {
 		//ImGui::StyleColorsDark();
 		colors[ImGuiCol_WindowBg] = ImVec4(40 / 255.f, 40 / 255.f, 40 / 255.f, 255 / 255.f); //ImVec4(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f);
 		colors[ImGuiCol_Border] = ImColor(25, 20, 36, 255);
+		if (toggle)
+			PostProcessing::performFullscreenBlur(ImGui::GetBackgroundDrawList(), 155);
 		menu();
 	}
 	else {
@@ -332,6 +336,7 @@ void ResetDevice()
 {
 	ImGui_ImplDX9_InvalidateDeviceObjects();
 	HRESULT hr = g_pd3dDevice->Reset(&g_d3dpp);
+	PostProcessing::onDeviceReset();
 	if (hr == D3DERR_INVALIDCALL)
 		IM_ASSERT(0);
 	ImGui_ImplDX9_CreateDeviceObjects();

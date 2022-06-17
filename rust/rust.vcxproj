@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Overlay\blur\PostProcessing.cpp" />
     <ClCompile Include="Overlay\imgui\imgui.cpp" />
     <ClCompile Include="Overlay\imgui\imgui_demo.cpp" />
     <ClCompile Include="Overlay\imgui\imgui_draw.cpp" />
@@ -185,6 +186,10 @@
     <ClInclude Include="helpers\updater.hpp" />
     <ClInclude Include="helpers\xorstr.hpp" />
     <ClInclude Include="lazy_importer.h" />
+    <ClInclude Include="Overlay\blur\BlurShaders\blur_x.h" />
+    <ClInclude Include="Overlay\blur\BlurShaders\blur_y.h" />
+    <ClInclude Include="Overlay\blur\BlurShaders\default_vs.h" />
+    <ClInclude Include="Overlay\blur\PostProcessing.h" />
     <ClInclude Include="Overlay\color.hpp" />
     <ClInclude Include="Overlay\FontData.hpp" />
     <ClInclude Include="Features\MISC\Misc.hpp" />
@@ -219,9 +224,6 @@
     <ClInclude Include="SDK\safe_ptr.hpp" />
     <ClInclude Include="SDK\Utils.hpp" />
     <ClInclude Include="SDK\VMProtectSDK.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="vos.club_csgo.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\VMProtectSDK64.dll" />
