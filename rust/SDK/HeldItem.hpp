@@ -17,7 +17,7 @@ namespace O {
 	uintptr_t previousVelocity = 0xE4;// private Vector3 previousVelocity
 	uintptr_t groundTime = 0xCC;// private float groundTime
 
-	uintptr_t clothingMoveSpeedReduction = 0x75C;// BasePlayer -> public float clothingMoveSpeedReduction;
+	uintptr_t clothingMoveSpeedReduction = 0x764;// BasePlayer -> public float clothingMoveSpeedReduction;
 
 	uintptr_t heldEntity = 0x98;// Item -> private EntityRef heldEntity;
 
@@ -32,9 +32,9 @@ namespace O {
 	uintptr_t aimConePenaltyMax = 0x2FC;// public float aimConePenaltyMax;
 
 		//BasePlayer
-	uintptr_t BaseMovement = 0x4F0;// public BaseMovement movement;
+	uintptr_t BaseMovement = 0x4F8;// public BaseMovement movement;
 	uintptr_t stancepenalty = 0x324; //private float stancePenalty;
-	uintptr_t ClothingAccuracyBonus = 0x764; // public float clothingAccuracyBonus;
+	uintptr_t ClothingAccuracyBonus = 0x76C; // public float clothingAccuracyBonus;
 	uintptr_t aimconePenalty = 0x328; //private float aimconePenalty;
 
 	uintptr_t canWieldItems = 0x2B8; // BaseMountable -> public bool canWieldItems;

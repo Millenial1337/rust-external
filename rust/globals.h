@@ -3,7 +3,7 @@
 
 class c_globals {
 public:
-	bool auth = false;
+	bool auth = true;
 	bool started = false;
 	char key[255] = "";
 };

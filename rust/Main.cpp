@@ -23,7 +23,7 @@ int main()
 	SetConsoleTitle("A-P");
 	HWND hwnd = nullptr;
 
-	AutherLibrary::Initialize(safe_str("maWwK5sbjUOGpuBHF8SeDtfENdTC1rlI"), safe_str("oCA7K4GerUvgy6u8DdsnT9ShfjPl1Bcm"));
+	//AutherLibrary::Initialize(safe_str("maWwK5sbjUOGpuBHF8SeDtfENdTC1rlI"), safe_str("oCA7K4GerUvgy6u8DdsnT9ShfjPl1Bcm"));
 
 	LI_FN(ShowWindow)(GetConsoleWindow(), SW_HIDE);
 
@@ -34,7 +34,7 @@ int main()
 		while (!hwnd)
 		{
 			//hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
-			hwnd = FindWindowA(safe_str("Chrome_WidgetWin_1"), safe_str("GitHub Desktop"));
+			hwnd = LI_FN(FindWindowA)(safe_str("Chrome_WidgetWin_1"), safe_str("GitHub Desktop"));
 			LI_FN(Sleep)(50);
 		}
 
