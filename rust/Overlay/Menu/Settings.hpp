@@ -40,7 +40,6 @@ namespace Settings {
 	extern bool drawSnaplines;
 	extern bool drawWeapon;
 	extern bool freeze;
-	extern bool niggerCross;
 	extern bool corpseESP;
 	extern bool snapLinez;
 
@@ -146,4 +145,6 @@ namespace Settings {
 	extern bool skyColorBool;
 	extern bool nightSky;
 	extern bool testingBool;
+	extern bool watermark;
+	extern bool debuglog;
 };

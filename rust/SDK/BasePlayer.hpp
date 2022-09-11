@@ -62,7 +62,6 @@ enum class BTimeCategory {
 #pragma region OffsetStuff
 
 constexpr auto ConVar_Graphics_c = 52904424; //0x32732A0
-
 #pragma endregion
 
 #pragma region BList
@@ -203,17 +202,17 @@ public:
 
 	BaseEntity(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
 
-		this->player = Read<uintptr_t>(_ent + 0x20); //Entity
-		this->visualState = Read<uintptr_t>(_trans + 0x38); //0x38
+		this->player = Read<uintptr_t>(_ent + 0x30); // Namespace: ProtoBuf -> class BasePlayer -> public PlayerMetabolism metabolism ??
+		this->visualState = Read<uintptr_t>(_trans + 0x38); // 
 
 		this->playerFlags = Read<int32_t>(_ent + 0x688); //public BasePlayer.PlayerFlags playerFlags;
-		this->name = ReadNative(_obj + 0x60);
-		this->entityFlags = Read<int32_t>(_ent + 0x130);
+		this->name = ReadNative(_obj + 0x68);//prefab name 0x60
+		this->entityFlags = Read<int32_t>(_ent + 0x138); //public BaseEntity.Flags flags
 
 		this->playerModel = Read<uintptr_t>(this->player + 0x4D0); //BasePlayer -> public PlayerModel playerModel;
-		this->modelState = Read<uintptr_t>(this->player + 0x210); //0x588 // PlayerModel -> private ModelState modelState; // 0x210
+		this->modelState = Read<uintptr_t>(this->player + 0x5D8); //private uint clActiveItem;
 
-		this->position = Read<Vector3>(this->visualState + 0x218); //SpecialPurposeCamera -> internal Vector3 position; //PlayerModel maybe <- this
+		this->position = Read<Vector3>(this->visualState + 0x218); //PlayerModel -> internal Vector3 position;
 		this->health = Read<float>(this->player + 0x22C);//protected float _health;
 	}
 
@@ -361,7 +360,7 @@ public:
 	}
 
 	Vector3 getPosition() {
-		return Read<Vector3>(this->visualState + 0x90); //0x90
+		return Read<Vector3>(this->visualState + 0x90); //0x90 
 	}
 
 	Vector3 getRecoilAngles() {
@@ -452,10 +451,10 @@ HeldItem getHeldItem()
 {
 	int active_weapon_id = Read<int>(this->player + 0x5D8); //private uint clActiveItem;
 	//							               public PlayerInventory inventory   BasePlayer
-	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x6A0, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
+	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x618, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
 
-	//std::cout << "Held weapon: found :" <<  items << std::endl;
-
+	if (Settings::debuglog)
+		std::cout << "Held weapon: " <<  items << std::endl;
 
 	for (int items_on_belt = 0; items_on_belt <= 6; items_on_belt++)
 	{
@@ -507,10 +506,10 @@ public:
 	EntityCorpse() {}
 
 	EntityCorpse(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
-		this->ent = Read<uintptr_t>(_ent + 0x28);
+		this->ent = Read<uintptr_t>(_ent + 0x30);
 		this->trans = Read<uintptr_t>(_trans + 0x38);
 
-		this->name = ReadNative(_obj + 0x60);
+		this->name = ReadNative(_obj + 0x68);
 	}
 
 public:
@@ -635,9 +634,9 @@ public:
 	BaseMiscEntity() {}
 
 	BaseMiscEntity(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
-		this->ent = Read<uintptr_t>(_ent + 0x28);
+		this->ent = Read<uintptr_t>(_ent + 0x30);
 		this->trans = Read<uintptr_t>(_trans + 0x38);
-		this->name = ReadNative(_obj + 0x60);
+		this->name = ReadNative(_obj + 0x68);
 
 		if (this->name.find(safe_str("stone-ore")) != std::string::npos)
 			this->name = safe_str("STONE");
@@ -700,7 +699,7 @@ public:
 	BaseWeaponESP() {}
 
 	BaseWeaponESP(uintptr_t _ent, uintptr_t _trans, std::string _name) {
-		this->ent = Read<uintptr_t>(_ent + 0x28);
+		this->ent = Read<uintptr_t>(_ent + 0x30);
 		this->trans = Read<uintptr_t>(_trans + 0x38);
 		this->name = _name;
 	}

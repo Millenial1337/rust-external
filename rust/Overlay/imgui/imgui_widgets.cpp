@@ -7034,7 +7034,7 @@ bool ImGui::Hotkey(const char* label, int* k, const ImVec2& size_arg) {
 	// Render
 	// Select which buffer we are going to display. When ImGuiInputTextFlags_NoLiveEdit is Set 'buf' might still be the old value. We Set buf to NULL to prevent accidental usage from now on.
 
-	char buf_display[64] = "No Key";
+	char buf_display[64] = "[ Hotkey ]";
 
 	RenderFrame(frame_bb.Min - ImVec2(7, 0), frame_bb.Max + ImVec2(0, 3), GetColorU32(ImGuiCol_FrameBg), true, style.FrameRounding);
 
@@ -7042,7 +7042,7 @@ bool ImGui::Hotkey(const char* label, int* k, const ImVec2& size_arg) {
 		strcpy(buf_display, KeyNames[*k]);
 	}
 	else if (g.ActiveId == id) {
-		strcpy(buf_display, "<Press a key>");
+		strcpy(buf_display, "<Press key>");
 	}
 
 	const ImRect clip_rect(frame_bb.Min.x, frame_bb.Min.y, frame_bb.Min.x + size.x, frame_bb.Min.y + size.y); // Not using frame_bb.Max because we have adjusted size

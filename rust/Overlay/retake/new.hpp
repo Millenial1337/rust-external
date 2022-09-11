@@ -18,7 +18,7 @@ namespace GUI
         const ImVec2 label_size = ImGui::CalcTextSize(label, NULL, true);
 
         ImVec2 pos = window->DC.CursorPos;
-        ImVec2 size = ImGui::CalcItemSize(ImVec2{ 376, ImGui::CalcTextSize(label).y + ImGui::CalcTextSize(text).y + 31 }, label_size.x + style.FramePadding.x * 2.0f, label_size.y + style.FramePadding.y * 2.0f);
+        ImVec2 size = ImGui::CalcItemSize(ImVec2{ 360, ImGui::CalcTextSize(label).y + ImGui::CalcTextSize(text).y + 31 }, label_size.x + style.FramePadding.x * 2.0f, label_size.y + style.FramePadding.y * 2.0f);
         const ImRect bb(pos, { pos.x + size.x , pos.y + size.y });
 
         ImGui::ItemSize(size, style.FramePadding.y);

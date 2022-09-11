@@ -32,6 +32,27 @@
     <ClCompile Include="Overlay\blur\PostProcessing.cpp">
       <Filter>Overlay\blur</Filter>
     </ClCompile>
+    <ClCompile Include="DiscordRPC\src\rpc_connection.cpp">
+      <Filter>DiscordRPC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\src\serialization.cpp">
+      <Filter>DiscordRPC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\src\connection_win.cpp">
+      <Filter>DiscordRPC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\src\discord_register_win.cpp">
+      <Filter>DiscordRPC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\src\discord_rpc.cpp">
+      <Filter>DiscordRPC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordRPC\discordrpc.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="config.cpp">
+      <Filter>Overlay\config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.h" />
@@ -187,6 +208,27 @@
     <ClInclude Include="Overlay\blur\PostProcessing.h">
       <Filter>Overlay\blur</Filter>
     </ClInclude>
+    <ClInclude Include="DiscordRPC\include\discord_register.h">
+      <Filter>DiscordRPC\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordRPC\include\discord_rpc.h">
+      <Filter>DiscordRPC\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordRPC\src\msg_queue.h">
+      <Filter>DiscordRPC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordRPC\src\rpc_connection.h">
+      <Filter>DiscordRPC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordRPC\src\serialization.h">
+      <Filter>DiscordRPC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordRPC\src\backoff.h">
+      <Filter>DiscordRPC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordRPC\discordrpc.h">
+      <Filter>DiscordRPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\VMProtectSDK64.lib" />
@@ -230,6 +272,18 @@
     </Filter>
     <Filter Include="Overlay\blur">
       <UniqueIdentifier>{1d30f129-8813-4c2f-ac34-302330e7de71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordRPC">
+      <UniqueIdentifier>{6f17f8e2-b3db-46a0-8c0b-108bb3359bdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordRPC\include">
+      <UniqueIdentifier>{1382c2bd-515a-4043-967a-4e60b391c34b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordRPC\src">
+      <UniqueIdentifier>{6d95440a-2959-42f4-8afa-34f2202041ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay\config">
+      <UniqueIdentifier>{ce81d7c4-37d4-44ca-b3f3-862ecf54d15e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

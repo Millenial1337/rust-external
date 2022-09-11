@@ -25,7 +25,7 @@ int main()
 
 	//AutherLibrary::Initialize(safe_str("maWwK5sbjUOGpuBHF8SeDtfENdTC1rlI"), safe_str("oCA7K4GerUvgy6u8DdsnT9ShfjPl1Bcm"));
 
-	LI_FN(ShowWindow)(GetConsoleWindow(), SW_HIDE);
+	LI_FN(ShowWindow)(GetConsoleWindow(), SW_SHOW);
 
 	try
 	{
@@ -35,13 +35,15 @@ int main()
 		{
 			//hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
 			hwnd = LI_FN(FindWindowA)(safe_str("Chrome_WidgetWin_1"), safe_str("GitHub Desktop"));
+			//hwnd = LI_FN(FindWindowA)(safe_str("UnityWndClass"), safe_str("Rust"));
 			LI_FN(Sleep)(50);
 		}
 
+		//start_log();
 
 		while (true)
 		{
-			if (GetAsyncKeyState(VK_F1))
+			if (LI_FN(GetAsyncKeyState)(VK_F5))
 				break;
 			LI_FN(Sleep)(50);
 		}
@@ -58,8 +60,11 @@ int main()
 		localPlayer = std::make_unique<LocalPlayer>();
 
 		pId = get_process_id(safe_str("RustClient.exe"));
+		std::cout << "PID: " << pId << endl;
 		gBase = get_module_base_address(safe_str("GameAssembly.dll"));
+		cout << "GameAssemblyBase: " << gBase << endl;
 		uBase = get_module_base_address(safe_str("UnityPlayer.dll"));
+		cout << "UnityPlayerBase: " << uBase << endl;
 		std::thread overlay_thread(Overlay::Loop);
 		std::thread entity_thread(Entity::EntityLoop);
 		std::thread aimbot_thread(Aimbot::DoAimbot);

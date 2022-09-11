@@ -70,8 +70,11 @@ public:
 
 		if (!wide_name.empty())
 			return std::string(wide_name.begin(), wide_name.end()).c_str();
-
-		//std::cout <<  "Display name " << display_name << std::endl;
+		if (Settings::debuglog)
+		{
+			std::cout << "Display name " << display_name << std::endl;
+			printf("wide name: %s", wide_name);
+		}
 
 		return safe_str("No Item");
 	}

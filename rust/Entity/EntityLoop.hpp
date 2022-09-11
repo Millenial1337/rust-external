@@ -27,6 +27,16 @@ namespace Entity {
 			auto objectList = Read<uintptr_t>(bufferList + 0x18);
 			auto objectListSize = Read<uint32_t>(bufferList + 0x10);
 
+			if (Settings::debuglog)
+			{
+				std::cout << "unk: " << unk1 << std::endl;
+				std::cout << "clientEntities " << clientEntities << std::endl;
+				std::cout << "entityRealm: " << entityRealm << std::endl;
+				std::cout << "bufferList: " << bufferList << std::endl;
+				std::cout << "objectList: " << objectList << std::endl;
+				std::cout << "objectListSize: " << objectListSize << std::endl;
+			}
+
 			for (auto i = 0; i < objectListSize; i++) {
 				auto curObject = Read<uintptr_t>(objectList + (0x20 + (i * 8)));
 				auto baseObject = Read<uintptr_t>(curObject + 0x10);
@@ -36,7 +46,19 @@ namespace Entity {
 			
 				auto ukn01 = Read<uintptr_t>(baseObject + 0x28);
 
+
 				auto ukn02 = Read<uintptr_t>(ukn01);
+
+				if (Settings::debuglog)
+				{
+					std::cout << "curObject: " << curObject << std::endl;
+					std::cout << "baseObject: " << baseObject << std::endl;
+					std::cout << "object: " << object << std::endl;
+					std::cout << "tag: " << tag << std::endl;
+					std::cout << "prefebName: " << prefebName << std::endl;
+					std::cout << "ukn01: " << ukn01 << std::endl;
+				}
+
 				if (!ukn02)
 					continue;
 				auto entityClass = ReadNative(ukn02 + 0x10);

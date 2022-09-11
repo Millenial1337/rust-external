@@ -20,7 +20,11 @@
 #include "../retake/childs.hpp"
 #include "../retake/new.hpp"
 
+#include "../../DiscordRPC/discordrpc.h"
+
 #include "../blur/PostProcessing.h"
+
+Discord* g_Discord;
 
 void configSam()
 {
@@ -100,154 +104,109 @@ void* __fastcall menu()
     style.ChildBorderSize = 1;
     style.PopupBorderSize = 0;
     style.FrameBorderSize = 1;
-    style.WindowRounding = 0;
-    style.ChildRounding = 0;
-    style.FrameRounding = 0;
-    style.PopupRounding = 0;
-    style.ScrollbarRounding = 0;
-    style.GrabRounding = 0;
+    style.WindowRounding = 6;
+    style.ChildRounding = 6;
+    style.FrameRounding = 6;
+    style.PopupRounding = 6;
+    style.ScrollbarRounding = 6;
+    style.GrabRounding = 6;
 
-    ImGui::SetNextWindowSize({520.000000f, 520.000000f });
+    style.Colors[ImGuiCol_WindowBg] = ImColor(55, 46, 58, 255);
+
+
     ImGui::SetNextWindowPos(ImVec2(-10, -10));
     ImGui::SetNextWindowBgAlpha(255.f);
 
     //Window Size
-    ImGui::SetNextWindowSize({ 520.000000f, 520.000000f });
+    ImGui::SetNextWindowSize({ 500.000000f, 345.000000f });
     ImGui::SetNextWindowPos(ImVec2((1920 - 840) * .5, (1080 - 500) * .5), ImGuiCond_Once);
 
-    ImGui::Begin(safe_str("cheat"), (bool*)true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+    ImGui::Begin(safe_str("cheat"), (bool*)true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar);
     {
         ImGui::SetScrollY(0);
 
         ImVec2 p = ImGui::GetCursorScreenPos();
         ImColor barColors = ImColor(88, 0, 255, 255);
 
-
         ImVec2 position = ImGui::GetWindowPos();
         ImDrawList* draw = ImGui::GetWindowDrawList();
 
         ImTricks::NotifyManager::HandleNotifies(ImGui::GetOverlayDrawList());
 
-        draw->AddRect(ImVec2(position.x + 0, position.y + 0), ImVec2(position.x + 520, position.y + 520), ImColor(0, 0, 0, 255), 0, 15, 1.000000);
-        draw->AddRectFilled(ImVec2(position.x + 1, position.y + 1), ImVec2(position.x + 519, position.y + 31), ImColor(30, 30, 35, 255), 0, 15);
-        draw->AddRectFilledMultiColor(ImVec2(position.x + 1, position.y + 1), ImVec2(position.x + 64, position.y + 31), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105));
-        draw->AddRectFilledMultiColor(ImVec2(position.x + 408, position.y + 1), ImVec2(position.x + 519, position.y + 31), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0));
-        draw->AddLine(ImVec2(position.x + 1, position.y + 31), ImVec2(position.x + 519, position.y + 31), ImColor(255, 255, 255, 17), 1.000000);
-        draw->AddRect(ImVec2(position.x + 1, position.y + 1), ImVec2(position.x + 518, position.y + 519), ImColor(255, 255, 255, 17), 0, 15, 1.000000);
-        draw->AddLine(ImVec2(position.x + 1, position.y + 61), ImVec2(position.x + 518, position.y + 61), ImColor(255, 255, 255, 17), 1.000000);
-        draw->AddLine(ImVec2(position.x + 1, position.y + 62), ImVec2(position.x + 518, position.y + 62), ImColor(0, 0, 0, 255), 1.000000);
-
-
-
-        // FLAGS
-        auto window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar; //| ImGuiWindowFlags_NoScrollbar;
-
-        // ATRIBUTES
-        //ImGui::SetNextWindowSize({ 522.000000f,472.000000f });
-
-        // STYLES
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 4);
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-        ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarSize, 1);
-
-        // COLORS
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, { 60 / 255.f, 60 / 255.f, 60 / 255.f, 255 / 255.f }); //235 / 255.f,235 / 255.f,235 / 255.f,255 / 255.f 
-        ImGui::PushStyleColor(ImGuiCol_Text, { 255 / 255.f,255 / 255.f,255 / 255.f,255.f / 255.f });
-        ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, { 35.f / 255.f,35.f / 255.f,35.f / 255.f,0 / 255.f });
-
-        draw->AddRectFilled(ImVec2{ position.x + 120,position.y + 62 }, ImVec2{ position.x + 515,position.y + 493 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
-        draw->AddRectFilled(ImVec2{ position.x + 150,position.y + 492 }, ImVec2{ position.x + 515,position.y + 515 }, ImColor(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f), 4, ImDrawCornerFlags_BotRight);
-        draw->AddLine(ImVec2{ position.x + 120,position.y + 31}, ImVec2{ position.x + 120,position.y + 493 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
-        draw->AddLine(ImVec2{ position.x,position.y + 30 }, ImVec2{ position.x + 520,position.y + 30 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
-
-
-
-        //under subtabs
-        draw->AddLine(ImVec2{ position.x + 130,position.y + 62 }, ImVec2{ position.x + 510,position.y + 62 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
-
-
-        //text
-        draw->AddText({ position.x + 33,position.y + 40 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "FEATURES");
-
-        draw->AddLine(ImVec2{ position.x + 10, position.y + 188 }, ImVec2{ position.x + 112, position.y + 188 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
-        draw->AddText({ position.x + 20, position.y + 190 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "INFORMATION");
-        draw->AddLine(ImVec2{ position.x + 10, position.y + 205 }, ImVec2{ position.x + 112, position.y + 205 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 100.f / 255.f));
-
+        ImGui::PushFont(Overlay::fontMenu);
         //logo text
-        draw->AddText({ position.x + 215, position.y + 35 / 2 - ImGui::CalcTextSize("AnarchyProject").y / 2 }, ImColor(255 / 255.f, 255 / 255.f, 255 / 255.f, 255.f / 255.f), "AnarchyProject ");
-        
-        ImGui::SetCursorPos({ 315, 10 });
-        ImGui::Text("%c", "|/-\\"[(int)(ImGui::GetTime() / 0.5f) & 3]);
+        draw->AddText({ position.x + 11, position.y + 3}, ImColor( 97, 79, 104, 255 ), "AnarchyProject");
+        draw->AddLine(ImVec2(position.x, position.y + 21), ImVec2(position.x + 500, position.y + 21), ImColor(43, 33, 47, 255));
 
-        draw->AddLine(ImVec2{ position.x + 8,position.y + 496 }, ImVec2{ position.x + 145,position.y + 496 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
-
-        ImGui::SetCursorPos({ 10, 498 });
-        ImGui::Text("Sub: %s", AutherLibrary::ExpireDateHumanReadable());
-
-        draw->AddLine(ImVec2{ position.x + 8,position.y + 513 }, ImVec2{ position.x + 145,position.y + 513 }, ImColor(120 / 255.f, 120 / 255.f, 120 / 255.f, 70.f / 255.f));
-
-        ImGui::SetCursorPos( {25, 475} );
-        if (Retake::button("EXIT CHEAT", ImVec2(100, 20)))
-            exit(-1);
+        draw->AddRectFilled(ImVec2(position.x, position.y + 21), ImVec2(position.x + 113, position.y + 345), ImColor(43, 33, 47, 255));
+        //ImGui::SetCursorPos({ 315, 10 });
+        //ImGui::Text("%c", "|/-\\"[(int)(ImGui::GetTime() / 0.5f) & 3]);
 
         static int page = 0;
-        static int subtab = 0;
-        ImGui::PushFont(Overlay::fontMenu);
+        static int aim = 0;
+        static int esp = 0;
+        static int misc = 0;
+        static int news = 0;
+
+
         ImGui::SetCursorPos({ 25, 65 });
         if (Retake::tab("Aimbot", page == 0))
+        {
             page = 0;
+        }
 
         ImGui::SetCursorPos({ 25, 95 });
         if (Retake::tab("Visuals", page == 1))
+        {
             page = 1;
+        }
 
         ImGui::SetCursorPos({ 25, 125 });
         if (Retake::tab("Misc", page == 2))
+        {
             page = 2;
+        }
 
         ImGui::SetCursorPos({ 25, 155 });
-        if (Retake::tab("Settings", page == 3))
+        if (Retake::tab("Configs", page == 3))
+        {
             page = 3;
+        }
 
         ImGui::SetCursorPos({ 25, 210 });
         if (Retake::tab("Dashboard", page == 4))
-            page = 4;
-
-        if (page == 0)
         {
-            ImGui::SetCursorPos({ 270, 40 });
-            if (Retake::subtab("AIMBOT", subtab == 0))
-                subtab = 0;
+            page = 4;
         }
+
         if (page == 1)
         {
             ImGui::SetCursorPos({ 160, 40 });
-            if (Retake::subtab("ESP", subtab == 0))
-                subtab = 0;
+            if (Retake::subtab("ESP", esp == 0))
+                esp = 0;
 
             ImGui::SetCursorPos({ 260, 40 });
-            if (Retake::subtab("Object List", subtab == 1))
-                subtab = 1;
+            if (Retake::subtab("Object List", esp == 1))
+                esp = 1;
 
             ImGui::SetCursorPos({ 360, 40 });
-            if (Retake::subtab("COLORS", subtab == 2))
-                subtab = 2;
+            if (Retake::subtab("COLORS", esp == 2))
+                esp = 2;
         }
         if (page == 2)
         {
             ImGui::SetCursorPos({ 210, 40 });
-            if (Retake::subtab("Weapon", subtab == 0))
-                subtab = 0;
+            if (Retake::subtab("Weapon", misc == 0))
+                misc = 0;
 
             ImGui::SetCursorPos({ 320, 40 });
-            if (Retake::subtab("Player", subtab == 1))
-                subtab = 1;
+            if (Retake::subtab("Player", misc == 1))
+                misc = 1;
         }
         if (page == 4) {
             ImGui::SetCursorPos({ 270, 40 });
-            if (Retake::subtab("NEWS", subtab == 0))
-                subtab = 0;
+            if (Retake::subtab("NEWS", news == 0))
+                news = 0;
         }
         {
             ImGui::SetCursorPos({ 130, 70 });
@@ -255,30 +214,28 @@ void* __fastcall menu()
             {
                 if (page == 0)
                 {
-                    if (subtab == 0)
-                    {
-                        Retake::checkbox("Enable Aimbot", &Settings::enableAimbot);
-                        ImGui::Text("Aimbot Key"); ImGui::SameLine(); ImGui::Hotkey("##Aimbot Key", &Settings::aimbotKey, ImVec2(80, 15));
+                    draw->AddRectFilled(ImVec2( position.x + 119 ,position.y + 24 ), ImVec2( position.x + 294 ,position.y + 144 ), ImColor(43, 33, 47, 255), 6, 15);
 
-                        ImGui::Spacing();
-                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 10);
-                        ImGui::Spacing();
-                        Retake::slider_int("Aimbot FOV", &Settings::aimbotFov, 0, 360, "%.1f", NULL);
+                    Retake::checkbox("Enable Aimbot", &Settings::enableAimbot);
+                    ImGui::Text("Aimbot Key"); ImGui::SameLine(); ImGui::Hotkey("##Aimbot Key", &Settings::aimbotKey, ImVec2(80, 18));
 
-                        Retake::checkbox("Enable Distance", &Settings::enableAimbotDistance);
-                        Retake::slider_int("Aimbot Distance", &Settings::aimbotDistance, 0, 300, "%.1f", NULL);
+                    ImGui::Spacing();
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 10);
+                    ImGui::Spacing();
+                    Retake::slider_int("Aimbot FOV", &Settings::aimbotFov, 0, 360, "%.1f", NULL);
 
-                        ImGui::PushItemWidth(ImGui::GetWindowWidth() - 340);
-                        ImGui::Spacing();
-                        const char* listbox_items[] = { "Head", "Chest", "Pevlis" };
-                        ImGui::ListBox("##Hitbox", &Settings::aimbotHitbox, listbox_items, IM_ARRAYSIZE(listbox_items));
-                        Retake::checkbox("ThickBullet", &Settings::thickBullettt);
+                    Retake::checkbox("Enable Distance", &Settings::enableAimbotDistance);
+                    Retake::slider_int("Aimbot Distance", &Settings::aimbotDistance, 0, 300, "%.1f", NULL);
 
-                    }
+                    ImGui::PushItemWidth(ImGui::GetWindowWidth() - 340);
+                    ImGui::Spacing();
+                    const char* listbox_items[] = { "Head", "Chest", "Pevlis" };
+                    ImGui::ListBox("##Hitbox", &Settings::aimbotHitbox, listbox_items, IM_ARRAYSIZE(listbox_items));
+                    Retake::checkbox("ThickBullet", &Settings::thickBullettt);
                 }
                 if (page == 1)
                 {
-                    if (subtab == 0)
+                    if (esp == 0)
                     {
                         Retake::checkbox("Enable Visuals", &Settings::enableVisuals);
 
@@ -320,7 +277,7 @@ void* __fastcall menu()
                         Retake::slider_int(("Fov Changer"), &Settings::FovSlider, 75, 150, "%.1f", NULL);
 
                     }
-                    if (subtab == 1)
+                    if (esp == 1)
                     {
                         if (ImGui::ListBoxHeader("##ESP Object List"))
                         {
@@ -330,7 +287,7 @@ void* __fastcall menu()
                             ImGui::ListBoxFooter();
                         }
                     }
-                    if (subtab == 2)
+                    if (esp == 2)
                     {
                         //ImGui::Text("Weapon Color"); 
                         Retake::ColorPicker(("Weapon Color"), Settings::drawColor_weapon, ImGuiColorEditFlags_NoInputs);
@@ -348,7 +305,7 @@ void* __fastcall menu()
                 }
                 if (page == 2)
                 {
-                    if (subtab == 0)
+                    if (misc == 0)
                     {
                         Retake::checkbox(("Rapid Fire"), &Settings::rapidFire);
                         if (Settings::rapidFire)
@@ -368,7 +325,7 @@ void* __fastcall menu()
 
                         ImGui::Spacing();
                     }
-                    if (subtab == 1)
+                    if (misc == 1)
                     {
                         Retake::checkbox(("Spider Climb"), &Settings::spiderClimb);
                         Retake::checkbox(("ar"), &Settings::fly);
@@ -432,22 +389,36 @@ void* __fastcall menu()
                 }
                 if (page == 3)
                 {
-                    static int subtab = 0;
-                    if (subtab == 0)
+                    ImGui::SetCursorPosY(10);
+                    Retake::BeginChild("Config", ImVec2(150, 200), false, NULL);
                     {
+                        Retake::checkbox("Watermark", &Settings::watermark);
+                        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+                        {
+                            ImGui::SetTooltip("Watermark");
+                        }
+
+
                         if (Retake::button("Load admin cfg", ImVec2(120, 20))) {
                             configSam();
                             ImTricks::NotifyManager::AddNotify("Admin config loaded.", ImTrickNotify_Success);
                         }
-                    		
+
+
+                        if (Retake::button("Print debug true", ImVec2(120, 20)))
+                            Settings::debuglog = true;
+
+                        if (Retake::button("Print debug false", ImVec2(120, 20)))
+                            Settings::debuglog = false;
+                        if (Retake::button("Exit", ImVec2(70, 20)))
+                            exit(1);
                     }
                 }
                 if (page == 4)
                 {
-                    static int subtab = 0;
-                    if (subtab == 0)
+                    if (news == 0)
                     {
-                        GUI::News("Information", dls(safe_str("http://risex.xyz/info.php")).c_str());
+                        GUI::News("Information", dls(safe_str("https://a-p.fun/info.php")).c_str());
                     }
                 }
             }
@@ -456,30 +427,8 @@ void* __fastcall menu()
 
 
         ImGui::PopFont();
-
-        ImGui::PopStyleColor();
-        ImGui::PopStyleColor();
-        ImGui::PopStyleColor();
-        ImGui::PopStyleVar();
-
-        ImGui::SetCursorPosY(9);
-
-        ImGui::Dummy(ImVec2(0, 25));
-        ImGui::Dummy(ImVec2(0, 0)); ImGui::SameLine();
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(16, 16));
-
-        ImGui::PushFont(Overlay::fontMenu);
-        ImGui::PopFont();
-        ImGui::PopStyleVar();
-
-        ImGui::SetCursorPosY(305);
-        ImVec2 p2 = ImGui::GetCursorScreenPos();
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 3);
-        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 650);
-        //ImGui::Text(("Rust"));
-
-        //ImGui::End();
     }
+    ImGui::End();
 }
 
 void* __fastcall login() {
@@ -511,13 +460,9 @@ void* __fastcall login() {
         ImGui::SetCursorPos({ 60, 8 });
         ImGui::InputText("", globals.key, IM_ARRAYSIZE(globals.key));
 
-        const ImU32 col = ImColor(15, 15, 155);
-        ImGui::SetCursorPos({ 138, 10 });
-
-
         ImGui::SetCursorPos({ 115, 33 });
-        if (ImGui::Button("Login", ImVec2(75, 20))) {
-            ImTricks::Animations::Spinner("##spinner", 15, 3, col);
+        if (ImGui::Button("Login", ImVec2(75, 20))) 
+        {
             if (AutherLibrary::Auth(globals.key, AutherLibrary::GetHwid()))
             {
                 globals.auth = true;

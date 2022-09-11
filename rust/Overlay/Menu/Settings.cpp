@@ -3,7 +3,6 @@
 
 namespace Settings {
 
-
 	float espColorMisc[4] = { 1.f, 1.f, 1.f, 1.f };
 	//Aimbot:
 	int aimbotSmoothingValue = 10;
@@ -29,7 +28,6 @@ namespace Settings {
 	bool drawSkeleton = false;
 	bool drawBox = false;
 	bool drawCrosshair = false;
-	bool niggerCross = false;
 	bool drawHealthBar = false;
 	bool healthNiggers = false;
 	bool drawName = false;
@@ -152,4 +150,6 @@ namespace Settings {
 	bool testingBool = false;
 
 	bool ShootMounted = false;
+	bool watermark = false;
+	bool debuglog = false;
 }

@@ -99,7 +99,7 @@ namespace Retake
 		const float w = 222 - 48;
 
 		const ImVec2 label_size = ImGui::CalcTextSize(label, NULL, true);
-		const ImRect frame_bb(window->DC.CursorPos + ImVec2(0, 16), window->DC.CursorPos + ImVec2(w, 29));
+		const ImRect frame_bb(window->DC.CursorPos + ImVec2(0, 20), window->DC.CursorPos + ImVec2(w, 29));
 		const ImRect total_bb(frame_bb.Min - ImVec2(0, 16), frame_bb.Max);
 
 		ImGui::ItemSize(total_bb, style.FramePadding.y);
@@ -134,20 +134,20 @@ namespace Retake
 		ImRect grab_bb;
 		const bool value_changed = ImGui::SliderBehavior(frame_bb, id, data_type, p_data, p_min, p_max, format, 1, ImGuiSliderFlags_None, &grab_bb);
 
-		window->DrawList->AddRectFilledMultiColor(frame_bb.Min, frame_bb.Max - ImVec2(0, 2), ImColor(40, 40, 46), ImColor(40, 40, 46), ImColor(30, 30, 30), ImColor(30, 30, 30));
-		window->DrawList->AddRect(frame_bb.Min, frame_bb.Max - ImVec2(0,2), ImColor(20, 20, 20, 255), 0, 0);
+		window->DrawList->AddRectFilled(frame_bb.Min, frame_bb.Max - ImVec2(0, 2), ImColor(40, 40, 46), 6);
 
-		window->DrawList->AddRectFilledMultiColor(ImVec2(frame_bb.Min.x + 1, frame_bb.Min.y + 1), ImVec2(grab_bb.Max.x + 1, grab_bb.Max.y + 1 - 2), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 200), ImColor(180, 68, 124, 200), ImColor(30, 30, 35, 0));
+		window->DrawList->AddRectFilled(ImVec2(frame_bb.Min.x + 1, frame_bb.Min.y + 1), ImVec2(grab_bb.Max.x + 1, grab_bb.Max.y + 1 - 2), ImColor(97, 79, 104, 255), 6);
 
 		char value_buf[64];
 		const char* value_buf_end = value_buf + DataTypeFormatString(value_buf, IM_ARRAYSIZE(value_buf), data_type, p_data, format);
 
 		float grab_w = grab_bb.Max.x - grab_bb.Min.x;
 		auto const moved_pos_of_prev_rect = 1;
-		auto const preview_w = ImGui::CalcTextSize((std::stringstream{ } << value_buf).str().c_str()).x;
-		ImVec2 text_pos = grab_bb.Min + ImVec2(grab_w, moved_pos_of_prev_rect);
+		auto const preview_w = ImGui::CalcTextSize((std::stringstream{ } << value_buf).str().c_str()).y;
+		ImVec2 text_pos = ImVec2(frame_bb.Max.x - 16, frame_bb.Min.y - 16);
 
-		ImGui::GetOverlayDrawList()->AddText(text_pos - ImVec2(preview_w / 2, 0), ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);
+		//ImGui::GetOverlayDrawList()->AddText(text_pos - preview_w / 2, ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);
+		ImGui::GetOverlayDrawList()->AddText(ImVec2(frame_bb.Max.x - 2 - ImGui::CalcTextSize(value_buf).x, window->DC.CursorPos.y - 25), ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);
 
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f));
 		ImGui::RenderText(ImVec2(frame_bb.Min.x, frame_bb.Min.y - 16), label);

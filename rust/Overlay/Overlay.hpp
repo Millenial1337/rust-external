@@ -15,6 +15,7 @@ namespace Overlay
 	void Style(ImGuiStyle& style);
 	inline ImFont* fontTitle;
 	inline ImFont* fontMenu;
+	inline ImFont* fontMenuSmall;
 	inline ImFont* playerName;
 	inline ImFont* weaponName;
 	inline ImFont* menuIcon;

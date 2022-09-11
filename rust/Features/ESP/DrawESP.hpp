@@ -165,25 +165,4 @@ namespace ESP {
 		}*/
 
 	}
-
-	void __fastcall Nigger()
-	{
-		float xs = screenWidth / 2;
-		float ys = screenHeight / 2;
-
-		ImVec2 top = ImVec2(xs, ys + 10);
-		ImVec2 right = ImVec2(xs + 10, ys);
-		ImVec2 bottom = ImVec2(xs, ys - 10);
-		ImVec2 left = ImVec2(xs - 10, ys);
-
-		Render::Line({ xs, ys - 11 }, { xs, ys + 11}, Render::FtIM(Settings::drawColor_crosshair), 2.3f);
-		Render::Line({ xs - 11, ys}, { xs + 11, ys }, Render::FtIM(Settings::drawColor_crosshair), 2.3f);
-
-		Render::Line(top, { top.x + 10, top.y }, Render::FtIM(Settings::drawColor_crosshair), 2.3f);
-		Render::Line(right, { right.x, right.y - 10 }, Render::FtIM(Settings::drawColor_crosshair), 2.3f);
-		Render::Line(bottom, { bottom.x - 10, bottom.y }, Render::FtIM(Settings::drawColor_crosshair), 2.3f);
-		Render::Line(left, { left.x, left.y + 10 }, Render::FtIM(Settings::drawColor_crosshair), 2.3f);
-
-
-	}
 }

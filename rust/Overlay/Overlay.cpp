@@ -13,6 +13,7 @@
 
 #include "../fonts/FontAwesome.h"
 #include "../fonts/RudaBolt.h"
+#include "FontData.hpp"
 #include "../globals.h"
 
 #define DIRECTINPUT_VERSION 0x0800
@@ -28,8 +29,10 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 bool toggle = false;
 
-void Overlay::Style(ImGuiStyle& style)
+void Overlay::Style(ImGuiStyle &style)
 {
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
 	style.WindowPadding = ImVec2(0, 0);
 	style.FramePadding = ImVec2(4, 3);
 	style.ItemSpacing = ImVec2(8, 4);
@@ -51,7 +54,7 @@ void Overlay::Style(ImGuiStyle& style)
 
 	style.Colors[ImGuiCol_Text] = ImVec4(0.900000f, 0.900000f, 0.900000f, 1.000000f);
 	style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.600000f, 0.600000f, 0.600000f, 1.000000f);
-	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.078431f, 0.078431f, 0.090196f, 1.000000f);
+	style.Colors[ImGuiCol_WindowBg] = ImColor(55, 46, 58, 255);
 	style.Colors[ImGuiCol_ChildBg] = ImVec4(0.000000f, 0.000000f, 0.000000f, 0.000000f);
 	style.Colors[ImGuiCol_PopupBg] = ImVec4(0.110000f, 0.110000f, 0.140000f, 0.920000f);
 	style.Colors[ImGuiCol_Border] = ImVec4(0.500000f, 0.500000f, 0.500000f, 0.500000f);
@@ -84,6 +87,11 @@ void Overlay::Style(ImGuiStyle& style)
 	style.Colors[ImGuiCol_ResizeGripActive] = ImVec4(0.780000f, 0.820000f, 1.000000f, 0.900000f);
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.000000f, 0.000000f, 1.000000f, 0.350000f);
 	style.Colors[ImGuiCol_DragDropTarget] = ImVec4(1.000000f, 1.000000f, 0.000000f, 0.900000f);
+
+	io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 15.0f);
+	Overlay::fontMenu = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 15.0f);
+	Overlay::fontMenuSmall = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 11.0f);
+	Overlay::playerName = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 12.0f);
 
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
 	g_pd3dDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
@@ -254,6 +262,9 @@ void __fastcall Overlay::Loop()
 
 void __fastcall Overlay::start(HWND hwnd) {
 
+	g_Discord->Initialize();
+	g_Discord->Update();
+
 	HWND gameWnd = FindWindowA(("UnityWndClass"), ("Rust")); //UnityWndClass
 	HWND activeWnd = nullptr;
 
@@ -297,12 +308,14 @@ void __fastcall Overlay::start(HWND hwnd) {
 		//ImGui::StyleColorsDark();
 		colors[ImGuiCol_WindowBg] = ImVec4(40 / 255.f, 40 / 255.f, 40 / 255.f, 255 / 255.f); //ImVec4(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f);
 		colors[ImGuiCol_Border] = ImColor(25, 20, 36, 255);
+		g_Discord->Details("In menu");
 		if (toggle)
 			PostProcessing::performFullscreenBlur(ImGui::GetBackgroundDrawList(), 155);
 		menu();
 	}
 	else {
 		SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
+		g_Discord->Details("In game");
 	}
 
 }
@@ -419,7 +432,6 @@ void __fastcall Render::DrawBox(ImVec2 pos, ImVec2 size, ImColor color)
 	ImGui::GetWindowDrawList()->AddRect(rect_bb.Min, rect_bb.Max, color, 0.0f, 15, 2);
 }
 
-
 void __fastcall Render::DrawLootBox(const ImVec2& Start, const ImVec2& End, const ImColor color, float Thickk = 1.5f)
 {
 	ImGui::GetWindowDrawList()->AddRect(Start, End, color, Thickk);
@@ -441,12 +453,10 @@ void __fastcall Render::DrawFilledBox(ImVec2 pos, ImVec2 size, ImColor color)
 	ImGui::GetWindowDrawList()->AddRectFilled(rect_bb.Min, rect_bb.Max, color, 0.5f, 15);
 }
 
-
 void __fastcall Render::DrawFilledRect(float x, float y, float w, float h, ImVec4 color)
 {
 	ImGui::GetOverlayDrawList()->AddRectFilled(ImVec2(x, y), ImVec2(x + w, y + h), ImGui::ColorConvertFloat4ToU32(ImVec4(color)), NULL, NULL);
 }
-
 
 void __fastcall Render::DrawHealthbarVertical(float x, float y, float w, float h, float value, float max)
 {

@@ -48,7 +48,7 @@ namespace Retake
 
 		float lerpFloat = ImTricks::Animations::FastFloatLerp(label, *v, 0.f, 1.f, 0.05f);
 
-		window->DrawList->AddRectFilled(total_bb.Min, total_bb.Min + ImVec2{ 12, 12 }, ImTricks::Animations::FastColorLerp(ImColor(40, 40, 46), ImColor(180, 68, 124), lerpFloat), 0, 0);
+		window->DrawList->AddRectFilled(total_bb.Min, total_bb.Min + ImVec2{ 12, 12 }, ImTricks::Animations::FastColorLerp(ImColor(55, 55, 56), ImColor(172, 142, 184), lerpFloat), 0, 0);
 		window->DrawList->AddRect(total_bb.Min, total_bb.Min + ImVec2{ 12, 12 }, ImTricks::Animations::FastColorLerp(ImColor(20, 20, 20, 255), ImColor(20, 20, 20, 140), lerpFloat), 0, 0);
 
 		RenderCheckMark(total_bb.Min + ImVec2{ 3, 3 }, ImTricks::Animations::FastColorLerp(ImColor(255, 255, 255, 0), ImColor(255, 255, 255, 255), lerpFloat), 6.f);
