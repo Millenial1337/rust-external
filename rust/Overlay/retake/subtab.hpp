@@ -1,12 +1,3 @@
-/////////////////////////////////////////////////////
-//                                                   
-//    Generated with Retake Design. (ex. ImGui Editor) 
-//    Retake Design is designed with love by pers0na2. 
-//    All rights to Retake Design belong to pers0na2.  
-//                                                   
-/////////////////////////////////////////////////////
-
-
 #ifndef QUARCSUBTAB
 #define QUARCSUBTAB
 

@@ -1,12 +1,3 @@
-/////////////////////////////////////////////////////
-//                                                   
-//    Generated with Retake Design. (ex. ImGui Editor) 
-//    Retake Design is designed with love by pers0na2. 
-//    All rights to Retake Design belong to pers0na2.  
-//                                                   
-/////////////////////////////////////////////////////
-
-
 #ifndef QUARCHILD
 #define QUARCHILD
 
@@ -61,7 +52,7 @@ namespace Retake
 			ImGui::SetActiveID(id + 1, child_window);
 			g.ActiveIdSource = ImGuiInputSource_Nav;
 		}
-		ImVec2 pos = ImGui::GetWindowPos();
+		ImVec2 pos = ImVec2(ImGui::GetWindowPos().x + 2, ImGui::GetWindowPos().y + 2);
 
 		parent_window->DrawList->AddRectFilled(ImVec2(pos - 2), ImVec2(pos + size_arg), ImColor(43, 33, 47, 255), 6, 15);
 		parent_window->DrawList->AddText(ImVec2(pos.x + 8, pos.y + 1), ImColor(91, 95, 130, 255), name);

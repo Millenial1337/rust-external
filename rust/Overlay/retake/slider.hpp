@@ -1,12 +1,3 @@
-/////////////////////////////////////////////////////
-//                                                   
-//    Generated with Retake Design. (ex. ImGui Editor) 
-//    Retake Design is designed with love by pers0na2. 
-//    All rights to Retake Design belong to pers0na2.  
-//                                                   
-/////////////////////////////////////////////////////
-
-
 #ifndef QUARCSLIDER
 #define QUARCSLIDER
 
@@ -144,7 +135,7 @@ namespace Retake
 		float grab_w = grab_bb.Max.x - grab_bb.Min.x;
 		auto const moved_pos_of_prev_rect = 1;
 		auto const preview_w = ImGui::CalcTextSize((std::stringstream{ } << value_buf).str().c_str()).y;
-		ImVec2 text_pos = ImVec2(frame_bb.Max.x - 16, frame_bb.Min.y - 16);
+		//ImVec2 text_pos = ImVec2(frame_bb.Max.x - 16, frame_bb.Min.y - 16);
 
 		//ImGui::GetOverlayDrawList()->AddText(text_pos - preview_w / 2, ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);
 		ImGui::GetOverlayDrawList()->AddText(ImVec2(frame_bb.Max.x - 2 - ImGui::CalcTextSize(value_buf).x, window->DC.CursorPos.y - 25), ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);

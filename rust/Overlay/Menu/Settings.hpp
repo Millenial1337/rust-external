@@ -26,7 +26,7 @@ namespace Settings {
 	extern float aimSmoothing;
 	extern float DroppedItemCol[4];
 	extern bool enableDroppedItem;
-	extern int enableDroppedItemDistance;
+	extern int droppedDistance;
 	extern bool enableVisuals;
 
 	extern bool drawSkeleton;
@@ -87,11 +87,9 @@ namespace Settings {
 
 	extern bool enableCompensateRecoil;
 
-	extern int boxDistance;
-	extern int skeletonDistance;
-	extern int healthDistance;
-	extern int nameDistance;
+	extern int playerDistance;
 	extern int weaponDistance;
+	extern int droppedDistance;
 
 	extern int typeBox;
 

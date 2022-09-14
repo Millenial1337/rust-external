@@ -123,7 +123,7 @@ namespace ESP {
 				std::unique_ptr<BaseWeaponESP> curOre = std::make_unique<BaseWeaponESP>(local_weapon->at(i));
 				auto position = Read<Vector3>(curOre->trans + 0x90);//world position = 0x90
 				auto distance = (int)Math::Distance(&localPlayer->Player->position, &position);
-				if (distance < Settings::enableDroppedItemDistance)
+				if (distance < Settings::droppedDistance)
 				{
 					Vector2 pos;
 
@@ -199,21 +199,21 @@ namespace ESP {
 
 				if (curEntity->isDead()) continue;
 
-				if (Settings::drawSkeleton && distance < Settings::skeletonDistance)
+				if (Settings::drawSkeleton && distance < Settings::playerDistance)
 					DrawSkeleton(curEntity->player);
 
 				
 
-				if (Settings::drawBox && distance < Settings::boxDistance)
+				if (Settings::drawBox && distance < Settings::playerDistance)
 					DrawBox(curEntity->player, curEntity->isSameTeam(localPlayer->Player));
 
-				if (Settings::drawName && distance < Settings::nameDistance)
+				if (Settings::drawName && distance < Settings::playerDistance)
 					DrawPlayerName(curEntity->player, curEntity->getName(), distance, curEntity->isSameTeam(localPlayer->Player));
 
 				if (Settings::drawWeapon && distance < Settings::weaponDistance && curEntity->getHeldItem().IsWeapon())
 					DrawPlayerWeapon(curEntity->player, curEntity->getHeldItem().GetItemName());
 
-				if (Settings::drawHealthBar && distance < Settings::healthDistance)
+				if (Settings::drawHealthBar && distance < Settings::playerDistance)
 					DrawHealthBar(curEntity->player, curEntity->health);
 			}
 		}

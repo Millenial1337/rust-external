@@ -1,12 +1,3 @@
-/////////////////////////////////////////////////////
-//                                                   
-//    Generated with Retake Design. (ex. ImGui Editor) 
-//    Retake Design is designed with love by pers0na2. 
-//    All rights to Retake Design belong to pers0na2.  
-//                                                   
-/////////////////////////////////////////////////////
-
-
 #ifndef QUARCCOMBO
 #define QUARCCOMBO
 
@@ -65,8 +56,9 @@ namespace Retake
 
 		const float value_x2 = ImMax(frame_bb.Min.x, frame_bb.Max.x - arrow_size);
 
-		window->DrawList->AddRectFilledMultiColor(frame_bb.Min, frame_bb.Max, ImColor(40, 40, 46), ImColor(40, 40, 46), ImColor(30, 30, 30), ImColor(30, 30, 30));
-		window->DrawList->AddRect(frame_bb.Min, frame_bb.Max, ImColor(20, 20, 20, 255), 0, 0);
+		//window->DrawList->AddRectFilledMultiColor(frame_bb.Min, frame_bb.Max, ImColor(40, 40, 46), ImColor(40, 40, 46), ImColor(30, 30, 30), ImColor(30, 30, 30));
+		window->DrawList->AddRectFilled(frame_bb.Min, frame_bb.Max, ImColor(35, 27, 38, 255), 6);
+		//window->DrawList->AddRect(frame_bb.Min, frame_bb.Max, ImColor(20, 20, 20, 255), 0, 0);
 
 		if (!(flags & ImGuiComboFlags_NoArrowButton))
 		{

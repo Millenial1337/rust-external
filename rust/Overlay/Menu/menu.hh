@@ -47,7 +47,7 @@ void configSam()
     Settings::SpeedHackSpeed = -0.47;
     Settings::aimbotDistance = 100;
     // Settings::boxDistance = 200;
-    Settings::nameDistance = 200;
+    Settings::playerDistance = 200;
     //Settings::weaponDistance = 200;
    // Settings::enableDroppedItemDistance = 100;
 
@@ -139,8 +139,8 @@ void* __fastcall menu()
         draw->AddLine(ImVec2(position.x, position.y + 21), ImVec2(position.x + 500, position.y + 21), ImColor(43, 33, 47, 255));
 
         draw->AddRectFilled(ImVec2(position.x, position.y + 21), ImVec2(position.x + 113, position.y + 345), ImColor(43, 33, 47, 255));
-        //ImGui::SetCursorPos({ 315, 10 });
-        //ImGui::Text("%c", "|/-\\"[(int)(ImGui::GetTime() / 0.5f) & 3]);
+        ImGui::SetCursorPos({ 103, 3 });
+        ImGui::TextColored(ImColor( 97, 79, 104, 255 ), "%c", "|/-\\"[(int)(ImGui::GetTime() / 0.5f) & 3]);
 
         static int page = 0;
         static int aim = 0;
@@ -149,31 +149,31 @@ void* __fastcall menu()
         static int news = 0;
 
 
-        ImGui::SetCursorPos({ 25, 65 });
+        ImGui::SetCursorPos({ 5, 26 });
         if (Retake::tab("Aimbot", page == 0))
         {
             page = 0;
         }
 
-        ImGui::SetCursorPos({ 25, 95 });
+        ImGui::SetCursorPos({ 5, 51 });
         if (Retake::tab("Visuals", page == 1))
         {
             page = 1;
         }
 
-        ImGui::SetCursorPos({ 25, 125 });
+        ImGui::SetCursorPos({ 5, 76 });
         if (Retake::tab("Misc", page == 2))
         {
             page = 2;
         }
 
-        ImGui::SetCursorPos({ 25, 155 });
+        ImGui::SetCursorPos({ 5, 101 });
         if (Retake::tab("Configs", page == 3))
         {
             page = 3;
         }
 
-        ImGui::SetCursorPos({ 25, 210 });
+        ImGui::SetCursorPos({ 5, 320 });
         if (Retake::tab("Dashboard", page == 4))
         {
             page = 4;
@@ -181,41 +181,41 @@ void* __fastcall menu()
 
         if (page == 1)
         {
-            ImGui::SetCursorPos({ 160, 40 });
+            ImGui::SetCursorPos({ 160, 30 });
             if (Retake::subtab("ESP", esp == 0))
                 esp = 0;
 
-            ImGui::SetCursorPos({ 260, 40 });
-            if (Retake::subtab("Object List", esp == 1))
+            ImGui::SetCursorPos({ 260, 30 });
+            if (Retake::subtab("Items", esp == 1))
                 esp = 1;
 
-            ImGui::SetCursorPos({ 360, 40 });
-            if (Retake::subtab("COLORS", esp == 2))
+            ImGui::SetCursorPos({ 360, 30 });
+            if (Retake::subtab("Colors", esp == 2))
                 esp = 2;
         }
         if (page == 2)
         {
-            ImGui::SetCursorPos({ 210, 40 });
+            ImGui::SetCursorPos({ 210, 30 });
             if (Retake::subtab("Weapon", misc == 0))
                 misc = 0;
 
-            ImGui::SetCursorPos({ 320, 40 });
+            ImGui::SetCursorPos({ 320, 30 });
             if (Retake::subtab("Player", misc == 1))
                 misc = 1;
         }
         if (page == 4) {
-            ImGui::SetCursorPos({ 270, 40 });
+            ImGui::SetCursorPos({ 270, 30 });
             if (Retake::subtab("NEWS", news == 0))
                 news = 0;
         }
         {
-            ImGui::SetCursorPos({ 130, 70 });
-            ImGui::BeginChild("", ImVec2(480, 440));
+
+            ImGui::SetCursorPos({ 130, 60 });
+            ImGui::BeginChild("", ImVec2(370, 280));
             {
                 if (page == 0)
                 {
-                    draw->AddRectFilled(ImVec2( position.x + 119 ,position.y + 24 ), ImVec2( position.x + 294 ,position.y + 144 ), ImColor(43, 33, 47, 255), 6, 15);
-
+                    Retake::BeginChild("Aim", ImVec2(330, 250), false, NULL);
                     Retake::checkbox("Enable Aimbot", &Settings::enableAimbot);
                     ImGui::Text("Aimbot Key"); ImGui::SameLine(); ImGui::Hotkey("##Aimbot Key", &Settings::aimbotKey, ImVec2(80, 18));
 
@@ -232,53 +232,54 @@ void* __fastcall menu()
                     const char* listbox_items[] = { "Head", "Chest", "Pevlis" };
                     ImGui::ListBox("##Hitbox", &Settings::aimbotHitbox, listbox_items, IM_ARRAYSIZE(listbox_items));
                     Retake::checkbox("ThickBullet", &Settings::thickBullettt);
+                    Retake::RetakeEndChild();
                 }
                 if (page == 1)
                 {
                     if (esp == 0)
                     {
                         Retake::checkbox("Enable Visuals", &Settings::enableVisuals);
-
-                        Retake::checkbox(("Player Box"), &Settings::drawBox);
-                        if (Settings::drawBox) {
-                            Retake::combo(("Box Type"), &Settings::typeBox, boxTypes, 3);
-                            Retake::slider_int(("Box Type distance"), &Settings::boxDistance, 100, 300, "%.1f", NULL);
-                        }
-
-                        Retake::checkbox(("Weapon ESP"), &Settings::drawWeapon);
-                        if (Settings::drawWeapon)
-                            Retake::slider_int(("Weapon Distance"), &Settings::weaponDistance, 100, 300, "%.1f", NULL);
-
-                        Retake::checkbox(("Skeleton"), &Settings::drawSkeleton);
-                        if (Settings::drawSkeleton)
-                            Retake::slider_int(("Skeleton distance"), &Settings::skeletonDistance, 100, 300, "%.1f", NULL);
-
-                        Retake::checkbox(("Name"), &Settings::drawName);
-                        if (Settings::drawName)
-                            Retake::slider_int(("Name distance"), &Settings::nameDistance, 100, 300, "%.1f", NULL);
-
-                        Retake::checkbox(("Health Bar"), &Settings::drawHealthBar);
-                        if (Settings::drawHealthBar)
-                            Retake::slider_int(("Health Bar distance"), &Settings::healthDistance, 100, 300, "%.1f", NULL);
-
-                        Retake::checkbox(("Dropped Items"), &Settings::enableDroppedItem);
-                        if (Settings::enableDroppedItem)
-                            Retake::slider_int(("Dropped Items distance"), &Settings::enableDroppedItemDistance, 100, 300, "%.1f", NULL);
-
-                        Retake::checkbox(("Crosshair"), &Settings::drawCrosshair);
-                        if (Settings::drawCrosshair)
                         {
-                            Retake::checkbox("while scoped", &Settings::crosshairScoped);
-                            Retake::slider_int("Length", &Settings::CrosshairLength, 1, 24, "%.1f", NULL);
-                            Retake::slider_int("Gap", &Settings::CrosshairGap, 0, 24, "%.1f", NULL);
-                            Retake::slider_int("Thickness", &Settings::CrosshairThickness, 1, 24, "%.1f", NULL);
+                            Retake::BeginChild("Players", ImVec2(175, 200), false, 0);
+                            {
+                                Retake::checkbox(("Name"), &Settings::drawName);
+                                Retake::checkbox(("Box"), &Settings::drawBox);
+                                Retake::combo(("Box Type"), &Settings::typeBox, boxTypes, 3);
+                                Retake::checkbox(("Skeleton"), &Settings::drawSkeleton);
+                                Retake::checkbox(("Health Bar"), &Settings::drawHealthBar);
+                                Retake::slider_int(("Distance"), &Settings::playerDistance, 100, 300, "%.1f", NULL);
+                            }
+                            ImGui::EndChild();
+
+                            ImGui::SameLine();
+
+                            Retake::BeginChild("Other", ImVec2(175, 200), false, NULL);
+                            {
+                                Retake::checkbox(("Crosshair"), &Settings::drawCrosshair);
+                                Retake::checkbox("while scoped", &Settings::crosshairScoped);
+                                Retake::slider_int("Length", &Settings::CrosshairLength, 1, 24, "%.1f", NULL);
+                                Retake::slider_int("Gap", &Settings::CrosshairGap, 0, 24, "%.1f", NULL);
+                                Retake::slider_int("Thickness", &Settings::CrosshairThickness, 1, 24, "%.1f", NULL);
+                                Retake::slider_int(("Fov Changer"), &Settings::FovSlider, 75, 150, "%.1f", NULL);
+                            }
+                            ImGui::EndChild();
                         }
-
-                        Retake::slider_int(("Fov Changer"), &Settings::FovSlider, 75, 150, "%.1f", NULL);
-
                     }
                     if (esp == 1)
                     {
+                        Retake::BeginChild("Items", ImVec2(175, 140), false, 0);
+                        {
+                            Retake::checkbox(("Weapon ESP"), &Settings::drawWeapon);
+                            Retake::slider_int(("Weapon Distance"), &Settings::weaponDistance, 100, 300, "%.1f", NULL);
+
+                            Retake::checkbox(("Dropped Items"), &Settings::enableDroppedItem);
+                            Retake::slider_int(("Dropped Items distance"), &Settings::droppedDistance, 100, 300, "%.1f", NULL);
+                        }
+                        ImGui::EndChild();
+
+                        ImGui::SameLine();
+
+                        Retake::BeginChild("Object list", ImVec2(175, 140), false, 0);
                         if (ImGui::ListBoxHeader("##ESP Object List"))
                         {
                             for (size_t i = 0; i < IM_ARRAYSIZE(Settings::selectedOres); i++) {
@@ -286,6 +287,7 @@ void* __fastcall menu()
                             }
                             ImGui::ListBoxFooter();
                         }
+                        ImGui::EndChild();
                     }
                     if (esp == 2)
                     {
@@ -389,30 +391,36 @@ void* __fastcall menu()
                 }
                 if (page == 3)
                 {
-                    ImGui::SetCursorPosY(10);
                     Retake::BeginChild("Config", ImVec2(150, 200), false, NULL);
+                    //Retake::RetakeBeginChild("Config", ImVec2(150, 200));
                     {
                         Retake::checkbox("Watermark", &Settings::watermark);
-                        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
-                        {
-                            ImGui::SetTooltip("Watermark");
-                        }
-
+                        //if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+                        //{
+                        //    ImGui::SetTooltip("Watermark");
+                        //}
 
                         if (Retake::button("Load admin cfg", ImVec2(120, 20))) {
                             configSam();
                             ImTricks::NotifyManager::AddNotify("Admin config loaded.", ImTrickNotify_Success);
                         }
 
-
-                        if (Retake::button("Print debug true", ImVec2(120, 20)))
-                            Settings::debuglog = true;
-
-                        if (Retake::button("Print debug false", ImVec2(120, 20)))
-                            Settings::debuglog = false;
-                        if (Retake::button("Exit", ImVec2(70, 20)))
+                        if (Retake::button("Exit", ImVec2(50, 20)))
                             exit(1);
                     }
+                    ImGui::EndChild();
+
+                    ImGui::SameLine();
+
+                    Retake::BeginChild("Debug", ImVec2(120, 80), false, NULL);
+                    {
+                        if (Retake::button("Print debug true", ImVec2(110, 20)))
+                            Settings::debuglog = true;
+
+                        if (Retake::button("Print debug false", ImVec2(110, 20)))
+                            Settings::debuglog = false;
+                    }
+                    ImGui::EndChild();
                 }
                 if (page == 4)
                 {

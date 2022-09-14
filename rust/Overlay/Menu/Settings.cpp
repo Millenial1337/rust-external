@@ -23,7 +23,7 @@ namespace Settings {
 	int RCSyaw = -50;
 
 	bool enableDroppedItem = false;
-	int enableDroppedItemDistance = 100;
+
 	bool enableVisuals = false;
 	bool drawSkeleton = false;
 	bool drawBox = false;
@@ -58,11 +58,9 @@ namespace Settings {
 
 	bool enableCompensateRecoil = false;
 
-	int boxDistance = 100;
+	int playerDistance = 100;
 	int weaponDistance = 100;
-	int skeletonDistance = 100;
-	int healthDistance = 100;
-	int nameDistance = 100;
+	int droppedDistance = 100;
 
 	int FovSlider = 90;
 

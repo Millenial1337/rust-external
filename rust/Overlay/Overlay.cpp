@@ -11,8 +11,6 @@
 #include <dwmapi.h>
 #include "Menu/menu.hh"
 
-#include "../fonts/FontAwesome.h"
-#include "../fonts/RudaBolt.h"
 #include "FontData.hpp"
 #include "../globals.h"
 
@@ -34,10 +32,10 @@ void Overlay::Style(ImGuiStyle &style)
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	style.WindowPadding = ImVec2(0, 0);
-	style.FramePadding = ImVec2(4, 3);
-	style.ItemSpacing = ImVec2(8, 4);
-	style.ItemInnerSpacing = ImVec2(4, 4);
-	style.IndentSpacing = 21;
+	style.FramePadding = ImVec2(4, 2);
+	style.ItemSpacing = ImVec2(8, 2);
+	style.ItemInnerSpacing = ImVec2(4, 2);
+	style.IndentSpacing = 12;
 	style.ScrollbarSize = 1;
 	style.GrabMinSize = 1;
 	style.WindowBorderSize = 0;
@@ -92,6 +90,7 @@ void Overlay::Style(ImGuiStyle &style)
 	Overlay::fontMenu = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 15.0f);
 	Overlay::fontMenuSmall = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 11.0f);
 	Overlay::playerName = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 12.0f);
+	Overlay::weaponName = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 12.0f);
 
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
 	g_pd3dDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
@@ -310,8 +309,10 @@ void __fastcall Overlay::start(HWND hwnd) {
 		colors[ImGuiCol_Border] = ImColor(25, 20, 36, 255);
 		g_Discord->Details("In menu");
 		if (toggle)
+		{
 			PostProcessing::performFullscreenBlur(ImGui::GetBackgroundDrawList(), 155);
-		menu();
+			menu();
+		}
 	}
 	else {
 		SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);

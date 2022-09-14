@@ -72,8 +72,7 @@ public:
 			return std::string(wide_name.begin(), wide_name.end()).c_str();
 		if (Settings::debuglog)
 		{
-			std::cout << "Display name " << display_name << std::endl;
-			printf("wide name: %s", wide_name);
+			std::cout << "Display name: " << display_name << std::endl;
 		}
 
 		return safe_str("No Item");
