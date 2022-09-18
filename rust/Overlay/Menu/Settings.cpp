@@ -148,6 +148,6 @@ namespace Settings {
 	bool testingBool = false;
 
 	bool ShootMounted = false;
-	bool watermark = false;
+	bool watermark = true;
 	bool debuglog = false;
 }

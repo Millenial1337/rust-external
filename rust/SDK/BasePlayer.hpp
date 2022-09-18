@@ -252,9 +252,9 @@ public:
 		Write(this->entityFlags + 0x138, flag);// BaseEntity -> public BaseEntity.Flags flags;
 	}
 
-	/*void speedHack(int speed) {
+	void speedHack(int speed) {
 		Write<float>(this->player + 0x714, speed); // PlayerModel -> speed (maybe)
-	}*/
+	}
 
 public:
 
@@ -549,14 +549,15 @@ public:
 			Write<float>(staticFields + 0x18, 20.f);//0x18 => m_camera
 		}
 	}
-	/*
-	void infiniteJump() {
+	
+	void infiniteJump()
+	{
 		if (GetAsyncKeyState(Settings::jumpKey))
 		{
 			Write<float>(this->playerMovement + 0xC0, 0);
 			Write<Vector3>(this->playerMovement + 0xBC, Vector3(99999, 99999, 99999));
 		}
-	}*/
+	}
 
 	void FlyHack()
 	{

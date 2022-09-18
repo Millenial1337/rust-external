@@ -2,23 +2,11 @@
 
 #include <windows.h>
 #include <iostream>
-#include <string>
-#include <Shlwapi.h>
-#include <random>
-#include <vector>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fstream>
-#include <sstream>
 #include <WinInet.h>
-#include <iomanip>
-#include <cstdio> 
 #include <WinUser.h>
 #include "wininet.h"
 #include <WinBase.h>
 #include <tchar.h>
-#include <filesystem>
-#include <experimental/filesystem>
 
 #pragma comment(lib, "urlmon.lib")
 #pragma comment(lib,"wininet.lib")
@@ -33,7 +21,7 @@ string repl(string subject, const string& search, const string& replace) {
 		pos += replace.length();
 	}
 	return subject;
-} //replacer
+}
 
 string dls(string URL) {
 	HINTERNET interwebs = InternetOpenA("Mozilla/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
