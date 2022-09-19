@@ -202,8 +202,8 @@ public:
 
 	BaseEntity(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
 
-		this->player = Read<uintptr_t>(_ent + 0x30); // Namespace: ProtoBuf -> class BasePlayer -> public PlayerMetabolism metabolism ??
-		this->visualState = Read<uintptr_t>(_trans + 0x38); // look up playerModel
+		this->player = Read<uintptr_t>(_ent + 0x30); // dunno
+		this->visualState = Read<uintptr_t>(_trans + 0x38); // dunno
 
 		this->playerFlags = Read<int32_t>(_ent + 0x688); //public BasePlayer.PlayerFlags playerFlags;
 		this->name = ReadNative(_obj + 0x68);//prefab name 0x60
@@ -360,7 +360,7 @@ public:
 	}
 
 	Vector3 getPosition() {
-		return Read<Vector3>(this->visualState + 0x90); //0x90 
+		return Read<Vector3>(this->visualState + 0x90); //0x90  ?? public class BaseViewModel
 	}
 
 	Vector3 getRecoilAngles() {

@@ -4,7 +4,7 @@
 #include "Utils.hpp"
 
 namespace O {
-	uintptr_t waterLevel = 0x478;// WaterWell -> public float waterLevel
+	uintptr_t waterLevel = 0x38;// WaterWell -> public float waterLevel
 
 		// PlayerWalkMovement
 	uintptr_t gravityTestRadius = 0x80;// public float gravityTestRadius
@@ -17,7 +17,7 @@ namespace O {
 	uintptr_t previousVelocity = 0xE4;// private Vector3 previousVelocity
 	uintptr_t groundTime = 0xCC;// private float groundTime
 
-	uintptr_t clothingMoveSpeedReduction = 0x764;// BasePlayer -> public float clothingMoveSpeedReduction;
+	uintptr_t clothingMoveSpeedReduction = 0x764;// public float clothingMoveSpeedReduction;
 
 	uintptr_t heldEntity = 0x98;// Item -> private EntityRef heldEntity;
 
@@ -62,7 +62,7 @@ public:
 
 	std::string GetItemName()
 	{
-		uint64_t info = Read<uint64_t>(this->ent + 0x20);
+		uint64_t info = Read<uint64_t>(this->ent + 0x20);// 0x30
 
 		uint64_t display_name = Read<uint64_t>(info + 0x20);
 

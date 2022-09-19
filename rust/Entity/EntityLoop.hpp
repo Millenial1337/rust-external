@@ -42,7 +42,7 @@ namespace Entity {
 				auto baseObject = Read<uintptr_t>(curObject + 0x10);
 				auto object = Read<uintptr_t>(baseObject + 0x30);
 				auto tag = Read<WORD>(object + 0x54);
-				auto prefebName = ReadNative(object + 0x60);
+				auto prefebName = ReadNative(object + 0x68);
 			
 				auto ukn01 = Read<uintptr_t>(baseObject + 0x28);
 
