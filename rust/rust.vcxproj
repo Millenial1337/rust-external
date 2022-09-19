@@ -192,12 +192,7 @@
     <ClInclude Include="Features\ESP\ESP.hpp" />
     <ClInclude Include="Features\MISC\DoMisc.hpp" />
     <ClInclude Include="globals.h" />
-    <ClInclude Include="helpers\antdebug.h" />
-    <ClInclude Include="helpers\guard.h" />
     <ClInclude Include="helpers\helpers.h" />
-    <ClInclude Include="helpers\include.h" />
-    <ClInclude Include="helpers\log.h" />
-    <ClInclude Include="helpers\updater.hpp" />
     <ClInclude Include="helpers\xorstr.hpp" />
     <ClInclude Include="lazy_importer.h" />
     <ClInclude Include="Overlay\blur\BlurShaders\blur_x.h" />

@@ -6,11 +6,9 @@
 #include "Features/MISC/DoMisc.hpp"
 #include "Entity/EntityLoop.hpp"
 #include <xstring>
-#include "helpers/log.h"
 #include "lazy_importer.h"
 #include "AuthLib/AutherLibrary.h"
 #include "globals.h"
-//#include "antdebug.h"
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "crypt32.lib")
@@ -34,8 +32,8 @@ int main()
 		while (!hwnd)
 		{
 			//hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
-			hwnd = LI_FN(FindWindowA)(safe_str("Chrome_WidgetWin_1"), safe_str("GitHub Desktop"));
-			//hwnd = LI_FN(FindWindowA)(safe_str("UnityWndClass"), safe_str("Rust"));
+			//hwnd = LI_FN(FindWindowA)(safe_str("Chrome_WidgetWin_1"), safe_str("GitHub Desktop"));
+			hwnd = LI_FN(FindWindowA)(safe_str("UnityWndClass"), safe_str("Rust"));
 			LI_FN(Sleep)(50);
 		}
 
@@ -60,11 +58,11 @@ int main()
 		localPlayer = std::make_unique<LocalPlayer>();
 
 		pId = get_process_id(safe_str("RustClient.exe"));
-		std::cout << "PID: " << pId << endl;
+		std::cout << "PID: " << pId << std::endl;
 		gBase = get_module_base_address(safe_str("GameAssembly.dll"));
-		cout << "GameAssemblyBase: " << gBase << endl;
+		std::cout << "GameAssemblyBase: " << gBase << std::endl;
 		uBase = get_module_base_address(safe_str("UnityPlayer.dll"));
-		cout << "UnityPlayerBase: " << uBase << endl;
+		std::cout << "UnityPlayerBase: " << uBase << std::endl;
 		std::thread overlay_thread(Overlay::Loop);
 		std::thread entity_thread(Entity::EntityLoop);
 		std::thread aimbot_thread(Aimbot::DoAimbot);

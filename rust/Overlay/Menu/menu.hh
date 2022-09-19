@@ -134,12 +134,15 @@ void* __fastcall menu()
         ImTricks::NotifyManager::HandleNotifies(ImGui::GetOverlayDrawList());
 
         ImGui::PushFont(Overlay::fontMenu);
+
+        ImVec2 text = ImGui::CalcTextSize("vos.club");
+
         //logo text
-        draw->AddText({ position.x + 11, position.y + 3}, ImColor( 97, 79, 104, 255 ), "AnarchyProject");
+        draw->AddText({ position.x + 11, position.y + 3}, ImColor( 97, 79, 104, 255 ), "vos.club");
         draw->AddLine(ImVec2(position.x, position.y + 21), ImVec2(position.x + 500, position.y + 21), ImColor(43, 33, 47, 255));
 
         draw->AddRectFilled(ImVec2(position.x, position.y + 21), ImVec2(position.x + 113, position.y + 345), ImColor(43, 33, 47, 255));
-        ImGui::SetCursorPos({ 103, 3 });
+        ImGui::SetCursorPos(ImVec2(11 + text.x + 5, 3));
         ImGui::TextColored(ImColor( 97, 79, 104, 255 ), "%c", "|/-\\"[(int)(ImGui::GetTime() / 0.5f) & 3]);
 
         static int page = 0;

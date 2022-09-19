@@ -154,22 +154,7 @@
     <ClInclude Include="Overlay\retake\imgui_tricks.hpp">
       <Filter>Overlay\retake</Filter>
     </ClInclude>
-    <ClInclude Include="helpers\antdebug.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\guard.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
     <ClInclude Include="helpers\helpers.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\include.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\log.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\updater.hpp">
       <Filter>helpers</Filter>
     </ClInclude>
     <ClInclude Include="helpers\xorstr.hpp">

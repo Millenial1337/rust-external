@@ -65,9 +65,12 @@ namespace ESP {
 
 			ImDrawList* draw = ImGui::GetOverlayDrawList();
 
+			auto text = ImGui::CalcTextSize("vos.club");
+
 			draw->AddRectFilled(ImVec2(15, 10), ImVec2(20, 25), ImColor(172, 142, 184, 255));
-			draw->AddRectFilled(ImVec2(20, 10), ImVec2(70, 25), ImColor(17, 18, 17, 255));
-			draw->AddText(ImVec2(22, 10), ImColor(255, 255, 255, 255), "a-p.fun");
+			draw->AddRectFilled(ImVec2(20, 10), ImVec2(20 + text.x + 5, 25), ImColor(17, 18, 17, 255));
+
+			draw->AddText(ImVec2(22, 10), ImColor(255, 255, 255, 255), "vos.club");
 		}
 
 		//Render::Text(ImVec2(2, 2), "AnarchyProject", ImColor(204, 153 ,255, 255), true, Overlay::fontMenu, 15);
