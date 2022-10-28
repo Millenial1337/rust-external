@@ -1,4 +1,4 @@
-# rust-external
+# rust-external DETECTED!
 
 - Based on [Medusa](https://github.com/Skengdoo/Medusa-Rust-External-Source)
 - Has too many shitcode/dolbaebcode
