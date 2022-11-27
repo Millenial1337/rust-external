@@ -469,12 +469,14 @@ void* __fastcall login() {
         ImGui::Text("key:");
 
         ImGui::SetCursorPos({ 60, 8 });
-        ImGui::InputText("", globals.key, IM_ARRAYSIZE(globals.key));
+        ImGui::InputText("", globals.user_name, IM_ARRAYSIZE(globals.user_name));
+        ImGui::SetCursorPos({ 60, 8 });
+    	ImGui::InputText("", globals.pass_word, IM_ARRAYSIZE(globals.pass_word));
 
         ImGui::SetCursorPos({ 115, 33 });
         if (ImGui::Button("Login", ImVec2(75, 20))) 
         {
-            if (AutherLibrary::Auth(globals.key, AutherLibrary::GetHwid()))
+            if (globals.init)
             {
                 globals.auth = true;
             }

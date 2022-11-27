@@ -4,9 +4,10 @@
 
 class c_globals {
 public:
-	bool auth = true;
-	bool started = false;
-	char key[255] = "";
+	bool auth = false;
+	bool init = false;
+	char user_name[255] = "";
+	char pass_word[255] = "";
 };
 
 inline c_globals globals;

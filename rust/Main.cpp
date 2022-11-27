@@ -44,6 +44,7 @@ int main()
 			if (LI_FN(GetAsyncKeyState)(VK_F5))
 				break;
 			LI_FN(Sleep)(50);
+			globals.init = true;
 		}
 
 		Mutex = std::make_unique<_Mutex>();
