@@ -202,10 +202,10 @@ public:
 
 	BaseEntity(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
 
-		this->player = Read<uintptr_t>(_ent + 0x30); // dunno
-		this->visualState = Read<uintptr_t>(_trans + 0x38); // dunno
+		this->player = Read<uintptr_t>(_ent + 0x30); // public class BasePlayer
+		this->visualState = Read<uintptr_t>(_trans + 0x38); // public class PlayerModel
 
-		this->playerFlags = Read<int32_t>(_ent + 0x688); //public BasePlayer.PlayerFlags playerFlags;
+		this->playerFlags = Read<int32_t>(_ent + 0x690); //public BasePlayer.PlayerFlags playerFlags;
 		this->name = ReadNative(_obj + 0x68);//prefab name 0x60
 		this->entityFlags = Read<int32_t>(_ent + 0x138); //public BaseEntity.Flags flags
 
@@ -238,14 +238,14 @@ public:
 
 	void remove_flag(MStateFlags flag)
 	{
-		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x24);// ModelState -> public int flags;
+		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x2C);// ModelState -> public int flags;
 		flags &= ~(int)flags;
 
-		*reinterpret_cast<int*>((uintptr_t)this + 0x24) = flags;// ModelState -> public int flags;
+		*reinterpret_cast<int*>((uintptr_t)this + 0x2C) = flags;// ModelState -> public int flags;
 	}
 
 	void setModelFlag(MStateFlags flag) {
-		Write(this->modelState + 0x24, flag);// 	public int flags;
+		Write(this->modelState + 0x2C, flag);// 	public int flags;
 	}
 
 	void setBaseFlag(BaseEntityFlag flag) {
@@ -253,7 +253,7 @@ public:
 	}
 
 	void speedHack(int speed) {
-		Write<float>(this->player + 0x714, speed); // PlayerModel -> speed (maybe)
+		Write<float>(this->player + 0x764, speed); // PlayerModel -> speed (maybe)
 	}
 
 public:
@@ -378,21 +378,21 @@ public:
 
 	void AntiHeavy()
 	{
-		float Reduction = Read<float>(this->player + 0x724);
+		float Reduction = Read<float>(this->player + 0x73C);
 		if (Reduction == 0.f) { Write<float>(this->player, -0.1f); }
 		else if ((Reduction > 0.15f) && (Reduction < 0.35f))
 		{
-			Write<float>(this->player + 0x724, 0.15f);
+			Write<float>(this->player + 0x73C, 0.15f);
 		}
 		else if (Reduction > 0.39f)
 		{
-			Write<float>(this->player + 0x724, 0.15f);
+			Write<float>(this->player + 0x73C, 0.15f);
 		}
 	}
 
 	void AutoShit()
 	{
-		auto mountable = Read<uint64_t>(this->player + 0x5E8);
+		auto mountable = Read<uint64_t>(this->player + 0x608);
 		if (mountable)
 			Write<bool>(mountable + 0x2B0, true);
 	}

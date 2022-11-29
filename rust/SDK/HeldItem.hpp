@@ -4,7 +4,7 @@
 #include "Utils.hpp"
 
 namespace O {
-	uintptr_t waterLevel = 0x38;// WaterWell -> public float waterLevel
+	uintptr_t waterLevel = 0x478;// WaterWell -> public float waterLevelObjFullOffset;
 
 		// PlayerWalkMovement
 	uintptr_t gravityTestRadius = 0x80;// public float gravityTestRadius
@@ -19,7 +19,7 @@ namespace O {
 
 	uintptr_t clothingMoveSpeedReduction = 0x764;// public float clothingMoveSpeedReduction;
 
-	uintptr_t heldEntity = 0x98;// Item -> private EntityRef heldEntity;
+	uintptr_t heldEntity = 0xA0;// Item -> private EntityRef heldEntity;
 
 		// BaseProjectile
 	uintptr_t recoil = 0x2E0;// public RecoilProperties recoil;
