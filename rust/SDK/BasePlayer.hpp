@@ -238,14 +238,14 @@ public:
 
 	void remove_flag(MStateFlags flag)
 	{
-		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x2C);// ModelState -> public int flags;
+		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x24);// ModelState -> public int flags;
 		flags &= ~(int)flags;
 
-		*reinterpret_cast<int*>((uintptr_t)this + 0x2C) = flags;// ModelState -> public int flags;
+		*reinterpret_cast<int*>((uintptr_t)this + 0x24) = flags;// ModelState -> public int flags;
 	}
 
 	void setModelFlag(MStateFlags flag) {
-		Write(this->modelState + 0x2C, flag);// 	public int flags;
+		Write(this->modelState + 0x24, flag);// 	public int flags;
 	}
 
 	void setBaseFlag(BaseEntityFlag flag) {
