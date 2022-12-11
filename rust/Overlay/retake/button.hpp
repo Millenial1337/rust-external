@@ -37,7 +37,9 @@ namespace Retake
 		window->DrawList->AddRectFilled(bb.Min, bb.Max, ImColor(121, 99, 130, 255), 6);
 
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(229 / 255.f, 229 / 255.f, 229 / 255.f, 255 / 255.f));
-		ImGui::RenderText(ImVec2(bb.Min.x + style.ItemInnerSpacing.x + 0, bb.Min.y + style.FramePadding.y + 0), label);
+		auto sizet = ImGui::CalcTextSize(label);
+		ImVec2 center = (size - sizet) * 0.5f;
+		ImGui::RenderText(ImVec2(bb.Min.x + center.x, bb.Min.y + style.FramePadding.y + 0), label);
 		ImGui::PopStyleColor();
 
 		return pressed;
@@ -75,7 +77,7 @@ namespace Retake
 		ImGui::PushID(name);
 
 		ImGui::TextColored({ 230 / 255.f, 230 / 255.f, 230 / 255.f, 230 / 255.f }, name);
-		SameLineCustom(157, -2);
+		SameLineCustom(157, 2);
 		bool openPopup = ImGui::ColorButton("##btn", ImVec4{ color[0], color[1], color[2], alpha ? color[3] : 1.0f }, ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_AlphaPreview, { 15,15 });
 		if (openPopup)
 			ImGui::OpenPopup("##popup");

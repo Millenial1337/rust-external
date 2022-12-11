@@ -36,7 +36,7 @@ namespace Utils {
 		const __m128 mulVec1 = { 2.000, -2.000, -2.000, 0.000 };
 		const __m128 mulVec2 = { -2.000, -2.000, 2.000, 0.000 };
 
-		int index = Read<int>(transform + 0x40); // maybe this
+		int index = Read<int>(transform + 0x40);
 
 		uintptr_t pTransformData = Read<uintptr_t>(transform + 0x38);
 		uintptr_t transformData[2];

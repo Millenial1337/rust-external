@@ -1698,10 +1698,14 @@ bool ImGui::BeginCombo(const char* label, const char* preview_value, ImGuiComboF
 			RenderArrow(window->DrawList, ImVec2(value_x2 + style.FramePadding.y, frame_bb.Min.y + style.FramePadding.y), text_col, ImGuiDir_Down, 1.0f);
 	}
 	RenderFrameBorder(frame_bb.Min, frame_bb.Max, style.FrameRounding);
+
+	auto sizet = ImGui::CalcTextSize(label);
+	ImVec2 center = ImVec2(expected_w + 21 - sizet.x, 0) * 0.5f;
+
 	if (preview_value != NULL && !(flags & ImGuiComboFlags_NoPreview))
-		RenderTextClipped(frame_bb.Min + style.FramePadding, ImVec2(value_x2, frame_bb.Max.y), preview_value, NULL, NULL, ImVec2(0.0f, 0.0f));
+		RenderTextClipped(frame_bb.Min + center, ImVec2(value_x2, frame_bb.Max.y), preview_value, NULL, NULL, ImVec2(0.0f, 0.0f));
 	if (label_size.x > 0)
-		RenderText(ImVec2(frame_bb.Max.x + style.ItemInnerSpacing.x, frame_bb.Min.y + style.FramePadding.y), label);
+		RenderText(ImVec2(frame_bb.Min.x + center.x, frame_bb.Min.y + style.FramePadding.y), label);
 
 	if ((pressed || g.NavActivateId == id) && !popup_open)
 	{
@@ -1811,7 +1815,7 @@ bool ImGui::Combo(const char* label, int* current_item, bool (*items_getter)(voi
 	if (popup_max_height_in_items != -1 && !(g.NextWindowData.Flags & ImGuiNextWindowDataFlags_HasSizeConstraint))
 		SetNextWindowSizeConstraints(ImVec2(0, 0), ImVec2(FLT_MAX, CalcMaxPopupHeightFromItemCount(popup_max_height_in_items)));
 
-	if (!BeginCombo(label, preview_value, ImGuiComboFlags_None))
+	if (!BeginCombo(label, preview_value, ImGuiComboFlags_NoArrowButton))
 		return false;
 
 	// Display items
@@ -6945,7 +6949,7 @@ bool ImGui::Hotkey(const char* label, int* k, const ImVec2& size_arg) {
 	const ImVec2 label_size = CalcTextSize(label, NULL, true);
 	ImVec2 size = CalcItemSize(size_arg, CalcItemWidth(), label_size.y + style.FramePadding.y * 2.0f);
 	const ImRect frame_bb(window->DC.CursorPos + ImVec2(label_size.x + style.ItemInnerSpacing.x, 0.0f), window->DC.CursorPos + size);
-	const ImRect total_bb(window->DC.CursorPos, frame_bb.Max);
+	const ImRect total_bb(window->DC.CursorPos, frame_bb.Max);	
 
 	ItemSize(total_bb, style.FramePadding.y);
 	if (!ItemAdd(total_bb, id))
@@ -7042,12 +7046,14 @@ bool ImGui::Hotkey(const char* label, int* k, const ImVec2& size_arg) {
 		strcpy(buf_display, KeyNames[*k]);
 	}
 	else if (g.ActiveId == id) {
-		strcpy(buf_display, "<Press key>");
+		strcpy(buf_display, "[ Press key ]");
 	}
 
 	const ImRect clip_rect(frame_bb.Min.x, frame_bb.Min.y, frame_bb.Min.x + size.x, frame_bb.Min.y + size.y); // Not using frame_bb.Max because we have adjusted size
 	ImVec2 render_pos = frame_bb.Min + style.FramePadding;
+
 	RenderTextClipped(frame_bb.Min + style.FramePadding + ImVec2(-4, 0), frame_bb.Max - style.FramePadding + ImVec2(0, 3), buf_display, NULL, NULL);
+
 	//draw_window->DrawList->AddText(g.Font, g.FontSize, render_pos, GetColorU32(ImGuiCol_Text), buf_display, NULL, 0.0f, &clip_rect);
 
 	if (label_size.x > 0)

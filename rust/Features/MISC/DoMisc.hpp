@@ -153,7 +153,7 @@ namespace Misc {
 				if (Settings::SpeedHack && GetAsyncKeyState(Settings::SpeedHackKey))
 					Write<float>(localPlayer->Player->player + O::clothingMoveSpeedReduction, Settings::SpeedHackSpeed);
 				else
-					Write<float>(localPlayer->Player->player + O::clothingMoveSpeedReduction, 0); //public float clothingMoveSpeedReduction;
+					Write<float>(localPlayer->Player->player + O::clothingMoveSpeedReduction, 0);
 
 				#pragma region Features
 
@@ -164,7 +164,9 @@ namespace Misc {
 
 				if (Settings::shootInAir)
 				{
-					localPlayer->Player->LongNeck(); localPlayer->Player->setModelFlag(MStateFlags::OnGround);// localPlayer->Movement->alwaysShoot();
+					//localPlayer->Player->LongNeck();
+					localPlayer->Player->setModelFlag(MStateFlags::OnGround);
+					// localPlayer->Movement->alwaysShoot();
 				}
 
 				if (Settings::thirdperson) localPlayer->Player->setPlayerFlag(BPlayerFlags::ThirdPersonViewmode);
@@ -192,15 +194,17 @@ namespace Misc {
 				if (heldItem->IsWeapon())
 				{
 					doRecoil(heldItem->getRecoilProp());
+					if (Settings::noAimcone) heldItem->setNoAimCone();
 					if (Settings::noSpread) heldItem->AntiSpread();
+					if (Settings::noSway) heldItem->setNoSway();
 					if (Settings::rapidFire) heldItem->rapidFire();
 					if (Settings::instantCompound) heldItem->instantCompound();
-					if (Settings::fastSwitchWeapons) heldItem->fastSwitch();
+					//if (Settings::fastSwitchWeapons) heldItem->fastSwitch();
 					if (Settings::tapeoka) heldItem->instantEoka();
 					if (Settings::longhit) heldItem->setLonghit(5.f);
 					if (Settings::runhit) heldItem->RunHit();
 					if (Settings::thickBullettt) heldItem->fatBullet();
-					if (Settings::fly)  heldItem->FastMed(20.f);
+					//if (Settings::fly)  heldItem->FastMed(20.f);
 				}
 				#pragma endregion
 				

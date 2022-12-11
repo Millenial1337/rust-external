@@ -54,10 +54,9 @@ namespace Retake
 		}
 		ImVec2 pos = ImVec2(ImGui::GetWindowPos().x + 2, ImGui::GetWindowPos().y + 2);
 
-		parent_window->DrawList->AddRectFilled(ImVec2(pos - 2), ImVec2(pos + size_arg), ImColor(43, 33, 47, 255), 6, 15);
-		parent_window->DrawList->AddText(ImVec2(pos.x + 8, pos.y + 1), ImColor(91, 95, 130, 255), name);
-		parent_window->DrawList->AddLine(ImVec2(pos.x, pos.y + 17), ImVec2(pos.x + size_arg.x, pos.y + 17), ImColor(35, 27, 38, 255));
-		ImGui::SetCursorPosY(23);
+		parent_window->DrawList->AddRectFilled(ImVec2(pos - 2), ImVec2(pos + size_arg), ImColor(43, 33, 47, 255), 0, 15);
+		//parent_window->DrawList->AddText(ImVec2(pos.x + 8, pos.y + 1), ImColor(91, 95, 130, 255), name);
+		//parent_window->DrawList->AddLine(ImVec2(pos.x, pos.y + 17), ImVec2(pos.x + size_arg.x, pos.y + 17), ImColor(35, 27, 38, 255));
 		//parent_window->DrawList->AddRect(ImVec2(ImGui::GetWindowPos().x + 0, ImGui::GetWindowPos().y + 0), ImVec2(ImGui::GetWindowPos().x + size_arg.x + 0, ImGui::GetWindowPos().y + size_arg.y + 0), ImColor(0, 0, 0, 255), 0, 15, 1.000000);
 		//parent_window->DrawList->AddRect(ImVec2(ImGui::GetWindowPos().x + 1, ImGui::GetWindowPos().y + 1), ImVec2(ImGui::GetWindowPos().x + size_arg.x + -1, ImGui::GetWindowPos().y + size_arg.y + -1), ImColor(255, 255, 255, 18), 0, 15, 1.000000);
 		return ret;
@@ -76,7 +75,8 @@ namespace Retake
 		BeginChild(str_id, size_arg, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 		ImGui::GetWindowDrawList()->AddRectFilled(ImVec2(ImGui::GetWindowPos().x + 2, ImGui::GetWindowPos().y + 2),
-			ImVec2(ImGui::GetWindowPos().x + size_arg.x - 2, ImGui::GetWindowPos().y + 25), ImColor(43, 33, 47, 255), 0, 6);
+			ImVec2(ImGui::GetWindowPos().x + size_arg.x - 2, ImGui::GetWindowPos().y + 25), ImColor(43, 33, 47, 255), 6, 6);
+
 
 		ImGui::GetWindowDrawList()->AddRectFilledMultiColor(ImVec2(ImGui::GetWindowPos().x + 2, ImGui::GetWindowPos().y + 2),
 			ImVec2(ImGui::GetWindowPos().x + 64, ImGui::GetWindowPos().y + 25), ImColor(180, 68, 124, 105), ImColor(30, 30, 35, 0), ImColor(30, 30, 35, 0), ImColor(180, 68, 124, 105));
@@ -85,8 +85,8 @@ namespace Retake
 
 		ImGui::GetWindowDrawList()->AddText(ImGui::GetWindowPos() + ImVec2(10, 6), ImColor(255, 255, 255), str_id);
 
-		ImGui::SetCursorPos({ 24, 40 });
-		ImGui::BeginChild(std::string(str_id).append("123").c_str(), size_arg - ImVec2(48, 50));
+		ImGui::SetCursorPos({ 2, 30 });
+		ImGui::BeginChild(std::string(str_id).append("123").c_str(), size_arg - ImVec2(5, 35));
 	}
 
 	void RetakeEndChild()

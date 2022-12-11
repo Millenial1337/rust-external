@@ -61,7 +61,7 @@ enum class BTimeCategory {
 
 #pragma region OffsetStuff
 
-constexpr auto ConVar_Graphics_c = 52904424; //0x32732A0
+constexpr auto ConVar_Graphics_c = 56922160; //0x32732A0
 #pragma endregion
 
 #pragma region BList
@@ -200,31 +200,37 @@ public:
 
 	BaseEntity() {}
 
+	//where i find this
+
+	// Namespace: 
+	//private struct RuntimeStructs.MonoError // TypeDefIndex: 18
+
 	BaseEntity(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
 
-		this->player = Read<uintptr_t>(_ent + 0x30); // public class BasePlayer
-		this->visualState = Read<uintptr_t>(_trans + 0x38); // public class PlayerModel
+		this->player = Read<uintptr_t>(_ent + 0x28); // public class BasePlayer (0x20 baseentity)
+		this->visualState = Read<uintptr_t>(_trans + 0x38); // public class Transform : Component, IEnumerable
 
 		this->playerFlags = Read<int32_t>(_ent + 0x690); //public BasePlayer.PlayerFlags playerFlags;
-		this->name = ReadNative(_obj + 0x68);//prefab name 0x60
+		this->name = ReadNative(_obj + 0x60);//_prefabname
 		this->entityFlags = Read<int32_t>(_ent + 0x138); //public BaseEntity.Flags flags
 
-		this->playerModel = Read<uintptr_t>(this->player + 0x4D0); //BasePlayer -> public PlayerModel playerModel;
-		this->modelState = Read<uintptr_t>(this->player + 0x5D8); //private uint clActiveItem;
+		this->playerModel = Read<uintptr_t>(this->player + 0x4D0); //public PlayerModel playerModel;
+		this->modelState = Read<uintptr_t>(this->player + 0x600); //public ModelState modelState
 
-		this->position = Read<Vector3>(this->visualState + 0x218); //PlayerModel -> internal Vector3 position;
+		this->position = Read<Vector3>(this->visualState + 0x90); //public Vector3 position { get; set; } i don't know what the fuck is this...
 		this->health = Read<float>(this->player + 0x22C);//protected float _health;
 	}
 
 public:
 
+	//public PlayerInput input; + private Vector3 bodyAngles;
 
-	void setViewAngles(Vector3 angles) { // vector 3
-		Write<Vector3>(Read<uint64_t>(this->player + 0x4F0) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
+	void setViewAngles(Vector3 angles) {
+		Write<Vector3>(Read<uint64_t>(this->player + 0x4F0) + 0x3C, angles); 
 	}
 
-	void setViewAngles(Vector2 angles) { // vector 2
-		Write<Vector2>(Read<uint64_t>(this->player + 0x4F0) + 0x3C, angles); //public PlayerInput input; + private Vector3 bodyAngles;
+	void setViewAngles(Vector2 angles) {
+		Write<Vector2>(Read<uint64_t>(this->player + 0x4F0) + 0x3C, angles);
 	}
 
 	void set_aim_angles(Vector3 aim_angle) {
@@ -233,7 +239,7 @@ public:
 	}
 
 	void setPlayerFlag(BPlayerFlags flag) {
-		Write(this->player + 0x690, flag); //0x5F8 //public BasePlayer.PlayerFlags playerFlags;
+		Write(this->player + 0x690, flag);//public BasePlayer.PlayerFlags playerFlags;
 	}
 
 	void remove_flag(MStateFlags flag)
@@ -253,7 +259,7 @@ public:
 	}
 
 	void speedHack(int speed) {
-		Write<float>(this->player + 0x764, speed); // PlayerModel -> speed (maybe)
+		Write<float>(this->player + 0x764, speed); // clothingMoveSpeedReduction
 	}
 
 public:
@@ -279,7 +285,7 @@ public:
 	bool iSMenu()
 	{
 		if (!this) return true;
-		DWORD64 Input = Read<DWORD64>(this->player + 0x4E8);//public PlayerInput input;
+		DWORD64 Input = Read<DWORD64>(this->player + 0x4F0);//public PlayerInput input;
 		return !(Read<bool>(Input + 0xA8)); // private bool hasKeyFocus;
 	}
 
@@ -359,8 +365,11 @@ public:
 		return Read<Vector3>(this->playerModel + 0x23C); //private Vector3 newVelocity;
 	}
 
+	//public class Transform : Component, IEnumerable // TypeDefIndex: 3572
+	
+
 	Vector3 getPosition() {
-		return Read<Vector3>(this->visualState + 0x90); //0x90  ?? public class BaseViewModel
+		return Read<Vector3>(this->visualState + 0x90); //public Vector3 position { get; set; }
 	}
 
 	Vector3 getRecoilAngles() {
@@ -368,7 +377,7 @@ public:
 	}
 
 	Vector3 getViewAngles() {
-		return ReadChain<Vector3>(this->player, { (uint64_t)0x4F0, (uint64_t)0x3C });// public PlayerInput input, maybe private Vector3 bodyAngles;
+		return ReadChain<Vector3>(this->player, { (uint64_t)0x4F0, (uint64_t)0x3C });// public PlayerInput input, private Vector3 bodyAngles;
 	}
 
 	std::string getName() {
@@ -394,7 +403,7 @@ public:
 	{
 		auto mountable = Read<uint64_t>(this->player + 0x608);
 		if (mountable)
-			Write<bool>(mountable + 0x2B0, true);
+			Write<bool>(mountable + 0x2B8, true); // canWieldItems
 	}
 
 #pragma region SkyClass+World
@@ -451,10 +460,10 @@ HeldItem getHeldItem()
 {
 	int active_weapon_id = Read<int>(this->player + 0x5D8); //private uint clActiveItem;
 	//							               public PlayerInventory inventory   BasePlayer
-	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x618, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
+	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x6A0, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
 
-	if (Settings::debuglog)
-		std::cout << "Held weapon: " <<  items << std::endl;
+	//if (Settings::debuglog)
+	//	std::cout << "Held weapon: " <<  items << std::endl;
 
 	for (int items_on_belt = 0; items_on_belt <= 6; items_on_belt++)
 	{
@@ -506,10 +515,10 @@ public:
 	EntityCorpse() {}
 
 	EntityCorpse(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
-		this->ent = Read<uintptr_t>(_ent + 0x30);
+		this->ent = Read<uintptr_t>(_ent + 0x28);
 		this->trans = Read<uintptr_t>(_trans + 0x38);
 
-		this->name = ReadNative(_obj + 0x68);
+		this->name = ReadNative(_obj + 0x60);
 	}
 
 public:
@@ -616,11 +625,6 @@ public:
 		}
 	}
 
-	void natak()
-	{
-			Write<bool>(this->Mounted + O::canWieldItems, true);
-	}
-
 public:
 
 	uint64_t playerMovement{};
@@ -637,7 +641,7 @@ public:
 	BaseMiscEntity(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
 		this->ent = Read<uintptr_t>(_ent + 0x30);
 		this->trans = Read<uintptr_t>(_trans + 0x38);
-		this->name = ReadNative(_obj + 0x68);
+		this->name = ReadNative(_obj + 0x60);
 
 		if (this->name.find(safe_str("stone-ore")) != std::string::npos)
 			this->name = safe_str("STONE");
@@ -700,7 +704,7 @@ public:
 	BaseWeaponESP() {}
 
 	BaseWeaponESP(uintptr_t _ent, uintptr_t _trans, std::string _name) {
-		this->ent = Read<uintptr_t>(_ent + 0x30);
+		this->ent = Read<uintptr_t>(_ent + 0x28);
 		this->trans = Read<uintptr_t>(_trans + 0x38);
 		this->name = _name;
 	}

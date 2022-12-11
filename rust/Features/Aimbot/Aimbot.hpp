@@ -92,7 +92,7 @@ namespace Aimbot {
 
 		if (Dist > 0.001f) {
 			float BulletTime = Dist / ProjectileSpeed_Normal();
-			//    std::cout << GetBulletSpeed() << endl;
+			//std::cout << GetBulletSpeed() << endl;
 			Vector3 vel = Player->getNewVelocity();
 			Vector3 PredictVel;
 			PredictVel.x = vel.x * BulletTime * 0.75f;

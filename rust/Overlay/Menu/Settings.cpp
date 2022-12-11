@@ -4,14 +4,15 @@
 namespace Settings {
 
 	float espColorMisc[4] = { 1.f, 1.f, 1.f, 1.f };
+
 	//Aimbot:
 	int aimbotSmoothingValue = 10;
 	int aimbotKey = 0x05;
 	int zoomKey = 0;
-	bool fly = false;
-	bool zoom = false;
+
 	bool enableAimbot = false;
 	bool enableAimbotDistance = false;
+	int aimBone = 0;
 	bool aimbotSmoothing = false;
 	float aimSmoothing = 100;
 	int aimbotFov = 10;
@@ -22,7 +23,18 @@ namespace Settings {
 	int RCSpitch = -50;
 	int RCSyaw = -50;
 
+	bool shootAnywhere = false;
+	bool noSpread = false;
+	bool noSway = false;
+	bool rapidFire = false;
+	float rapidfirevalue = 0.01; //0.09
+	bool instantCompound = false;
+	bool noAimcone = false;
+
 	bool enableDroppedItem = false;
+	
+	bool fly = false;
+	bool zoom = false;
 
 	bool enableVisuals = false;
 	bool drawSkeleton = false;
@@ -38,10 +50,8 @@ namespace Settings {
 	bool freeze = false;
 
 	bool bradleyESP = true;
-	bool shootAnywhere = false;
-	bool noSpread = false;
-	bool rapidFire = false;
-	bool instantCompound = false;
+
+
 	bool snapLinez = false;
 	bool SuperJump = false;
 	
@@ -52,14 +62,11 @@ namespace Settings {
 
 	float FiledVIEWW = 90;
 
-	float rapidfirevalue = 0.01; //0.09
-
 	bool enableSmoothing = false;
 
 	bool enableCompensateRecoil = false;
 
 	int playerDistance = 100;
-	int weaponDistance = 100;
 	int droppedDistance = 100;
 
 	int FovSlider = 90;
@@ -73,7 +80,7 @@ namespace Settings {
 	int walkWaterKEY = 0;
 	bool walkOnWater = false;
 
-	int aimBone = 0;
+
 
 	bool spiderClimb = false;
 	bool corpseESP = false;
@@ -149,5 +156,5 @@ namespace Settings {
 
 	bool ShootMounted = false;
 	bool watermark = true;
-	bool debuglog = false;
+	//bool debuglog = false;
 }

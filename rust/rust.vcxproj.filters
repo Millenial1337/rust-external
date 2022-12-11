@@ -29,9 +29,6 @@
     <ClCompile Include="Overlay\retake\imgui_tricks.cpp">
       <Filter>Overlay\retake</Filter>
     </ClCompile>
-    <ClCompile Include="Overlay\blur\PostProcessing.cpp">
-      <Filter>Overlay\blur</Filter>
-    </ClCompile>
     <ClCompile Include="DiscordRPC\src\rpc_connection.cpp">
       <Filter>DiscordRPC\src</Filter>
     </ClCompile>
@@ -180,18 +177,6 @@
     </ClInclude>
     <ClInclude Include="Features\MISC\Misc.hpp">
       <Filter>Features\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\blur\BlurShaders\blur_x.h">
-      <Filter>Overlay\blur</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\blur\BlurShaders\blur_y.h">
-      <Filter>Overlay\blur</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\blur\BlurShaders\default_vs.h">
-      <Filter>Overlay\blur</Filter>
-    </ClInclude>
-    <ClInclude Include="Overlay\blur\PostProcessing.h">
-      <Filter>Overlay\blur</Filter>
     </ClInclude>
     <ClInclude Include="DiscordRPC\include\discord_register.h">
       <Filter>DiscordRPC\include</Filter>

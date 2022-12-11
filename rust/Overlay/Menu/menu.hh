@@ -22,8 +22,6 @@
 
 #include "../../DiscordRPC/discordrpc.h"
 
-#include "../blur/PostProcessing.h"
-
 Discord* g_Discord;
 
 void configSam()
@@ -37,7 +35,7 @@ void configSam()
     //Settings::drawWeapon = TRUE;
     Settings::drawName = TRUE;
     Settings::drawCrosshair = TRUE;
-    Settings::adminFlag = TRUE;
+    //Settings::adminFlag = TRUE;
     Settings::drawHealthBar = TRUE;
     Settings::thickBullettt = TRUE;
     Settings::nightSky = TRUE;
@@ -94,32 +92,36 @@ const char* oresItems[] = {
     "Bradley",
     "Corpse" };
 
+static bool init = false;
+
 void* __fastcall menu()
 {
     ImGuiStyle& style = ImGui::GetStyle();
+    if (init == false)
+    {
+        style.ScrollbarSize = 1;
+        style.GrabMinSize = 1;
+        style.WindowBorderSize = 0;
+        style.ChildBorderSize = 1;
+        style.PopupBorderSize = 0;
+        style.FrameBorderSize = 1;
+        style.WindowRounding = 6;
+        style.ChildRounding = 6;
+        style.FrameRounding = 6;
+        style.PopupRounding = 6;
+        style.ScrollbarRounding = 6;
+        style.GrabRounding = 6;
 
-    style.ScrollbarSize = 1;
-    style.GrabMinSize = 1;
-    style.WindowBorderSize = 0;
-    style.ChildBorderSize = 1;
-    style.PopupBorderSize = 0;
-    style.FrameBorderSize = 1;
-    style.WindowRounding = 6;
-    style.ChildRounding = 6;
-    style.FrameRounding = 6;
-    style.PopupRounding = 6;
-    style.ScrollbarRounding = 6;
-    style.GrabRounding = 6;
+        ImGui::SetNextWindowPos(ImVec2(-10, -10));
+        ImGui::SetNextWindowBgAlpha(255.f);
+
+        //Window Size
+        ImGui::SetNextWindowSize({ 500.000000f, 345.000000f });
+        ImGui::SetNextWindowPos(ImVec2((1920 - 840) * .5, (1080 - 500) * .5), ImGuiCond_Once);
+        init = true;
+    }
 
     style.Colors[ImGuiCol_WindowBg] = ImColor(55, 46, 58, 255);
-
-
-    ImGui::SetNextWindowPos(ImVec2(-10, -10));
-    ImGui::SetNextWindowBgAlpha(255.f);
-
-    //Window Size
-    ImGui::SetNextWindowSize({ 500.000000f, 345.000000f });
-    ImGui::SetNextWindowPos(ImVec2((1920 - 840) * .5, (1080 - 500) * .5), ImGuiCond_Once);
 
     ImGui::Begin(safe_str("cheat"), (bool*)true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar);
     {
@@ -146,11 +148,7 @@ void* __fastcall menu()
         ImGui::TextColored(ImColor( 97, 79, 104, 255 ), "%c", "|/-\\"[(int)(ImGui::GetTime() / 0.5f) & 3]);
 
         static int page = 0;
-        static int aim = 0;
         static int esp = 0;
-        static int misc = 0;
-        static int news = 0;
-
 
         ImGui::SetCursorPos({ 5, 26 });
         if (Retake::tab("Aimbot", page == 0))
@@ -159,18 +157,18 @@ void* __fastcall menu()
         }
 
         ImGui::SetCursorPos({ 5, 51 });
-        if (Retake::tab("Visuals", page == 1))
+        if (Retake::tab("Visual", page == 1))
         {
             page = 1;
         }
 
-        ImGui::SetCursorPos({ 5, 76 });
+        ImGui::SetCursorPos({ 5, 126 });
         if (Retake::tab("Misc", page == 2))
         {
             page = 2;
         }
 
-        ImGui::SetCursorPos({ 5, 101 });
+        ImGui::SetCursorPos({ 5, 151 });
         if (Retake::tab("Configs", page == 3))
         {
             page = 3;
@@ -182,59 +180,54 @@ void* __fastcall menu()
             page = 4;
         }
 
-        if (page == 1)
-        {
-            ImGui::SetCursorPos({ 160, 30 });
+            ImGui::SetCursorPos({ 5, 71 });
             if (Retake::subtab("ESP", esp == 0))
+            {
+                page = 1;
                 esp = 0;
+            }
 
-            ImGui::SetCursorPos({ 260, 30 });
+            ImGui::SetCursorPos({ 5, 91 });
             if (Retake::subtab("Items", esp == 1))
+            {
+                page = 1;
                 esp = 1;
+            }
 
-            ImGui::SetCursorPos({ 360, 30 });
+            ImGui::SetCursorPos({ 5, 111 });
             if (Retake::subtab("Colors", esp == 2))
+            {
+                page = 1;
                 esp = 2;
-        }
-        if (page == 2)
-        {
-            ImGui::SetCursorPos({ 210, 30 });
-            if (Retake::subtab("Weapon", misc == 0))
-                misc = 0;
-
-            ImGui::SetCursorPos({ 320, 30 });
-            if (Retake::subtab("Player", misc == 1))
-                misc = 1;
-        }
-        if (page == 4) {
-            ImGui::SetCursorPos({ 270, 30 });
-            if (Retake::subtab("NEWS", news == 0))
-                news = 0;
-        }
+            }
         {
 
-            ImGui::SetCursorPos({ 130, 60 });
+            ImGui::SetCursorPos({ 120, 30 });
             ImGui::BeginChild("", ImVec2(370, 280));
             {
                 if (page == 0)
                 {
-                    Retake::BeginChild("Aim", ImVec2(330, 250), false, NULL);
+                    Retake::RetakeBeginChild("Aim", ImVec2(370, 250));
+
                     Retake::checkbox("Enable Aimbot", &Settings::enableAimbot);
                     ImGui::Text("Aimbot Key"); ImGui::SameLine(); ImGui::Hotkey("##Aimbot Key", &Settings::aimbotKey, ImVec2(80, 18));
 
                     ImGui::Spacing();
-                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 10);
-                    ImGui::Spacing();
+
                     Retake::slider_int("Aimbot FOV", &Settings::aimbotFov, 0, 360, "%.1f", NULL);
 
                     Retake::checkbox("Enable Distance", &Settings::enableAimbotDistance);
                     Retake::slider_int("Aimbot Distance", &Settings::aimbotDistance, 0, 300, "%.1f", NULL);
 
-                    ImGui::PushItemWidth(ImGui::GetWindowWidth() - 340);
+                    ImGui::PushItemWidth(ImGui::GetWindowWidth() - 220);
                     ImGui::Spacing();
                     const char* listbox_items[] = { "Head", "Chest", "Pevlis" };
-                    ImGui::ListBox("##Hitbox", &Settings::aimbotHitbox, listbox_items, IM_ARRAYSIZE(listbox_items));
+
+                    ImGui::Combo("##Hitbox", &Settings::aimbotHitbox, listbox_items, IM_ARRAYSIZE(listbox_items));
+
+                    //ImGui::ListBox("##Hitbox", &Settings::aimbotHitbox, listbox_items, IM_ARRAYSIZE(listbox_items));
                     Retake::checkbox("ThickBullet", &Settings::thickBullettt);
+
                     Retake::RetakeEndChild();
                 }
                 if (page == 1)
@@ -243,20 +236,21 @@ void* __fastcall menu()
                     {
                         Retake::checkbox("Enable Visuals", &Settings::enableVisuals);
                         {
-                            Retake::BeginChild("Players", ImVec2(175, 200), false, 0);
+                            Retake::RetakeBeginChild("Players", ImVec2(175, 195));
                             {
                                 Retake::checkbox(("Name"), &Settings::drawName);
                                 Retake::checkbox(("Box"), &Settings::drawBox);
                                 Retake::combo(("Box Type"), &Settings::typeBox, boxTypes, 3);
                                 Retake::checkbox(("Skeleton"), &Settings::drawSkeleton);
                                 Retake::checkbox(("Health Bar"), &Settings::drawHealthBar);
+                                Retake::checkbox(("Weapon"), &Settings::drawWeapon);
                                 Retake::slider_int(("Distance"), &Settings::playerDistance, 100, 300, "%.1f", NULL);
                             }
-                            ImGui::EndChild();
+                            Retake::RetakeEndChild();
 
                             ImGui::SameLine();
 
-                            Retake::BeginChild("Other", ImVec2(175, 200), false, NULL);
+                            Retake::RetakeBeginChild("Other", ImVec2(175, 210));
                             {
                                 Retake::checkbox(("Crosshair"), &Settings::drawCrosshair);
                                 Retake::checkbox("while scoped", &Settings::crosshairScoped);
@@ -265,35 +259,33 @@ void* __fastcall menu()
                                 Retake::slider_int("Thickness", &Settings::CrosshairThickness, 1, 24, "%.1f", NULL);
                                 Retake::slider_int(("Fov Changer"), &Settings::FovSlider, 75, 150, "%.1f", NULL);
                             }
-                            ImGui::EndChild();
+                            Retake::RetakeEndChild();
                         }
                     }
                     if (esp == 1)
                     {
-                        Retake::BeginChild("Items", ImVec2(175, 140), false, 0);
+                        Retake::RetakeBeginChild("Items", ImVec2(175, 140));
                         {
-                            Retake::checkbox(("Weapon ESP"), &Settings::drawWeapon);
-                            Retake::slider_int(("Weapon Distance"), &Settings::weaponDistance, 100, 300, "%.1f", NULL);
-
                             Retake::checkbox(("Dropped Items"), &Settings::enableDroppedItem);
                             Retake::slider_int(("Dropped Items distance"), &Settings::droppedDistance, 100, 300, "%.1f", NULL);
                         }
-                        ImGui::EndChild();
+                        Retake::RetakeEndChild();
 
                         ImGui::SameLine();
 
-                        Retake::BeginChild("Object list", ImVec2(175, 140), false, 0);
-                        if (ImGui::ListBoxHeader("##ESP Object List"))
+                        Retake::RetakeBeginChild("Object list", ImVec2(175, 280));
+                        if (ImGui::ListBoxHeader("##ESP Object List", ImVec2(170, 245)))
                         {
                             for (size_t i = 0; i < IM_ARRAYSIZE(Settings::selectedOres); i++) {
                                 ImGui::Selectable(oresItems[i], &Settings::selectedOres[i], ImGuiSelectableFlags_::ImGuiSelectableFlags_DontClosePopups);
                             }
                             ImGui::ListBoxFooter();
                         }
-                        ImGui::EndChild();
+                        Retake::RetakeEndChild();
                     }
                     if (esp == 2)
                     {
+                        Retake::RetakeBeginChild(" ", ImVec2(350, 250));
                         //ImGui::Text("Weapon Color"); 
                         Retake::ColorPicker(("Weapon Color"), Settings::drawColor_weapon, ImGuiColorEditFlags_NoInputs);
                         //ImGui::Text("Skeleton Color"); 
@@ -306,32 +298,35 @@ void* __fastcall menu()
                         Retake::ColorPicker(("Crosshair Color"), Settings::drawColor_crosshair, ImGuiColorEditFlags_NoInputs);
                         //ImGui::Text("ESP Object Color"); 
                         Retake::ColorPicker(("ESP Object Color"), Settings::espColorMisc, ImGuiColorEditFlags_NoInputs);
+                        Retake::RetakeEndChild();
                     }
                 }
                 if (page == 2)
                 {
-                    if (misc == 0)
-                    {
-                        Retake::checkbox(("Rapid Fire"), &Settings::rapidFire);
+                    Retake::RetakeBeginChild(safe_str("Weapon"), ImVec2(160, 280));
+                        Retake::checkbox(safe_str("Rapid Fire"), &Settings::rapidFire);
                         if (Settings::rapidFire)
                         {
-                            Retake::slider_float(("Rapid Fire Value"), &Settings::rapidfirevalue, 0.01, 0.09, safe_str("%.2f"), 1);
+                            Retake::slider_float(safe_str("Rapid Fire Value"), &Settings::rapidfirevalue, 0.01, 0.09, safe_str("%.2f"), 1);
                         }
-                        Retake::checkbox(("Enable RCS"), &Settings::enableRCS);
+                        Retake::checkbox(safe_str("Enable RCS"), &Settings::enableRCS);
                         if (Settings::enableRCS)
                         {
-                            Retake::slider_int(("RCS Percentage X"), &Settings::RCSyaw, 0, -50, "%.0f", NULL);
-                            Retake::slider_int(("RCS Percentage Y"), &Settings::RCSpitch, 0, -50, "%.0f", NULL);
+                            Retake::slider_int(safe_str("RCS X"), &Settings::RCSyaw, 0, -50, "%i", NULL);
+                            Retake::slider_int(safe_str("RCS Y"), &Settings::RCSpitch, 0, -50, "%i", NULL);
                         }
-                        Retake::checkbox(("No Spread"), &Settings::noSpread);
-                        Retake::checkbox(("Instant Compound"), &Settings::instantCompound);
-                        Retake::checkbox(("Instant Switch"), &Settings::fastSwitchWeapons);
-                        Retake::checkbox(("instant eoka"), &Settings::tapeoka);
+                        Retake::checkbox(safe_str("No Spread"), &Settings::noSpread);
+                        Retake::checkbox(safe_str("NoAimCone"), &Settings::noAimcone);
+                        Retake::checkbox(safe_str("No Sway"), &Settings::noSway);
+                        Retake::checkbox(safe_str("Instant Compound"), &Settings::instantCompound);
+                        Retake::checkbox(safe_str("Instant Switch"), &Settings::fastSwitchWeapons);
+                        Retake::checkbox(safe_str("instant eoka"), &Settings::tapeoka);
+                	Retake::RetakeEndChild();
 
-                        ImGui::Spacing();
-                    }
-                    if (misc == 1)
-                    {
+                    ImGui::SameLine();
+
+                	Retake::RetakeBeginChild("Player", ImVec2(200, 280));
+
                         Retake::checkbox(("Spider Climb"), &Settings::spiderClimb);
                         Retake::checkbox(("ar"), &Settings::fly);
 
@@ -357,7 +352,7 @@ void* __fastcall menu()
                         Retake::checkbox(("Long Neck"), &Settings::shootInAir);
                         if (Settings::shootInAir)
                         {
-                            // ImGui::SameLine();
+                            ImGui::SameLine();
                             ImGui::Hotkey(("##Long Neck Key"), &Settings::LongNeckKey, ImVec2(80, 15));
                         }
                         Retake::checkbox("High Jump", &Settings::SuperJump);
@@ -369,32 +364,37 @@ void* __fastcall menu()
                         Retake::checkbox("Speed Hack", &Settings::SpeedHack);
                         if (Settings::SpeedHack)
                         {
+                            ImGui::SameLine();
                             ImGui::Hotkey(("##Speed Hack Key"), &Settings::SpeedHackKey, ImVec2(80, 15));
-                            Retake::slider_float("Speed", &Settings::SpeedHackSpeed, 10, -10, "%.2f", 0.47);
+                            Retake::slider_float("Speed", &Settings::SpeedHackSpeed, 0, -10, "%.2f", NULL);
                         }
                         Retake::checkbox(("Bright Night"), &Settings::nightSky);
                         Retake::checkbox(("Run Hit"), &Settings::runhit);
                         Retake::checkbox(("Zoom"), &Settings::zoom);
                         if (Settings::zoom)
                         {
+                            ImGui::SameLine();
                             ImGui::Hotkey(("##Zoom Key"), &Settings::zoomKey, ImVec2(80, 15));
                         }
                         Retake::checkbox("FlyHack", &Settings::flyHackkk);
                         if (Settings::flyHackkk)
                         {
+                            ImGui::SameLine();
                             ImGui::Hotkey("##Flyhack Key", &Settings::flyhackKey, ImVec2(80, 15));
                             Retake::slider_float(("speed"), &Settings::flyhackSpeed, 6, -5, "%.0f", 1);
                         }
                         Retake::checkbox(("Jesus mode"), &Settings::walkOnWater);
                         if (Settings::walkOnWater)
                         {
+                            ImGui::SameLine();
                             ImGui::Hotkey(("##Jesus Key"), &Settings::walkWaterKEY, ImVec2(80, 15));
                         }
-                    }
+
+                	Retake::RetakeEndChild();
                 }
                 if (page == 3)
                 {
-                    Retake::BeginChild("Config", ImVec2(150, 200), false, NULL);
+                    Retake::RetakeBeginChild("Config", ImVec2(150, 200));
                     //Retake::RetakeBeginChild("Config", ImVec2(150, 200));
                     {
                         Retake::checkbox("Watermark", &Settings::watermark);
@@ -411,26 +411,23 @@ void* __fastcall menu()
                         if (Retake::button("Exit", ImVec2(50, 20)))
                             exit(1);
                     }
-                    ImGui::EndChild();
+                    Retake::RetakeEndChild();
 
-                    ImGui::SameLine();
+                    //ImGui::SameLine();
 
-                    Retake::BeginChild("Debug", ImVec2(120, 80), false, NULL);
-                    {
-                        if (Retake::button("Print debug true", ImVec2(110, 20)))
-                            Settings::debuglog = true;
+                    //Retake::RetakeBeginChild("Debug", ImVec2(120, 80));
+                    //{
+                    //    if (Retake::button("Print debug true", ImVec2(110, 20)))
+                    //        Settings::debuglog = true;
 
-                        if (Retake::button("Print debug false", ImVec2(110, 20)))
-                            Settings::debuglog = false;
-                    }
-                    ImGui::EndChild();
+                    //    if (Retake::button("Print debug false", ImVec2(110, 20)))
+                    //        Settings::debuglog = false;
+                    //}
+                    //Retake::RetakeEndChild();
                 }
                 if (page == 4)
                 {
-                    if (news == 0)
-                    {
-                        GUI::News("Information", dls(safe_str("https://a-p.fun/info.php")).c_str());
-                    }
+                	GUI::News("Information", dls(safe_str("https://a-p.fun/info.php")).c_str());
                 }
             }
             ImGui::EndChild();
@@ -476,7 +473,7 @@ void* __fastcall login() {
         ImGui::SetCursorPos({ 115, 33 });
         if (ImGui::Button("Login", ImVec2(75, 20))) 
         {
-            if (globals.init)
+            if (globals.auth == false)
             {
                 globals.auth = true;
             }

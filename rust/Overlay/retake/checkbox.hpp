@@ -24,7 +24,7 @@ namespace Retake
 		const ImVec2 label_size = ImGui::CalcTextSize(label, NULL, true);
 		const float square_sz = ImGui::GetFrameHeight();
 		const ImVec2 pos = window->DC.CursorPos;
-		const ImRect total_bb(pos, pos + ImVec2(square_sz + (style.ItemInnerSpacing.x + label_size.x + 0), 0 + label_size.y + style.FramePadding.y * 2));
+		const ImRect total_bb(pos, pos + ImVec2(square_sz + (style.ItemInnerSpacing.x + label_size.x + 0),label_size.y));
 		ItemSize(total_bb, style.FramePadding.y);
 		ItemAdd(total_bb, id);
 
@@ -39,13 +39,13 @@ namespace Retake
 
 		float lerpFloat = ImTricks::Animations::FastFloatLerp(label, *v, 0.f, 1.f, 0.05f);
 
-		window->DrawList->AddRectFilled(total_bb.Min, total_bb.Min + ImVec2{ 12, 12 }, ImTricks::Animations::FastColorLerp(ImColor(55, 55, 56), ImColor(172, 142, 184), lerpFloat), 0, 0);
-		window->DrawList->AddRect(total_bb.Min, total_bb.Min + ImVec2{ 12, 12 }, ImTricks::Animations::FastColorLerp(ImColor(20, 20, 20, 255), ImColor(20, 20, 20, 140), lerpFloat), 0, 0);
+		window->DrawList->AddRectFilled(total_bb.Min, total_bb.Min + ImVec2{ 12, 12 }, ImTricks::Animations::FastColorLerp(ImColor(55, 55, 56), ImColor(172, 142, 184), lerpFloat), 3, 15);
+		window->DrawList->AddRect(total_bb.Min, total_bb.Min + ImVec2{ 12, 12 }, ImTricks::Animations::FastColorLerp(ImColor(20, 20, 20, 255), ImColor(20, 20, 20, 140), lerpFloat), 3, 15);
 
 		RenderCheckMark(total_bb.Min + ImVec2{ 3, 3 }, ImTricks::Animations::FastColorLerp(ImColor(255, 255, 255, 0), ImColor(255, 255, 255, 255), lerpFloat), 6.f);
 
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f));
-		ImGui::RenderText(ImVec2(total_bb.Min.x + style.ItemInnerSpacing.x + 14, total_bb.Min.y - 1), label);
+		ImGui::RenderText(ImVec2(total_bb.Min.x + style.ItemInnerSpacing.x + 14, total_bb.Min.y - 3), label);
 		ImGui::PopStyleColor();
 		return pressed;
 	}

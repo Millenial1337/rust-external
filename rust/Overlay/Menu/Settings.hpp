@@ -18,6 +18,7 @@ namespace Settings {
 	extern int aimbotKey;
 	extern int aimbotSmoothingValue;
 	extern bool aimbotSmoothing;
+	extern bool noAimcone;
 
 	extern bool enableRCS;
 	extern int RCSpitch;
@@ -73,6 +74,7 @@ namespace Settings {
 	extern bool shootInAir;
 
 	extern bool noSpread;
+	extern bool noSway;
 	extern bool rapidFire;
 	extern bool shootAnywhere;
 	extern bool spiderClimb;
@@ -88,7 +90,6 @@ namespace Settings {
 	extern bool enableCompensateRecoil;
 
 	extern int playerDistance;
-	extern int weaponDistance;
 	extern int droppedDistance;
 
 	extern int typeBox;
@@ -144,5 +145,5 @@ namespace Settings {
 	extern bool nightSky;
 	extern bool testingBool;
 	extern bool watermark;
-	extern bool debuglog;
+	//extern bool debuglog;
 };

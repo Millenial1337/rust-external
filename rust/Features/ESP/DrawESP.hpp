@@ -4,8 +4,8 @@
 namespace ESP {
 	void __fastcall DrawSkeleton(uint64_t player) {
 		std::array<BonesList, 15> Bones = {
-			r_foot, l_knee, l_hip,
-			l_foot, r_knee, r_hip,
+			l_foot, l_knee, l_hip,
+			r_foot, r_knee, r_hip,
 			spine1, neck, head,
 			l_upperarm, l_forearm, l_hand,
 			r_upperarm, r_forearm, r_hand

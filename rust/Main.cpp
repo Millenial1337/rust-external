@@ -17,7 +17,7 @@
 #pragma comment(lib, "Normaliz.lib")
 
 int main()
-{	
+{
 	SetConsoleTitle("A-P");
 	HWND hwnd = nullptr;
 
@@ -31,7 +31,6 @@ int main()
 
 		while (!hwnd)
 		{
-			//hwnd = FindWindowA(safe_str("UnityWndClass"), safe_str("Rust")); //UnityWndClass  Rust
 			//hwnd = LI_FN(FindWindowA)(safe_str("Chrome_WidgetWin_1"), safe_str("GitHub Desktop"));
 			hwnd = LI_FN(FindWindowA)(safe_str("UnityWndClass"), safe_str("Rust"));
 			LI_FN(Sleep)(50);

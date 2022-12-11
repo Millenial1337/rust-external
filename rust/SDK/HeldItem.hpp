@@ -30,14 +30,17 @@ namespace O {
 	uintptr_t hipAimCone = 0x2F4;// public float hipAimCone;
 	uintptr_t aimconePenaltyPerShot = 0x2F8;// public float aimconePenaltyPerShot;
 	uintptr_t aimConePenaltyMax = 0x2FC;// public float aimConePenaltyMax;
+	uintptr_t createdprojectiles = 0x398;
 
 		//BasePlayer
 	uintptr_t BaseMovement = 0x4F8;// public BaseMovement movement;
-	uintptr_t stancepenalty = 0x324; //private float stancePenalty;
+	uintptr_t stancepenalty = 0x328; //private float stancePenalty;
 	uintptr_t ClothingAccuracyBonus = 0x76C; // public float clothingAccuracyBonus;
-	uintptr_t aimconePenalty = 0x328; //private float aimconePenalty;
+	uintptr_t aimconePenalty = 0x34C; //private float aimconePenalty;
 
 	uintptr_t canWieldItems = 0x2B8; // BaseMountable -> public bool canWieldItems;
+
+	uintptr_t blocksprintonattack = 0x2A1;
 }
 
 typedef void(__fastcall* hitsound_fn)(DWORD64);
@@ -53,7 +56,7 @@ public:
 
 		this->name = GetItemName();
 
-		this->bp = Read<uintptr_t>(this->ent + O::heldEntity);
+		this->bp = Read<uintptr_t>(ent + O::heldEntity);
 
 		this->recoil_properties = Read<uintptr_t>(this->bp + O::recoil);
 
@@ -70,10 +73,6 @@ public:
 
 		if (!wide_name.empty())
 			return std::string(wide_name.begin(), wide_name.end()).c_str();
-		if (Settings::debuglog)
-		{
-			std::cout << "Display name: " << display_name << std::endl;
-		}
 
 		return safe_str("No Item");
 	}
@@ -113,7 +112,7 @@ public:
 	}
 
 	void RunHit() { // rework
-		Write<int>(this->bp + 0x299, 0);
+		Write<int>(this->bp + O::blocksprintonattack, 0);
 	}
 
 	uintptr_t getRecoilProp() {
@@ -124,7 +123,7 @@ public:
 
 	void fatBullet()
 	{
-		auto List = Read<DWORD64>(this->bp + 0x370); //private List<Projectile> createdProjectiles;
+		auto List = Read<DWORD64>(this->bp + O::createdprojectiles); //private List<Projectile> createdProjectiles;
 		List = Read<DWORD64>(List + 0x10);
 		for (int i = 0; i < 8; ++i)
 		{
@@ -134,40 +133,40 @@ public:
 	}
 	
 	void rapidFire() {
-			Write<float>(this->bp + 0x1F4, Settings::rapidfirevalue);
-			Write<bool>(this->bp + 0x298, true); //public bool automatic;
+			Write<float>(this->bp + 0x1FC, Settings::rapidfirevalue); //public float repeatDelay
+			Write<bool>(this->bp + 0x2A0, true); //public bool automatic;
 	}
 
 	void instantCompound() {
 		if (this->name.find(safe_str("bow.compound")) != std::string::npos)
 		{
-			Write<float>(bp + 0x390, 0);//stringHoldDurationMax
-			Write<float>(bp + 0x394, 1000000);//stringBonusDamage
-			Write<float>(bp + 0x3A0, 1000000);//movementPenaltyRampUpTime
+			Write<float>(bp + 0x3B8, 0);//stringHoldDurationMax
+			Write<float>(bp + 0x3BC, 1000000);//stringBonusDamage
+			Write<float>(bp + 0x3C8, 1000000);//movementPenaltyRampUpTime
 		}
 	}
 
 	void setLonghit(float input)  // rework
 	{
-		Write(this->bp + 0x290, input);
+		Write(this->bp + 0x298, input);
 	}
 
-	void FastMed(float input)  // rework
-	{
-		Write(this->bp + 0x280, input);
-	}
+	//void FastMed(float input)  // rework
+	//{
+	//	Write(this->bp + 0x280, input);
+	//}
 
-	void fastSwitch() {  // rework
-			Write<float>(bp + 0x1F0, 0);//deployDelay | instant deploy > AttackEntity
-	}
+	//void fastSwitch() {  // rework
+	//		Write<float>(bp + 0x1F8, 0);//deployDelay | instant deploy > AttackEntity
+	//}
 
 
 	//causes a crash if switched to another weapon (i will fix - johnn)
 	void instantEoka() {
 		if (this->name.find(safe_str("eoka")) != std::string::npos)
 		{
-			Write<bool>(this->bp + 0x388, true);//_didSparkThisFrame
-			Write<float>(this->bp + 0x378, 100.f);//successFraction
+			Write<bool>(this->bp + 0x3B0, true);//_didSparkThisFrame
+			Write<float>(this->bp + 0x3A0, 100.f);//successFraction
 		}
 	}
 

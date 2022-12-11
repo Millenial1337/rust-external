@@ -25,7 +25,7 @@ void CleanupDeviceD3D();
 void ResetDevice();
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-bool toggle = false;
+bool toggle = true;
 
 void Overlay::Style(ImGuiStyle &style)
 {
@@ -86,11 +86,11 @@ void Overlay::Style(ImGuiStyle &style)
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.000000f, 0.000000f, 1.000000f, 0.350000f);
 	style.Colors[ImGuiCol_DragDropTarget] = ImVec4(1.000000f, 1.000000f, 0.000000f, 0.900000f);
 
-	io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 15.0f);
-	Overlay::fontMenu = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 15.0f);
-	Overlay::fontMenuSmall = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 11.0f);
-	Overlay::playerName = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 12.0f);
-	Overlay::weaponName = io.Fonts->AddFontFromMemoryTTF(FontData::ttcommons, sizeof(FontData::ttcommons), 12.0f);
+	io.Fonts->AddFontFromMemoryTTF(FontData::lexend, sizeof(FontData::lexend), 15.0f);
+	Overlay::fontMenu = io.Fonts->AddFontFromMemoryTTF(FontData::lexend, sizeof(FontData::lexend), 15.0f);
+	Overlay::fontMenuSmall = io.Fonts->AddFontFromMemoryTTF(FontData::lexend, sizeof(FontData::lexend), 11.0f);
+	Overlay::playerName = io.Fonts->AddFontFromMemoryTTF(FontData::lexend, sizeof(FontData::lexend), 12.0f);
+	Overlay::weaponName = io.Fonts->AddFontFromMemoryTTF(FontData::lexend, sizeof(FontData::lexend), 12.0f);
 
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
 	g_pd3dDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
@@ -228,8 +228,6 @@ void __fastcall Overlay::Loop()
 			}
 			//ImGui::End();
 		}
-		PostProcessing::setDevice(g_pd3dDevice);
-		PostProcessing::newFrame();
 		ImGui::EndFrame();
 		g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 		g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -261,8 +259,8 @@ void __fastcall Overlay::Loop()
 
 void __fastcall Overlay::start(HWND hwnd) {
 
-	g_Discord->Initialize();
-	g_Discord->Update();
+	//g_Discord->Initialize();
+	//g_Discord->Update();
 
 	HWND gameWnd = FindWindowA(("UnityWndClass"), ("Rust")); //UnityWndClass
 	HWND activeWnd = nullptr;
@@ -307,16 +305,15 @@ void __fastcall Overlay::start(HWND hwnd) {
 		//ImGui::StyleColorsDark();
 		colors[ImGuiCol_WindowBg] = ImVec4(40 / 255.f, 40 / 255.f, 40 / 255.f, 255 / 255.f); //ImVec4(20 / 255.f, 20 / 255.f, 20 / 255.f, 255 / 255.f);
 		colors[ImGuiCol_Border] = ImColor(25, 20, 36, 255);
-		g_Discord->Details("In menu");
+		//g_Discord->Details("In menu");
 		if (toggle)
 		{
-			PostProcessing::performFullscreenBlur(ImGui::GetBackgroundDrawList(), 155);
 			menu();
 		}
 	}
 	else {
 		SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
-		g_Discord->Details("In game");
+		//g_Discord->Details("In game");
 	}
 
 }
@@ -332,7 +329,8 @@ bool CreateDeviceD3D(HWND hWnd)
 	g_d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
 	g_d3dpp.EnableAutoDepthStencil = TRUE;
 	g_d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-	g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+	//g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+	g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 	g_d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;
 	if (g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0)
 		return false;
@@ -350,7 +348,6 @@ void ResetDevice()
 {
 	ImGui_ImplDX9_InvalidateDeviceObjects();
 	HRESULT hr = g_pd3dDevice->Reset(&g_d3dpp);
-	PostProcessing::onDeviceReset();
 	if (hr == D3DERR_INVALIDCALL)
 		IM_ASSERT(0);
 	ImGui_ImplDX9_CreateDeviceObjects();

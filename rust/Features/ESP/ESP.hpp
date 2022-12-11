@@ -32,22 +32,21 @@ namespace ESP {
 		};
 		Colors ColorClass;
 
-		//uintptr_t gomPtr = Read<uintptr_t>(uBase + 0x17C1F18); //game object manager | Chain + 0x17C1F18 -> 0x8 -> 0x10 -> 0x30 -> 0x18 -> 0x2E4
-		//uintptr_t taggedObjects = Read<uintptr_t>(gomPtr + 0x8);
-		//uintptr_t gameObject = Read<uintptr_t>(taggedObjects + 0x10);
-		//uintptr_t objectClass = Read<uintptr_t>(gameObject + 0x30);
-		//uintptr_t entity = Read<uintptr_t>(objectClass + 0x18);
-		//Old, maybe broken
+		uintptr_t gomPtr = Read<uintptr_t>(uBase + 0x17C1F18); //game object manager | Chain + 0x17C1F18 -> 0x8 -> 0x10 -> 0x30 -> 0x18 -> 0x2E4
+		uintptr_t taggedObjects = Read<uintptr_t>(gomPtr + 0x8);
+		uintptr_t gameObject = Read<uintptr_t>(taggedObjects + 0x10);
+		uintptr_t objectClass = Read<uintptr_t>(gameObject + 0x30);
+		uintptr_t entity = Read<uintptr_t>(objectClass + 0x18);
 
-		//pViewMatrix = Read<Matrix4x4>(entity + 0x2E4); //camera
+		pViewMatrix = Read<Matrix4x4>(entity + 0x2E4); //camera
 
-		uintptr_t cmptr = Read<uintptr_t>(uBase + 0x1762E80); //0x1762F40 qword_181762E80 qword_181762F40
-		uintptr_t camera_manager = Read<uintptr_t>(cmptr);
-		uintptr_t camera = Read<uintptr_t>(camera_manager);
-		uintptr_t camera_object = Read<uintptr_t>(camera + 0x30);
-		uintptr_t object_class = Read<uintptr_t>(camera_object + 0x30);
-		uintptr_t entity = Read<uintptr_t>(object_class + 0x18);
-		pViewMatrix = Read<Matrix4x4>(entity + 0x2E4);
+		//uintptr_t cmptr = Read<uintptr_t>(uBase + 0x1762E80); //0x1762F40 qword_181762E80 qword_181762F40
+		//uintptr_t camera_manager = Read<uintptr_t>(cmptr);
+		//uintptr_t camera = Read<uintptr_t>(camera_manager);
+		//uintptr_t camera_object = Read<uintptr_t>(camera + 0x30);
+		//uintptr_t object_class = Read<uintptr_t>(camera_object + 0x30);
+		//uintptr_t entity = Read<uintptr_t>(object_class + 0x18);
+		//pViewMatrix = Read<Matrix4x4>(entity + 0x2E4);
 
 		if (Settings::watermark)
 		{
@@ -142,7 +141,7 @@ namespace ESP {
 					static float screenX = GetSystemMetrics(SM_CXSCREEN);
 					static float screenY = GetSystemMetrics(SM_CYSCREEN);
 					ImU32 color = Render::FtIM(Settings::DroppedItemCol);
-					if (Settings::enableDroppedItem && distance <= Settings::weaponDistance)
+					if (Settings::enableDroppedItem && distance <= Settings::droppedDistance)
 					{
 						Render::Text(ImVec2(pos.x - text_size.x / 2, pos.y + 12 - text_size.y), nameStr, color, true, Overlay::playerName, Overlay::playerName->FontSize);
 						Render::Text(ImVec2(pos.x - text_sizeDistance.x / 2, pos.y + 21 - text_sizeDistance.y), distanceStr, color, true, Overlay::playerName, Overlay::playerName->FontSize);
@@ -213,7 +212,7 @@ namespace ESP {
 				if (Settings::drawName && distance < Settings::playerDistance)
 					DrawPlayerName(curEntity->player, curEntity->getName(), distance, curEntity->isSameTeam(localPlayer->Player));
 
-				if (Settings::drawWeapon && distance < Settings::weaponDistance && curEntity->getHeldItem().IsWeapon())
+				if (Settings::drawWeapon && distance < Settings::playerDistance && curEntity->getHeldItem().IsWeapon())
 					DrawPlayerWeapon(curEntity->player, curEntity->getHeldItem().GetItemName());
 
 				if (Settings::drawHealthBar && distance < Settings::playerDistance)

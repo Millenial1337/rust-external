@@ -4,6 +4,8 @@
 #include "../imgui/imgui.h"
 #define IMGUI_DEFINE_MATH_OPERATORS
 #define IM_USE using namespace ImGui; 
+#include <map>
+
 #include "../imgui/imgui_internal.h"
 #include <sstream>
 
@@ -87,11 +89,11 @@ namespace Retake
 		ImGuiContext& g = *GImGui;
 		const ImGuiStyle& style = g.Style;
 		const ImGuiID id = window->GetID(label);
-		const float w = 222 - 48;
+		const float w = ImGui::GetWindowWidth() - 0.1f;
 
 		const ImVec2 label_size = ImGui::CalcTextSize(label, NULL, true);
-		const ImRect frame_bb(window->DC.CursorPos + ImVec2(0, 20), window->DC.CursorPos + ImVec2(w, 29));
-		const ImRect total_bb(frame_bb.Min - ImVec2(0, 16), frame_bb.Max);
+		const ImRect frame_bb(window->DC.CursorPos + ImVec2(0, 10), window->DC.CursorPos + ImVec2(w, 19));
+		const ImRect total_bb(frame_bb.Min - ImVec2(0, 6), frame_bb.Max + ImVec2(0, 5));
 
 		ImGui::ItemSize(total_bb, style.FramePadding.y);
 		if (!ImGui::ItemAdd(total_bb, id, &frame_bb))
@@ -138,7 +140,7 @@ namespace Retake
 		//ImVec2 text_pos = ImVec2(frame_bb.Max.x - 16, frame_bb.Min.y - 16);
 
 		//ImGui::GetOverlayDrawList()->AddText(text_pos - preview_w / 2, ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);
-		ImGui::GetOverlayDrawList()->AddText(ImVec2(frame_bb.Max.x - 2 - ImGui::CalcTextSize(value_buf).x, window->DC.CursorPos.y - 25), ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);
+		ImGui::GetOverlayDrawList()->AddText(ImVec2(frame_bb.Min.x + ImGui::GetWindowSize().x - ImGui::CalcTextSize(value_buf).x, window->DC.CursorPos.y - 28), ImColor(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f), value_buf);
 
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(229 / 255.f, 229 / 255.f, 229 / 255.f, 230 / 255.f));
 		ImGui::RenderText(ImVec2(frame_bb.Min.x, frame_bb.Min.y - 16), label);
@@ -147,6 +149,250 @@ namespace Retake
 		return value_changed;
 	}
 
+    //bool SliderScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format, float power)
+    //{
+    //    ImGuiWindow* window = ImGui::GetCurrentWindow();
+    //    if (window->SkipItems)
+    //        return false;
+
+    //    if (window->DC.CurrLineTextBaseOffset != window->DC.PrevLineTextBaseOffset)
+	   //     ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 1 * 8.f);
+
+    //    ImGui::SetCursorPosX(ImGui::GetCursorPosX() +1 * 3.f);
+
+    //    ImGuiContext& g = *GImGui;
+    //    const ImGuiStyle& style = g.Style;
+    //    const ImGuiID id = window->GetID(label);
+    //    //const float w = ImGui::CalcItemWidth();
+    //    const float w = ImGui::GetWindowWidth() - 2;
+
+    //    const ImVec2 label_size = ImGui::CalcTextSize(label, NULL, true);
+    //    const ImRect frame_bb(window->DC.CursorPos + ImVec2(0, 11 ), window->DC.CursorPos + ImVec2(w, label_size.y + style.FramePadding.y * 2.0f * 0.5f));
+    //    const ImRect total_bb(frame_bb.Min, frame_bb.Max + ImVec2(style.ItemInnerSpacing.x + label_size.x , 0));
+
+    //    ImGui::ItemSize(ImRect(total_bb.Min - ImVec2(0, 22 ), total_bb.Max), style.FramePadding.y);
+    //    if (!ImGui::ItemAdd(ImRect(total_bb.Min - ImVec2(0, 22 ), total_bb.Max), id, &frame_bb))
+    //        return false;
+
+    //    // Default format string when passing NULL
+    //    if (format == NULL)
+    //        format = ImGui::DataTypeGetInfo(data_type)->PrintFmt;
+    //    else if (data_type == ImGuiDataType_S32 && strcmp(format, "%d") != 0) // (FIXME-LEGACY: Patch old "%.0f" format string to use "%d", read function more details.)
+    //        format = PatchFormatStringFloatToInt(format);
+
+    //    // Tabbing or CTRL-clicking on Slider turns it into an input box
+
+    //    const bool hovered = ImGui::ItemHoverable(frame_bb, id);
+    //    bool temp_input_is_active = ImGui::TempInputIsActive(id);
+    //    bool temp_input_start = false;
+    //    if (!temp_input_is_active)
+    //    {
+    //        const bool focus_requested = ImGui::FocusableItemRegister(window, id);
+    //        const bool clicked = (hovered && g.IO.MouseClicked[0]);
+    //        if (focus_requested || clicked || g.NavActivateId == id || g.NavInputId == id)
+    //        {
+	   //         ImGui::SetActiveID(id, window);
+    //            ImGui::SetFocusID(id, window);
+    //            ImGui::FocusWindow(window);
+    //            g.ActiveIdUsingNavDirMask |= (1 << ImGuiDir_Left) | (1 << ImGuiDir_Right);
+    //        }
+    //    }
+
+    //    // Our current specs do NOT clamp when using CTRL+Click manual input, but we should eventually add a flag for that..
+    //    if (temp_input_is_active || temp_input_start)
+    //        return ImGui::TempInputScalar(frame_bb, id, label, data_type, p_data, format);// , p_min, p_max);
+
+
+    //    // Draw frame
+
+    //    const ImU32 frame_col = ImGui::GetColorU32(g.ActiveId == id ? ImGuiCol_FrameBgActive : g.HoveredId == id ? ImGuiCol_FrameBgHovered : ImGuiCol_FrameBg);
+    //    const ImVec4 hover_act = ImVec4(155 / 255.f, 155 / 255.f, 155 / 255.f, 1.f);
+    //    const ImVec4 hover_dis = ImVec4(74 / 255.f, 79 / 255.f, 143 / 255.f, 1.f);
+    //    const ImVec4 hover_off = ImVec4(74 / 255.f, 79 / 255.f, 143 / 255.f, 0.4f);
+
+
+    //    float deltatime = 1.5f * ImGui::GetIO().DeltaTime;
+
+    //    static std::map<ImGuiID, ImVec4> hover_animation;
+    //    auto it_hover = hover_animation.find(id);
+    //    if (it_hover == hover_animation.end())
+    //    {
+    //        hover_animation.insert({ id, hover_off });
+    //        it_hover = hover_animation.find(id);
+    //    }
+    //    if (hovered || g.ActiveId == id)
+    //    {
+    //        ImVec4 to = hover_act;
+    //        if (it_hover->second.x != to.x)
+    //        {
+    //            if (it_hover->second.x < to.x)
+    //                it_hover->second.x = ImMin(it_hover->second.x + deltatime, to.x);
+    //            else if (it_hover->second.x > to.x)
+    //                it_hover->second.x = ImMax(to.x, it_hover->second.x - deltatime);
+    //        }
+
+    //        if (it_hover->second.y != to.y)
+    //        {
+    //            if (it_hover->second.y < to.y)
+    //                it_hover->second.y = ImMin(it_hover->second.y + deltatime, to.y);
+    //            else if (it_hover->second.y > to.y)
+    //                it_hover->second.y = ImMax(to.y, it_hover->second.y - deltatime);
+    //        }
+
+    //        if (it_hover->second.z != to.z)
+    //        {
+    //            if (it_hover->second.z < to.z)
+    //                it_hover->second.z = ImMin(it_hover->second.z + deltatime, to.z);
+    //            else if (it_hover->second.z > to.z)
+    //                it_hover->second.z = ImMax(to.z, it_hover->second.z - deltatime);
+    //        }
+
+    //        if (it_hover->second.w != to.w)
+    //        {
+    //            if (it_hover->second.w < to.w)
+    //                it_hover->second.w = ImMin(it_hover->second.w + deltatime, to.w);
+    //            else if (it_hover->second.w > to.w)
+    //                it_hover->second.w = ImMax(to.w, it_hover->second.w - deltatime);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        ImVec4 to = hover_off;
+    //        if (it_hover->second.x != to.x)
+    //        {
+    //            if (it_hover->second.x < to.x)
+    //                it_hover->second.x = ImMin(it_hover->second.x + deltatime, to.x);
+    //            else if (it_hover->second.x > to.x)
+    //                it_hover->second.x = ImMax(to.x, it_hover->second.x - deltatime);
+    //        }
+
+    //        if (it_hover->second.y != to.y)
+    //        {
+    //            if (it_hover->second.y < to.y)
+    //                it_hover->second.y = ImMin(it_hover->second.y + deltatime, to.y);
+    //            else if (it_hover->second.y > to.y)
+    //                it_hover->second.y = ImMax(to.y, it_hover->second.y - deltatime);
+    //        }
+
+    //        if (it_hover->second.z != to.z)
+    //        {
+    //            if (it_hover->second.z < to.z)
+    //                it_hover->second.z = ImMin(it_hover->second.z + deltatime, to.z);
+    //            else if (it_hover->second.z > to.z)
+    //                it_hover->second.z = ImMax(to.z, it_hover->second.z - deltatime);
+    //        }
+
+    //        if (it_hover->second.w != to.w)
+    //        {
+    //            if (it_hover->second.w < to.w)
+    //                it_hover->second.w = ImMin(it_hover->second.w + deltatime, to.w);
+    //            else if (it_hover->second.w > to.w)
+    //                it_hover->second.w = ImMax(to.w, it_hover->second.w - deltatime);
+    //        }
+    //    }
+
+
+    //    static map<ImGuiID, ImVec4> grab_animation;
+    //    auto it_grab = grab_animation.find(id);
+    //    if (it_grab == grab_animation.end())
+    //    {
+    //        grab_animation.insert({ id, hover_dis });
+    //        it_grab = grab_animation.find(id);
+    //    }
+    //    if (g.ActiveId == id)
+    //    {
+    //        ImVec4 to = hover_act;
+    //        if (it_grab->second.x != to.x)
+    //        {
+    //            if (it_grab->second.x < to.x)
+    //                it_grab->second.x = ImMin(it_grab->second.x + deltatime, to.x);
+    //            else if (it_grab->second.x > to.x)
+    //                it_grab->second.x = ImMax(to.x, it_grab->second.x - deltatime);
+    //        }
+
+    //        if (it_grab->second.y != to.y)
+    //        {
+    //            if (it_grab->second.y < to.y)
+    //                it_grab->second.y = ImMin(it_grab->second.y + deltatime, to.y);
+    //            else if (it_grab->second.y > to.y)
+    //                it_grab->second.y = ImMax(to.y, it_grab->second.y - deltatime);
+    //        }
+
+    //        if (it_grab->second.z != to.z)
+    //        {
+    //            if (it_grab->second.z < to.z)
+    //                it_grab->second.z = ImMin(it_grab->second.z + deltatime, to.z);
+    //            else if (it_grab->second.z > to.z)
+    //                it_grab->second.z = ImMax(to.z, it_grab->second.z - deltatime);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        ImVec4 to = hover_dis;
+    //        if (it_grab->second.x != to.x)
+    //        {
+    //            if (it_grab->second.x < to.x)
+    //                it_grab->second.x = ImMin(it_grab->second.x + deltatime, to.x);
+    //            else if (it_grab->second.x > to.x)
+    //                it_grab->second.x = ImMax(to.x, it_grab->second.x - deltatime);
+    //        }
+
+    //        if (it_grab->second.y != to.y)
+    //        {
+    //            if (it_grab->second.y < to.y)
+    //                it_grab->second.y = ImMin(it_grab->second.y + deltatime, to.y);
+    //            else if (it_grab->second.y > to.y)
+    //                it_grab->second.y = ImMax(to.y, it_grab->second.y - deltatime);
+    //        }
+
+    //        if (it_grab->second.z != to.z)
+    //        {
+    //            if (it_grab->second.z < to.z)
+    //                it_grab->second.z = ImMin(it_grab->second.z + deltatime, to.z);
+    //            else if (it_grab->second.z > to.z)
+    //                it_grab->second.z = ImMax(to.z, it_grab->second.z - deltatime);
+    //        }
+    //    }
+
+    //    window->DrawList->AddRectFilled(frame_bb.Min + ImVec2(1.5f, 1.5f) - ImVec2(0, 2.5f), frame_bb.Max + ImVec2(0.2f, 0.2f) - ImVec2(2.2f, 0.0f), ImColor(33.f / 255.f, 33.f / 255.f, 33.f / 255.f, 1.f), 0.0f);
+    //    // window->DrawList->AddRect(frame_bb.Min + ImVec2(1.5f, 1.5f) - ImVec2(0, 5), frame_bb.Max + ImVec2(0.2f, 2.2f), ImColor(20, 20, 20, 255), 3.f, 15, 1.0f);
+
+
+    //     // Slider behavior
+    //    ImRect grab_bb;
+    //    ImRect hov_bb;
+    //    const bool value_changed = ImGui::SliderBehavior(frame_bb, id, data_type, p_data, p_min, p_max, format, power, ImGuiSliderFlags_None, &grab_bb);
+    //    if (value_changed)
+	   //     ImGui::MarkItemEdited(id);
+    //    hov_bb = hov_bb;
+    //    // Render grab
+    //    if (grab_bb.Max.x > grab_bb.Min.x)
+    //        window->DrawList->AddRectFilled(frame_bb.Min + ImVec2(1.5f, 1.5f) - ImVec2(0, 2.5f), grab_bb.Max + ImVec2(0.2f, 2.2f) + ImVec2(0, 0), ImColor(155, 155, 155, 255), 0.0f);
+
+
+    //    // Display value using user-provided display format so user can add prefix/suffix/decorations to the value.
+    //    char value_buf[64];
+    //    const char* value_buf_end = value_buf + DataTypeFormatString(value_buf, IM_ARRAYSIZE(value_buf), data_type, p_data, format);
+
+    //    const bool clicked = (hovered && g.IO.MouseClicked[0]);
+    //    static bool held = false;
+    //    if (hovered && g.IO.MouseClicked[0] || clicked && g.IO.MouseClicked[0])
+    //        held = true;
+    //    else if (!g.IO.MouseClicked[0])
+    //        held = false;
+
+
+    //    window->DrawList->AddText(ImVec2(frame_bb.Max.x - ImGui::CalcTextSize(value_buf).x, frame_bb.Min.y - ImGui::CalcTextSize(value_buf).y - (4 * 1)), (*(int*)p_data > 1) ? ImColor(255, 255, 255) : ImColor(170, 170, 170, 200), value_buf, value_buf_end);
+
+    //    if (label_size.x > 0.0f)
+	   //     ImGui::RenderText(ImVec2(frame_bb.Min.x, frame_bb.Min.y - ImGui::CalcTextSize(label).y - (4 * 1)), label);
+
+
+
+    //    IMGUI_TEST_ENGINE_ITEM_INFO(id, label, window->DC.ItemFlags);
+    //    return value_changed;
+    //}
+    
 	bool slider_float(const char* label, float* v, float v_min, float v_max, const char* format, ImGuiSliderFlags flags)
 	{
 		return SliderScalar(label, ImGuiDataType_Float, v, &v_min, &v_max, format, flags);
