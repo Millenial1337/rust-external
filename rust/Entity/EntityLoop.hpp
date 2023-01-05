@@ -9,8 +9,8 @@
 namespace Entity {
 #pragma region PlayerChain
 	void EntityLoop() {
-		//auto BaseNetworkable = IL2CPPScan(safe_str("BaseNetworkable"));
-		auto BaseNetworkable = uintptr_t(gBase + 0x3648468);
+		auto BaseNetworkable = IL2CPPScan(safe_str("BaseNetworkable"));
+		//auto BaseNetworkable = uintptr_t(gBase + 0x3648468);
 
 		/*{ 0xb8, 0x0, 0x10, 0x28 }*/
 

@@ -34,7 +34,7 @@ namespace O {
 
 		//BasePlayer
 	uintptr_t BaseMovement = 0x4F8;// public BaseMovement movement;
-	uintptr_t stancepenalty = 0x328; //private float stancePenalty;
+	uintptr_t stancepenalty = 0x348; //private float stancePenalty;
 	uintptr_t ClothingAccuracyBonus = 0x76C; // public float clothingAccuracyBonus;
 	uintptr_t aimconePenalty = 0x34C; //private float aimconePenalty;
 
@@ -134,7 +134,7 @@ public:
 	
 	void rapidFire() {
 			Write<float>(this->bp + 0x1FC, Settings::rapidfirevalue); //public float repeatDelay
-			Write<bool>(this->bp + 0x2A0, true); //public bool automatic;
+			Write<bool>(this->bp + 0x290, true); //public bool automatic;
 	}
 
 	void instantCompound() {
@@ -148,7 +148,7 @@ public:
 
 	void setLonghit(float input)  // rework
 	{
-		Write(this->bp + 0x298, input);
+		Write(this->bp + 0x298, input);//eyePositionOverride
 	}
 
 	//void FastMed(float input)  // rework

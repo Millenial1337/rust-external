@@ -61,7 +61,7 @@ enum class BTimeCategory {
 
 #pragma region OffsetStuff
 
-constexpr auto ConVar_Graphics_c = 56922160; //0x32732A0
+constexpr auto ConVar_Graphics_c = 56959168; //0x32732A0
 #pragma endregion
 
 #pragma region BList
@@ -403,7 +403,7 @@ public:
 	{
 		auto mountable = Read<uint64_t>(this->player + 0x608);
 		if (mountable)
-			Write<bool>(mountable + 0x2B8, true); // canWieldItems
+			Write<bool>(mountable + O::canWieldItems, true); // canWieldItems
 	}
 
 #pragma region SkyClass+World
