@@ -108,42 +108,6 @@ namespace ImTricks {
 
 			return ImTrickyColor(lerp.x, lerp.y, lerp.z, lerp.w);
 		}
-		bool Spinner(const char* label, float radius, int thickness, const ImU32& color) {
-			ImGuiWindow* window = ImGui::GetCurrentWindow();
-			if (window->SkipItems)
-				return false;
-
-			ImGuiContext& g = *GImGui;
-			const ImGuiStyle& style = g.Style;
-			const ImGuiID id = window->GetID(label);
-
-			ImVec2 pos = window->DC.CursorPos;
-			ImVec2 size((radius) * 2, (radius + style.FramePadding.y) * 2);
-
-			const ImRect bb(pos, ImVec2(pos.x + size.x, pos.y + size.y));
-			ImGui::ItemSize(bb, style.FramePadding.y);
-			if (!ImGui::ItemAdd(bb, id))
-				return false;
-
-			// Render
-			window->DrawList->PathClear();
-
-			int num_segments = 30;
-			int start = abs(ImSin(g.Time * 1.8f) * (num_segments - 5));
-
-			const float a_min = IM_PI * 2.0f * ((float)start) / (float)num_segments;
-			const float a_max = IM_PI * 2.0f * ((float)num_segments - 3) / (float)num_segments;
-
-			const ImVec2 centre = ImVec2(pos.x + radius, pos.y + radius + style.FramePadding.y);
-
-			for (int i = 0; i < num_segments; i++) {
-				const float a = a_min + ((float)i / (float)num_segments) * (a_max - a_min);
-				window->DrawList->PathLineTo(ImVec2(centre.x + ImCos(a + g.Time * 8) * radius,
-					centre.y + ImSin(a + g.Time * 8) * radius));
-			}
-
-			window->DrawList->PathStroke(color, false, thickness);
-		}
 	}
 
 	namespace NotifyManager {
@@ -151,7 +115,7 @@ namespace ImTricks {
 		std::vector<NotifyStruct> notifies;
 
 		void AddNotify(const char* message, NotifyState state) {
-			notifies.push_back({ message, state, GetTickCount64() + 3000 });
+			notifies.push_back({ message, state, 0.f });
 			
 		}
 
@@ -160,14 +124,20 @@ namespace ImTricks {
 			if (notifies.empty())
 				return;
 
-			const auto ScreenSize = ImGui::GetIO().DisplaySize;
-			ImVec2 NotifyPos = ScreenSize - ImVec2(320.f, 50.f);
+			//const auto ScreenSize = ImGui::GetIO().DisplaySize;
+			ImVec2 NotifyPos = ImVec2(0.f, 0.f);
 
-			auto DrawNotify = [&draw, &NotifyPos](NotifyStruct notify) {
+			auto DrawNotify = [&draw, &NotifyPos](NotifyStruct &notify) {
 
-				const auto NotifyEndPos = NotifyPos + ImVec2(300, 30);
+				//const auto NotifyEndPos = NotifyPos + ImVec2(300, 30);
+				notify.curpos.y = 30;
+				notify.curpos.x = ImLerp(0, 300, notify.progress);
+				//notify.curpos.x += notify.curpos.x + ImGui::GetIO().DeltaTime;
+				notify.curpos.x = std::clamp(notify.curpos.x, 0.f, 300.f);
+				notify.progress += ImGui::GetIO().DeltaTime;
+				notify.progress = std::clamp(notify.progress, 0.f, 1.f);
 
-				draw->AddRectFilled(NotifyPos, NotifyEndPos, ImGui::GetColorU32(ImGuiCol_PopupBg), ImGui::GetStyle().PopupRounding);
+				draw->AddRectFilled(ImVec2(NotifyPos.x, NotifyPos.y), ImVec2(notify.curpos.x, notify.curpos.y), ImColor(0.110000f/255.f, 0.110000f/255.f, 0.140000f/255.f, 255.f), ImGui::GetStyle().PopupRounding);
 
 				auto StateColor = ImColor(45, 45, 45);
 
@@ -193,12 +163,14 @@ namespace ImTricks {
 
 			for (int i = 0; i < notifies.size(); i++)
 			{
-				auto current_notify = notifies.at(i);
-				if (current_notify.time < GetTickCount64())
+				auto &current_notify = notifies.at(i);
+				if (current_notify.time > 5.f)
 				{
 					notifies.erase(notifies.begin() + i);
 					continue;
 				}
+				if (current_notify.progress >= 1)
+					current_notify.time += ImGui::GetIO().DeltaTime;
 				DrawNotify(current_notify);            
 			}
 		}

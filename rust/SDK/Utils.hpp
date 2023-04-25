@@ -102,7 +102,7 @@ namespace Utils {
 
 	__forceinline Vector3 __fastcall GetBonePosition(uintptr_t entity, int bone)
 	{
-		uintptr_t playerModel = Read<uintptr_t>(entity + 0x130); //BaseEntity -> public Model model;
+		uintptr_t playerModel = Read<uintptr_t>(entity + 0xB8); //BaseEntity -> public Model model;
 		uintptr_t boneTransforms = Read<uintptr_t>(playerModel + 0x48); //public class Model -> public Transform[] boneTransforms;
 		uintptr_t entityBone = Read<uintptr_t>(boneTransforms + (0x20 + (bone * 0x8))); // 0x20 = public Transform rootBone;
 

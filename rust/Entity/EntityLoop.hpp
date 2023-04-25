@@ -10,6 +10,8 @@ namespace Entity {
 #pragma region PlayerChain
 	void EntityLoop() {
 		auto BaseNetworkable = IL2CPPScan(safe_str("BaseNetworkable"));
+		std::cout << "basenetworkable: " << std::hex << BaseNetworkable << std::endl;
+		std::cout << gBase + 0x2ec4d00;
 		//auto BaseNetworkable = uintptr_t(gBase + 0x3648468);
 
 		/*{ 0xb8, 0x0, 0x10, 0x28 }*/
@@ -21,11 +23,11 @@ namespace Entity {
 			std::unique_ptr<std::vector<BaseMiscEntity>> t_oreList = std::make_unique<std::vector<BaseMiscEntity>>();
 			std::unique_ptr<std::vector<BaseWeaponESP>> t_weaponList = std::make_unique<std::vector<BaseWeaponESP>>();
 
-			auto unk1 = Read<uintptr_t>(BaseNetworkable + 0xB8);
+			auto unk1 = Read<uintptr_t>(BaseNetworkable + 0x90); //0xB8
 			auto clientEntities = Read<uintptr_t>(unk1);
-			auto entityRealm = Read<uintptr_t>(clientEntities + 0x10);
+			auto entityRealm = Read<uintptr_t>(clientEntities + 0x10); // EntityList
 			auto bufferList = Read<uintptr_t>(entityRealm + 0x28);
-			auto objectList = Read<uintptr_t>(bufferList + 0x18);
+			auto objectList = Read<uintptr_t>(bufferList + 0x18); //TODO: Check and fix
 			auto objectListSize = Read<uint32_t>(bufferList + 0x10);
 
 			//if (Settings::debuglog)
@@ -64,7 +66,6 @@ namespace Entity {
 					continue;
 				auto entityClass = ReadNative(ukn02 + 0x10);
 
-
 				if (tag == player) { //6
 					auto objectClass = Read<uintptr_t>(object + 0x30);
 					auto entity = Read<uintptr_t>(objectClass + 0x18);
@@ -79,8 +80,6 @@ namespace Entity {
 
 					if (!BPlayer->isDead()) t_entList->push_back(*BPlayer); continue;
 				}
-
-				
 				else if (prefebName.find(safe_str("assets/prefabs/misc/item drop/item_drop_backpack.prefab")) != std::string::npos || prefebName.find(safe_str("assets/prefabs/player/player_corpse.prefab")) != std::string::npos) {
 					auto objectClass = Read<uintptr_t>(object + 0x30);
 					auto entity = Read<uintptr_t>(objectClass + 0x18);
@@ -89,7 +88,6 @@ namespace Entity {
 					std::unique_ptr<EntityCorpse> CEntity = std::make_unique<EntityCorpse>(entity, transform, object);
 					t_corpseList->push_back(*CEntity); continue;
 				}
-
 				else if (prefebName.find(safe_str("assets/")) != std::string::npos) {
 					if (prefebName.find(safe_str("stone-ore")) != std::string::npos) {
 						if (Settings::selectedOres[0] == false) continue;

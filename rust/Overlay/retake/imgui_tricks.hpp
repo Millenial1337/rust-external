@@ -127,7 +127,6 @@ namespace ImTricks {
 		*/
 		extern ImColor FastColorLerp(ImColor start, ImColor end, float stage);
 		extern ImTrickyColor FastColorLerp(ImTrickyColor start, ImTrickyColor end, float stage);
-		extern bool Spinner(const char* label, float radius, int thickness, const ImU32& color);
 	}
 
 	/*
@@ -138,7 +137,9 @@ namespace ImTricks {
 		struct NotifyStruct {
 			const char* message;
 			NotifyState state;
-			ULONGLONG time;
+			float progress;
+			float time;
+			ImVec2 curpos;
 		};
 
 		extern std::vector<NotifyStruct> notifies;

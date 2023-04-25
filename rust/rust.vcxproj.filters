@@ -255,5 +255,8 @@
     <Filter Include="Overlay\config">
       <UniqueIdentifier>{ce81d7c4-37d4-44ca-b3f3-862ecf54d15e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Overlay\retake\easing">
+      <UniqueIdentifier>{c611721f-bba1-41ae-b107-b7ce6867f49c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

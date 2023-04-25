@@ -210,11 +210,11 @@ public:
 		this->player = Read<uintptr_t>(_ent + 0x28); // public class BasePlayer (0x20 baseentity)
 		this->visualState = Read<uintptr_t>(_trans + 0x38); // public class Transform : Component, IEnumerable
 
-		this->playerFlags = Read<int32_t>(_ent + 0x690); //public BasePlayer.PlayerFlags playerFlags;
-		this->name = ReadNative(_obj + 0x60);//_prefabname
-		this->entityFlags = Read<int32_t>(_ent + 0x138); //public BaseEntity.Flags flags
+		this->playerFlags = Read<int32_t>(_ent + 0x6A8); //public BasePlayer.PlayerFlags playerFlags;
+		this->name = ReadNative(_obj + 0x40);//_prefabname
+		this->entityFlags = Read<int32_t>(_ent + 0xC0); //public BaseEntity.Flags flags
 
-		this->playerModel = Read<uintptr_t>(this->player + 0x4D0); //public PlayerModel playerModel;
+		this->playerModel = Read<uintptr_t>(this->player + 0x4A8); //public PlayerModel playerModel;
 		this->modelState = Read<uintptr_t>(this->player + 0x600); //public ModelState modelState
 
 		this->position = Read<Vector3>(this->visualState + 0x90); //public Vector3 position { get; set; } i don't know what the fuck is this...
@@ -226,40 +226,40 @@ public:
 	//public PlayerInput input; + private Vector3 bodyAngles;
 
 	void setViewAngles(Vector3 angles) {
-		Write<Vector3>(Read<uint64_t>(this->player + 0x4F0) + 0x3C, angles); 
+		Write<Vector3>(Read<uint64_t>(this->player + 0x4C8) + 0x3C, angles);
 	}
 
 	void setViewAngles(Vector2 angles) {
-		Write<Vector2>(Read<uint64_t>(this->player + 0x4F0) + 0x3C, angles);
+		Write<Vector2>(Read<uint64_t>(this->player + 0x4C8) + 0x3C, angles);
 	}
 
 	void set_aim_angles(Vector3 aim_angle) {
 		auto current = Read<uintptr_t>((uintptr_t)(this + 0x10));
-		Read<Vector3>(current + 0x18) = aim_angle; //InputMessage -> public Vector3 aimAngles
+		Read<Vector3>(current + 0x14) = aim_angle; //InputMessage -> public Vector3 aimAngles
 	}
 
 	void setPlayerFlag(BPlayerFlags flag) {
-		Write(this->player + 0x690, flag);//public BasePlayer.PlayerFlags playerFlags;
+		Write(this->player + 0x6A8, flag);//public BasePlayer.PlayerFlags playerFlags;
 	}
 
 	void remove_flag(MStateFlags flag)
 	{
-		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x24);// ModelState -> public int flags;
+		int flags = *reinterpret_cast<int*>((uintptr_t)this + 0x20);// ModelState -> public int flags;
 		flags &= ~(int)flags;
 
-		*reinterpret_cast<int*>((uintptr_t)this + 0x24) = flags;// ModelState -> public int flags;
+		*reinterpret_cast<int*>((uintptr_t)this + 0x20) = flags;// ModelState -> public int flags;
 	}
 
 	void setModelFlag(MStateFlags flag) {
-		Write(this->modelState + 0x24, flag);// 	public int flags;
+		Write(this->modelState + 0x20, flag);// 	public int flags;
 	}
 
 	void setBaseFlag(BaseEntityFlag flag) {
-		Write(this->entityFlags + 0x138, flag);// BaseEntity -> public BaseEntity.Flags flags;
+		Write(this->entityFlags + 0xC0, flag);// BaseEntity -> public BaseEntity.Flags flags;
 	}
 
 	void speedHack(int speed) {
-		Write<float>(this->player + 0x764, speed); // clothingMoveSpeedReduction
+		Write<float>(this->player + 0x75C, speed); // clothingMoveSpeedReduction
 	}
 
 public:
@@ -274,24 +274,24 @@ public:
 
 
 	bool isLocalPlayer() {
-		return Read<bool>(this->playerModel + 0x299); //internal bool isLocalPlayer;
+		return Read<bool>(this->playerModel + 0x239); //internal bool isLocalPlayer;
 	}
 	
 	bool isVisible()
 	{
-		return Read<bool>(this->playerModel + 0x288); // internal bool visible //0x268
+		return Read<bool>(this->playerModel + 0x228); // internal bool visible //0x268
 	}
 
 	bool iSMenu()
 	{
 		if (!this) return true;
-		DWORD64 Input = Read<DWORD64>(this->player + 0x4F0);//public PlayerInput input;
+		DWORD64 Input = Read<DWORD64>(this->player + 0x4C8);//public PlayerInput input;
 		return !(Read<bool>(Input + 0xA8)); // private bool hasKeyFocus;
 	}
 
 	bool isSameTeam(std::unique_ptr<BaseEntity>& localPlayer) {
-		auto localTeam = Read<uint32_t>(localPlayer->player + 0x5A0); //public ulong currentTeam; 
-		auto playerTeam = Read<uint32_t>(this->player + 0x5A0);
+		auto localTeam = Read<uint32_t>(localPlayer->player + 0x598); //public ulong currentTeam; 
+		auto playerTeam = Read<uint32_t>(this->player + 0x598);
 
 		if (localTeam == 0 || playerTeam == 0)
 			return false;
@@ -318,7 +318,7 @@ public:
 	bool isFrozen() {
 		if (GetAsyncKeyState(Settings::flyKey))
 		{
-			return Read<bool>(this->player + 0x4D8); //public bool Frozen;
+			return Read<bool>(this->player + 0x4B0); //public bool Frozen;
 		}
 	}
 
@@ -334,7 +334,7 @@ public:
 
 	uint64_t getUserID()
 	{
-		return Read<uint64_t>(this->player + 0x6D8); //BasePlayer -> public ulong userID; 
+		return Read<uint64_t>(this->player + 0x6F0); //BasePlayer -> public ulong userID; 
 	}
 
 	int getDistance(std::unique_ptr<BaseEntity>& player) {
@@ -362,7 +362,7 @@ public:
 	}
 
 	Vector3 getNewVelocity() {
-		return Read<Vector3>(this->playerModel + 0x23C); //private Vector3 newVelocity;
+		return Read<Vector3>(this->playerModel + 0x1DC); //private Vector3 newVelocity;
 	}
 
 	//public class Transform : Component, IEnumerable // TypeDefIndex: 3572
@@ -373,11 +373,11 @@ public:
 	}
 
 	Vector3 getRecoilAngles() {
-		return ReadChain<Vector3>(this->player, { (uint64_t)0x4F0, (uint64_t)0x64 }); //public PlayerInput input, public Vector3 recoilAngles
+		return ReadChain<Vector3>(this->player, { (uint64_t)0x4C8, (uint64_t)0x64 }); //public PlayerInput input, public Vector3 recoilAngles
 	}
 
 	Vector3 getViewAngles() {
-		return ReadChain<Vector3>(this->player, { (uint64_t)0x4F0, (uint64_t)0x3C });// public PlayerInput input, private Vector3 bodyAngles;
+		return ReadChain<Vector3>(this->player, { (uint64_t)0x4C8, (uint64_t)0x3C });// public PlayerInput input, private Vector3 bodyAngles;
 	}
 
 	std::string getName() {
@@ -387,21 +387,21 @@ public:
 
 	void AntiHeavy()
 	{
-		float Reduction = Read<float>(this->player + 0x73C);
+		float Reduction = Read<float>(this->player + 0x734);
 		if (Reduction == 0.f) { Write<float>(this->player, -0.1f); }
 		else if ((Reduction > 0.15f) && (Reduction < 0.35f))
 		{
-			Write<float>(this->player + 0x73C, 0.15f);
+			Write<float>(this->player + 0x734, 0.15f);
 		}
 		else if (Reduction > 0.39f)
 		{
-			Write<float>(this->player + 0x73C, 0.15f);
+			Write<float>(this->player + 0x734, 0.15f);
 		}
 	}
 
 	void AutoShit()
 	{
-		auto mountable = Read<uint64_t>(this->player + 0x608);
+		auto mountable = Read<uint64_t>(this->player + 0x600);
 		if (mountable)
 			Write<bool>(mountable + O::canWieldItems, true); // canWieldItems
 	}
@@ -434,6 +434,7 @@ public:
 
 		if (Settings::nightSky)
 		{
+			//public class TOD_NightParameters
 			Write<float>(TOD_AmbientParameters + 0x28, 1.f);//public EnvironmentMultiplier[] AmbientMultipliers;
 			Write<float>(TOD_NightParameters + 0x50, 6.f);//AmbientMultiplier
 			Write<float>(TOD_NightParameters + 0x54, 1.f);//ReflectionMultiplier 0x54
@@ -451,16 +452,16 @@ public:
 	{
 		if (GetAsyncKeyState(Settings::LongNeckKey))
 		{
-			DWORD64 eyes = Read<DWORD64>(this->player + 0x698); //public PlayerEyes eyes;
+			DWORD64 eyes = Read<DWORD64>(this->player + 0x6B0); //public PlayerEyes eyes;
 			Write<Vector3>(eyes + 0x38, Vector3(0, (0.8f), 0));
 		}
 	}
 
 HeldItem getHeldItem()
 {
-	int active_weapon_id = Read<int>(this->player + 0x5D8); //private uint clActiveItem;
+	int active_weapon_id = Read<int>(this->player + 0x5D0); //private uint clActiveItem;
 	//							               public PlayerInventory inventory   BasePlayer
-	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x6A0, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
+	uint64_t items = ReadChain<uint64_t>(this->player, { (uint64_t)0x6B8, (uint64_t)0x28, (uint64_t)0x38, 0x10 }); //public PlayerInventory inventory;
 
 	//if (Settings::debuglog)
 	//	std::cout << "Held weapon: " <<  items << std::endl;
@@ -483,7 +484,7 @@ HeldItem getHeldItem()
 }
 
 std::wstring getPlayerName() {
-	std::wstring name = ReadUnicode(Read<uint64_t>(this->player + 0x6F0) + 0x14); //BasePlayer -> protected string _displayName
+	std::wstring name = ReadUnicode(Read<uint64_t>(this->player + 0x6E8) + 0x14); //BasePlayer -> protected string _displayName
 
 	if (name.find(safe_strW(L"Scientist")) == 0)
 		return safe_strW(L"Scientist");
@@ -563,8 +564,8 @@ public:
 	{
 		if (GetAsyncKeyState(Settings::jumpKey))
 		{
-			Write<float>(this->playerMovement + 0xC0, 0);
-			Write<Vector3>(this->playerMovement + 0xBC, Vector3(99999, 99999, 99999));
+			Write<float>(this->playerMovement + 0xC0, 0); // maxvelocity
+			Write<Vector3>(this->playerMovement + 0xBC, Vector3(99999, 99999, 99999));	
 		}
 	}
 
@@ -639,7 +640,7 @@ public:
 	BaseMiscEntity() {}
 
 	BaseMiscEntity(uintptr_t _ent, uintptr_t _trans, uintptr_t _obj) {
-		this->ent = Read<uintptr_t>(_ent + 0x30);
+		this->ent = Read<uintptr_t>(_ent + 0x28);
 		this->trans = Read<uintptr_t>(_trans + 0x38);
 		this->name = ReadNative(_obj + 0x60);
 
