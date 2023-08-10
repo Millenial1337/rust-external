@@ -8,7 +8,7 @@ NTSTATUS hook_handler(PVOID called_param)
 
 	if ( m->change_protection )
 	{
-		memory::protect_virtual_memory( m->pid, (PVOID)m->address, m->size, m->protection, m->protection_old );
+		memory::protect_virtual_memory( m->pid, (PVOID)m->address, (ULONG)m->size, m->protection, m->protection_old );
 	}
 
 	if (m->ReqBase != FALSE) {
@@ -28,6 +28,7 @@ NTSTATUS hook_handler(PVOID called_param)
 	}
 
 	if (m->write != FALSE) {
+		//PVOID kernelBuff = ExAllocatePoolZero(NonPagedPool, m->size, 0x1337);
 		PVOID kernelBuff = ExAllocatePool(NonPagedPool, m->size);
 
 		if (!kernelBuff) 
@@ -61,6 +62,7 @@ NTSTATUS hook_handler(PVOID called_param)
 
 	if (m->ReadString != FALSE) {
 		PVOID kernelBuffer = ExAllocatePool(NonPagedPool, m->size);
+		//PVOID kernelBuffer = ExAllocatePoolZero(NonPagedPool, m->size, 0x1338);
 
 		if (!kernelBuffer)
 			return STATUS_UNSUCCESSFUL;
@@ -81,6 +83,7 @@ NTSTATUS hook_handler(PVOID called_param)
 
 	if (m->WriteString != FALSE) {
 		PVOID kernelBuffer1 = ExAllocatePool(NonPagedPool, m->size);
+		//PVOID kernelBuffer1 = ExAllocatePoolZero(NonPagedPool, m->size, 0x1339);
 
 		if (!kernelBuffer1)
 			return STATUS_UNSUCCESSFUL;

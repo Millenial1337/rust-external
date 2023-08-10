@@ -12,6 +12,7 @@ namespace memory {
 
 
 		PRTL_PROCESS_MODULES modules = (PRTL_PROCESS_MODULES)ExAllocatePoolWithTag(NonPagedPool, bytes, 0x454E4F45); // 'ENON'
+		//PRTL_PROCESS_MODULES modules = (PRTL_PROCESS_MODULES)ExAllocatePool2(NonPagedPool, bytes, 0x454E4F45); // 'ENON'
 
 		status = ZwQuerySystemInformation(SystemModuleInformation, modules, bytes, &bytes);
 

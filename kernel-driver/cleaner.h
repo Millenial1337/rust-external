@@ -71,6 +71,7 @@ namespace cleaner {
 			return NULL;
 
 		pMods = (PRTL_PROCESS_MODULES)ExAllocatePoolWithTag(NonPagedPool, bytes, 0x454E4F45); // 'ENON'
+		//pMods = (PRTL_PROCESS_MODULES)ExAllocatePool2(NonPagedPool, bytes, 0x454E4F45); // 'ENON'
 		RtlZeroMemory(pMods, bytes);
 
 		status = ZwQuerySystemInformation(SystemModuleInformation, pMods, bytes, &bytes);
