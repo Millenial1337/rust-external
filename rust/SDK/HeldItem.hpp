@@ -4,7 +4,7 @@
 #include "Utils.hpp"
 
 namespace O {
-	uintptr_t waterLevel = 0x480;// WaterWell -> public float waterLevelObjFullOffset;
+	uintptr_t waterLevel = 0x4D8;// WaterWell -> public float waterLevelObjFullOffset;
 
 		// PlayerWalkMovement
 	uintptr_t gravityTestRadius = 0x80;// public float gravityTestRadius
@@ -17,9 +17,9 @@ namespace O {
 	uintptr_t previousVelocity = 0xE4;// private Vector3 previousVelocity
 	uintptr_t groundTime = 0xCC;// private float groundTime
 
-	uintptr_t clothingMoveSpeedReduction = 0x77C;// public float clothingMoveSpeedReduction;
+	uintptr_t clothingMoveSpeedReduction = 0x89C;// public float clothingMoveSpeedReduction;
 
-	uintptr_t heldEntity = 0x98;// Item -> private EntityRef heldEntity;
+	uintptr_t heldEntity = 0xA8;// Item -> private EntityRef heldEntity;
 
 		// BaseProjectile
 	uintptr_t recoil = 0x2E0;// public RecoilProperties recoil;
@@ -33,12 +33,12 @@ namespace O {
 	uintptr_t createdprojectiles = 0x398;
 
 		//BasePlayer
-	uintptr_t BaseMovement = 0x4D0;// public BaseMovement movement;
+	uintptr_t BaseMovement = 0x5C0;// public BaseMovement movement;
 	uintptr_t stancepenalty = 0x348; //private float stancePenalty;
-	uintptr_t ClothingAccuracyBonus = 0x784; // public float clothingAccuracyBonus;
+	uintptr_t ClothingAccuracyBonus = 0x8A4; // public float clothingAccuracyBonus;
 	uintptr_t aimconePenalty = 0x34C; //private float aimconePenalty;
 
-	uintptr_t canWieldItems = 0x2B8; // BaseMountable -> public bool canWieldItems;
+	uintptr_t canWieldItems = 0x2D8; // BaseMountable -> public bool canWieldItems;
 
 	uintptr_t blocksprintonattack = 0x299;
 }
@@ -148,7 +148,7 @@ public:
 
 	void setLonghit(float input)  // rework
 	{
-		Write(this->bp + 0x298, input);//eyePositionOverride
+		Write(this->bp + 0x2B8, input);//eyePositionOverride
 	}
 
 	//void FastMed(float input)  // rework

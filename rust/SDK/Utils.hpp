@@ -104,7 +104,7 @@ namespace Utils {
 	{
 		uintptr_t playerModel = Read<uintptr_t>(entity + 0xB8); //BaseEntity -> public Model model;
 		uintptr_t boneTransforms = Read<uintptr_t>(playerModel + 0x48); //public class Model -> public Transform[] boneTransforms;
-		uintptr_t entityBone = Read<uintptr_t>(boneTransforms + (0x20 + (bone * 0x8))); // 0x20 = public Transform rootBone;
+		uintptr_t entityBone = Read<uintptr_t>(boneTransforms + (0x28 + (bone * 0x8))); // 0x20 = public Transform rootBone;
 
 		return GetPosition(Read<uintptr_t>(entityBone + 0x10));
 	}
